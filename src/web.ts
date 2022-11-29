@@ -44,6 +44,10 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     });
   }
 
+  async confirmPaymentIntent():Promise<unknown>{
+    return;
+  }
+
   async initialize(options: StripeInitializationOptions): Promise<void> {
     if (typeof options.publishableKey !== 'string' || options.publishableKey.trim().length === 0) {
       throw new Error('you must provide a valid key');
