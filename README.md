@@ -70,6 +70,7 @@ Learn at [the official @capacitor-community/stripe documentation](https://stripe
 
 <docgen-index>
 
+* [`confirmPaymentIntent(...)`](#confirmpaymentintent)
 * [`isApplePayAvailable()`](#isapplepayavailable)
 * [`createApplePay(...)`](#createapplepay)
 * [`presentApplePay()`](#presentapplepay)
@@ -125,6 +126,21 @@ Learn at [the official @capacitor-community/stripe documentation](https://stripe
 
 This is for @capacitor/docgen only.
 Not use in product.
+
+### confirmPaymentIntent(...)
+
+```typescript
+confirmPaymentIntent(options: { clientSecret: string; paymentMethodId: string; stripeAccount?: string; }) => Promise<unknown>
+```
+
+| Param         | Type                                                                                    |
+| ------------- | --------------------------------------------------------------------------------------- |
+| **`options`** | <code>{ clientSecret: string; paymentMethodId: string; stripeAccount?: string; }</code> |
+
+**Returns:** <code>Promise&lt;unknown&gt;</code>
+
+--------------------
+
 
 ### isApplePayAvailable()
 

@@ -3,6 +3,7 @@ import type { GooglePayDefinitions } from './googlepay';
 import type { IdentityVerificationSheetDefinitions } from './identityverificationsheet';
 import type { PaymentFlowDefinitions } from './paymentflow';
 import type { PaymentSheetDefinitions } from './paymentsheet';
+import type { PaymentIntentDefinitions } from './shared/index';
 
 export * from './applepay/index';
 export * from './googlepay/index';
@@ -15,7 +16,8 @@ type StripeDefinitions = PaymentSheetDefinitions &
   PaymentFlowDefinitions &
   ApplePayDefinitions &
   GooglePayDefinitions &
-  IdentityVerificationSheetDefinitions;
+  IdentityVerificationSheetDefinitions & 
+  PaymentIntentDefinitions;
 
 export interface StripePlugin extends StripeDefinitions {
   initialize(opts: StripeInitializationOptions): Promise<void>;

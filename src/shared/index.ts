@@ -1,3 +1,12 @@
+export interface PaymentIntentDefinitions {
+  confirmPaymentIntent (options: {
+    clientSecret: string;
+    paymentMethodId: string;
+    stripeAccount?: string;
+
+  }): Promise<unknown>;
+}
+
 /**
  * @extends BasePaymentOption
  */

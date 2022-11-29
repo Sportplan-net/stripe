@@ -3,7 +3,7 @@ import Capacitor
 
 class PaymentIntenetExecutor: NSObject, STPAuthenticationContext {
     func authenticationPresentingViewController() -> UIViewController {
-        return (plugin?.bridge?.viewController)!ick 
+        return (UIApplication.shared.keyWindow?.rootViewController)!
     }
     
     public weak var plugin: CAPPlugin?
@@ -22,7 +22,7 @@ class PaymentIntenetExecutor: NSObject, STPAuthenticationContext {
                 STPAPIClient.shared.stripeAccount = stripeAccount
             }
             let pip: STPPaymentIntentParams = STPPaymentIntentParams.init(clientSecret: clientSecret)
-            pip.paymentMethodId = call.getString("paymentMethodId")
+            pip.paymentMethodId = paymentMethodId
             let pm = STPPaymentHandler.shared()
             pm.confirmPayment(pip, with: self) { (status, pi, err) in
                        switch status {
