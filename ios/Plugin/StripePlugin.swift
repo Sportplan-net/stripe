@@ -9,6 +9,7 @@ public class StripePlugin: CAPPlugin {
     private let paymentSheetExecutor = PaymentSheetExecutor()
     private let paymentFlowExecutor = PaymentFlowExecutor()
     private let applePayExecutor = ApplePayExecutor()
+    private let paymentIntentExecutor = PaymentIntenetExecutor()
 
     @objc func initialize(_ call: CAPPluginCall) {
         self.paymentSheetExecutor.plugin = self
@@ -69,6 +70,10 @@ public class StripePlugin: CAPPlugin {
 
     @objc func createPaymentFlow(_ call: CAPPluginCall) {
         self.paymentFlowExecutor.createPaymentFlow(call)
+    }
+    
+    @objc func confirmPaymentIntent(_ call: CAPPluginCall) {
+        self.paymentIntentExecutor.confirmPaymentIntent(call)
     }
 
     @objc func presentPaymentFlow(_ call: CAPPluginCall) {
