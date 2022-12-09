@@ -28,10 +28,11 @@ public class PaymentSheetExecutor extends Executor {
     public PaymentSheetExecutor(
         Supplier<Context> contextSupplier,
         Supplier<Activity> activitySupplier,
+
         BiConsumer<String, JSObject> notifyListenersFunction,
         String pluginLogTag
     ) {
-        super(contextSupplier, activitySupplier, notifyListenersFunction, pluginLogTag, "PaymentSheetExecutor");
+        super(contextSupplier, activitySupplier, null, notifyListenersFunction, pluginLogTag, "PaymentSheetExecutor");
         this.contextSupplier = contextSupplier;
     }
 
