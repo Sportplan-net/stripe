@@ -3,6 +3,9 @@ package com.getcapacitor.community.stripe;
 import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.net.Uri;
+import androidx.activity.ComponentActivity;
+
+import com.getcapacitor.Bridge;
 import com.getcapacitor.Logger;
 import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
@@ -11,6 +14,7 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.community.stripe.googlepay.GooglePayExecutor;
 import com.getcapacitor.community.stripe.helper.MetaData;
 import com.getcapacitor.community.stripe.identityverification.IdentityVerificationSheetExecutor;
+import com.getcapacitor.community.stripe.paymentIntent.PaymentIntentExecutor;
 import com.getcapacitor.community.stripe.paymentflow.PaymentFlowExecutor;
 import com.getcapacitor.community.stripe.paymentsheet.PaymentSheetExecutor;
 import com.stripe.android.PaymentConfiguration;
@@ -18,6 +22,7 @@ import com.stripe.android.Stripe;
 import com.stripe.android.core.AppInfo;
 import com.stripe.android.googlepaylauncher.GooglePayLauncher;
 import com.stripe.android.identity.IdentityVerificationSheet;
+import com.stripe.android.payments.paymentlauncher.PaymentLauncher;
 import com.stripe.android.paymentsheet.PaymentSheet;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +34,7 @@ public class StripePlugin extends Plugin {
     private String publishableKey;
     private String paymentSheetCallbackId;
     private String paymentFlowCallbackId;
+    private String paymentIntentCallbackId;
     private String googlePayCallbackId;
 
     private String identityVerificationCallbackId;
@@ -47,13 +53,31 @@ public class StripePlugin extends Plugin {
     private final PaymentFlowExecutor paymentFlowExecutor = new PaymentFlowExecutor(
         this::getContext,
         this::getActivity,
+        null,
         this::notifyListeners,
         getLogTag()
     );
 
+    private final PaymentIntentExecutor paymentIntentExecutor = new PaymentIntentExecutor(
+            this::getContext,
+            this::getActivity,
+            this::getComponentActivity,
+            this::notifyListeners,
+            getLogTag()
+    );
+    /**
+     * Gets a plugin log tag with the child's class name as subTag.
+     */
+    /*private String getComponentActivity() {
+        return this.bridge.get
+    }*/
+
+
+
     private final GooglePayExecutor googlePayExecutor = new GooglePayExecutor(
         this::getContext,
         this::getActivity,
+        null,
         this::notifyListeners,
         getLogTag()
     );
@@ -149,6 +173,14 @@ public class StripePlugin extends Plugin {
                     }
                 );
         }
+            this.paymentIntentExecutor.paymentLauncher = PaymentLauncher.Companion.create(
+                    getActivity(),
+                    PaymentConfiguration.getInstance(getContext()).getPublishableKey(),
+                    PaymentConfiguration.getInstance(getContext()).getStripeAccountId(),
+                    paymentResult -> {
+                        this.paymentIntentExecutor.onPaymentResult(bridge, paymentIntentCallbackId, paymentResult);
+                    }
+            );
     }
 
     @PluginMethod
@@ -169,6 +201,20 @@ public class StripePlugin extends Plugin {
         } catch (Exception e) {
             call.reject("unable to set publishable key: " + e.getLocalizedMessage(), e);
         }
+    }
+
+    @PluginMethod
+    public void confirmPaymentIntent(final PluginCall call) {
+        paymentIntentCallbackId = call.getCallbackId();
+        bridge.saveCall(call);
+
+        String stripeAccountId = call.getString("stripeAccount", null);
+
+        if(publishableKey != null && stripeAccountId != null) {
+            PaymentConfiguration.init(getContext(), publishableKey, stripeAccountId);
+        }
+
+        paymentIntentExecutor.confirmPaymentIntent(call);
     }
 
     @PluginMethod
@@ -249,5 +295,14 @@ public class StripePlugin extends Plugin {
         bridge.saveCall(call);
 
         googlePayExecutor.presentGooglePay(call);
+    }
+
+    @Override
+    public Bridge getBridge() {
+        return super.getBridge();
+    }
+
+    public ComponentActivity getComponentActivity() {
+        return super.getActivity();
     }
 }

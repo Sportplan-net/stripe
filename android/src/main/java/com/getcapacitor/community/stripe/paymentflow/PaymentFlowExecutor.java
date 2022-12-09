@@ -28,10 +28,11 @@ public class PaymentFlowExecutor extends Executor {
     public PaymentFlowExecutor(
         Supplier<Context> contextSupplier,
         Supplier<Activity> activitySupplier,
+        Supplier<ComponentActivity> componentActivitySupplier,
         BiConsumer<String, JSObject> notifyListenersFunction,
         String pluginLogTag
     ) {
-        super(contextSupplier, activitySupplier, notifyListenersFunction, pluginLogTag, "PaymentFlowExecutor");
+        super(contextSupplier, activitySupplier, componentActivitySupplier, notifyListenersFunction, pluginLogTag, "PaymentFlowExecutor");
         this.contextSupplier = contextSupplier;
     }
 

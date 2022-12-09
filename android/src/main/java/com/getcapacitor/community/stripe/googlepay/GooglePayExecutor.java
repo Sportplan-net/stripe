@@ -3,6 +3,8 @@ package com.getcapacitor.community.stripe.googlepay;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+
+import androidx.activity.ComponentActivity;
 import androidx.core.util.Supplier;
 import com.getcapacitor.Bridge;
 import com.getcapacitor.JSObject;
@@ -23,10 +25,11 @@ public class GooglePayExecutor extends Executor {
     public GooglePayExecutor(
         Supplier<Context> contextSupplier,
         Supplier<Activity> activitySupplier,
+        Supplier<ComponentActivity> componentActivitySupplier,
         BiConsumer<String, JSObject> notifyListenersFunction,
         String pluginLogTag
     ) {
-        super(contextSupplier, activitySupplier, notifyListenersFunction, pluginLogTag, "GooglePayExecutor");
+        super(contextSupplier, activitySupplier, componentActivitySupplier, notifyListenersFunction, pluginLogTag, "GooglePayExecutor");
         this.contextSupplier = contextSupplier;
     }
 
