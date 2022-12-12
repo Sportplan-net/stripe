@@ -13,7 +13,6 @@ public abstract class Executor {
 
     protected Supplier<Context> contextSupplier;
     protected final Supplier<Activity> activitySupplier;
-    protected final Supplier<ComponentActivity> componentActivitySupplier;
     protected BiConsumer<String, JSObject> notifyListenersFunction;
     protected final String logTag;
 
@@ -25,14 +24,12 @@ public abstract class Executor {
     public Executor(
         Supplier<Context> contextSupplier,
         Supplier<Activity> activitySupplier,
-        Supplier<ComponentActivity> componentActivitySupplier,
         BiConsumer<String, JSObject> notifyListenersFunction,
         String pluginLogTag,
         String executorTag
     ) {
         this.contextSupplier = contextSupplier;
         this.activitySupplier = activitySupplier;
-        this.componentActivitySupplier = componentActivitySupplier;
         this.notifyListenersFunction = notifyListenersFunction;
         this.logTag = pluginLogTag + "|" + executorTag;
     }

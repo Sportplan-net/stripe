@@ -15,6 +15,7 @@ import com.getcapacitor.community.stripe.googlepay.GooglePayExecutor;
 import com.getcapacitor.community.stripe.helper.MetaData;
 import com.getcapacitor.community.stripe.identityverification.IdentityVerificationSheetExecutor;
 import com.getcapacitor.community.stripe.paymentIntent.PaymentIntentExecutor;
+import com.getcapacitor.community.stripe.paymentintent.PaymentIntentExecutor;
 import com.getcapacitor.community.stripe.paymentflow.PaymentFlowExecutor;
 import com.getcapacitor.community.stripe.paymentsheet.PaymentSheetExecutor;
 import com.stripe.android.PaymentConfiguration;
@@ -45,7 +46,6 @@ public class StripePlugin extends Plugin {
 
     private final PaymentSheetExecutor paymentSheetExecutor = new PaymentSheetExecutor(
         this::getContext,
-        this::getActivity,
         this::notifyListeners,
         getLogTag()
     );
@@ -53,7 +53,6 @@ public class StripePlugin extends Plugin {
     private final PaymentFlowExecutor paymentFlowExecutor = new PaymentFlowExecutor(
         this::getContext,
         this::getActivity,
-        null,
         this::notifyListeners,
         getLogTag()
     );
@@ -61,7 +60,6 @@ public class StripePlugin extends Plugin {
     private final PaymentIntentExecutor paymentIntentExecutor = new PaymentIntentExecutor(
             this::getContext,
             this::getActivity,
-            this::getComponentActivity,
             this::notifyListeners,
             getLogTag()
     );
@@ -77,7 +75,6 @@ public class StripePlugin extends Plugin {
     private final GooglePayExecutor googlePayExecutor = new GooglePayExecutor(
         this::getContext,
         this::getActivity,
-        null,
         this::notifyListeners,
         getLogTag()
     );
@@ -188,9 +185,19 @@ public class StripePlugin extends Plugin {
         try {
             publishableKey = call.getString("publishableKey");
 
-            if (publishableKey == null || publishableKey.equals("")) {
-                call.reject("you must provide a valid key");
-                return;
+                if (publishableKey == null || publishableKey.equals("")) {
+                    call.reject("you must provide a valid key");
+                    return;
+                }
+
+                String stripeAccountId = call.getString("stripeAccount", null);
+
+                PaymentConfiguration.init(getContext(), publishableKey, stripeAccountId);
+                Stripe.setAppInfo(AppInfo.create(APP_INFO_NAME));
+            } else if (publishableKey != null && call.getString("stripeAccount", null) != null){
+                // PaymentConfiguration.init(getContext(), publishableKey, stripeAccountId);
+            } else {
+                Logger.info("PaymentConfiguration.init was run at load");
             }
 
             String stripeAccountId = call.getString("stripeAccount", null);
@@ -210,10 +217,9 @@ public class StripePlugin extends Plugin {
 
         String stripeAccountId = call.getString("stripeAccount", null);
 
-        if(publishableKey != null && stripeAccountId != null) {
+        if (publishableKey != null && stripeAccountId != null) {
             PaymentConfiguration.init(getContext(), publishableKey, stripeAccountId);
         }
-
         paymentIntentExecutor.confirmPaymentIntent(call);
     }
 

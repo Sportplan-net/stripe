@@ -6,9 +6,9 @@ import type { PaymentSheetEventsEnum, PaymentSheetResultInterface } from './paym
 
 export interface PaymentSheetDefinitions {
   createPaymentSheet(options: CreatePaymentSheetOption): Promise<void>;
-  presentPaymentSheet(): Promise<{
-    paymentResult: PaymentSheetResultInterface;
-  }>;
+    presentPaymentSheet(): Promise<{
+      paymentResult: PaymentSheetResultInterface;
+    }>;
 
   addListener(
     eventName: PaymentSheetEventsEnum.Loaded,

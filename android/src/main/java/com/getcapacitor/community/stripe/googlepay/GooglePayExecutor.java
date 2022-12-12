@@ -25,11 +25,10 @@ public class GooglePayExecutor extends Executor {
     public GooglePayExecutor(
         Supplier<Context> contextSupplier,
         Supplier<Activity> activitySupplier,
-        Supplier<ComponentActivity> componentActivitySupplier,
         BiConsumer<String, JSObject> notifyListenersFunction,
         String pluginLogTag
     ) {
-        super(contextSupplier, activitySupplier, componentActivitySupplier, notifyListenersFunction, pluginLogTag, "GooglePayExecutor");
+        super(contextSupplier, activitySupplier, notifyListenersFunction, pluginLogTag, "GooglePayExecutor");
         this.contextSupplier = contextSupplier;
     }
 

@@ -14,16 +14,17 @@ import type {
   GooglePayResultInterface,
   IdentityVerificationSheetResultInterface,
   PaymentFlowResultInterface,
+  PaymentIntentResultInterface,
   PaymentSheetResultInterface,
   StripeInitializationOptions,
   StripePlugin,
 } from './definitions';
-import { ApplePayEventsEnum, GooglePayEventsEnum, PaymentFlowEventsEnum, PaymentSheetEventsEnum } from './definitions';
+import { ApplePayEventsEnum, GooglePayEventsEnum, PaymentFlowEventsEnum, PaymentSheetEventsEnum, PaymentIntentEventsEnum } from './definitions';
 import { isPlatform } from './shared/platform';
 
-interface StripePaymentSheet extends Components.StripePaymentSheet, HTMLStencilElement, HTMLElement {}
+interface StripePaymentSheet extends Components.StripePaymentSheet, HTMLStencilElement, HTMLElement { }
 
-interface StripeRequestButton extends Components.StripePaymentRequestButton, HTMLStencilElement, HTMLElement {}
+interface StripeRequestButton extends Components.StripePaymentRequestButton, HTMLStencilElement, HTMLElement { }
 
 export class StripeWeb extends WebPlugin implements StripePlugin {
   private publishableKey: string | undefined;
@@ -46,8 +47,31 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     });
   }
 
-  async confirmPaymentIntent():Promise<unknown>{
-    return;
+  async confirmPaymentIntent(options: {
+    clientSecret: string;
+    paymentMethodId: string;
+    stripeAccount?: string;
+  }): Promise<{
+    paymentResult: PaymentIntentResultInterface;
+  }> {
+    if (!window || !window.Stripe || !this.publishableKey) {
+      return {
+        paymentResult: PaymentIntentEventsEnum.FailedToLoad
+      }
+    }
+    const stripe = window.Stripe(this.publishableKey, { stripeAccount: options.stripeAccount });
+    const { error: confirmError } = await stripe.confirmCardPayment(options.clientSecret, { payment_method: options.paymentMethodId });
+    if (confirmError) {
+      this.notifyListeners(PaymentIntentEventsEnum.Failed, confirmError);
+      return {
+        paymentResult: PaymentIntentEventsEnum.Failed,
+      };
+    } else {
+      this.notifyListeners(PaymentIntentEventsEnum.Completed, null);
+      return {
+        paymentResult: PaymentIntentEventsEnum.Completed,
+      };
+    }
   }
 
   async initialize(options: StripeInitializationOptions): Promise<void> {
