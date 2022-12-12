@@ -1,13 +1,14 @@
 import type { ApplePayDefinitions } from './applepay';
 import type { GooglePayDefinitions } from './googlepay';
 import type { PaymentFlowDefinitions } from './paymentflow';
+import type { PaymentIntentDefinitions } from './paymentintent';
 import type { PaymentSheetDefinitions } from './paymentsheet';
-import type { PaymentIntentDefinitions } from './shared/index';
 
 export * from './applepay/index';
 export * from './googlepay/index';
 export * from './paymentflow/index';
 export * from './paymentsheet/index';
+export * from './paymentintent/index';
 export * from './shared/index';
 
 type StripeDefinitions = PaymentSheetDefinitions & PaymentFlowDefinitions & ApplePayDefinitions & GooglePayDefinitions & PaymentIntentDefinitions;

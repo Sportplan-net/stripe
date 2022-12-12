@@ -53,7 +53,6 @@ Learn at [the official @capacitor-community/stripe documentation](https://stripe
 
 <docgen-index>
 
-* [`confirmPaymentIntent(...)`](#confirmpaymentintent)
 * [`isApplePayAvailable()`](#isapplepayavailable)
 * [`createApplePay(...)`](#createapplepay)
 * [`presentApplePay()`](#presentapplepay)
@@ -82,6 +81,12 @@ Learn at [the official @capacitor-community/stripe documentation](https://stripe
 * [`addListener(PaymentFlowEventsEnum.Canceled, ...)`](#addlistenerpaymentfloweventsenumcanceled)
 * [`addListener(PaymentFlowEventsEnum.Failed, ...)`](#addlistenerpaymentfloweventsenumfailed)
 * [`addListener(PaymentFlowEventsEnum.Created, ...)`](#addlistenerpaymentfloweventsenumcreated)
+* [`confirmPaymentIntent(...)`](#confirmpaymentintent)
+* [`addListener(PaymentIntentEventsEnum.Loaded, ...)`](#addlistenerpaymentintenteventsenumloaded)
+* [`addListener(PaymentIntentEventsEnum.FailedToLoad, ...)`](#addlistenerpaymentintenteventsenumfailedtoload)
+* [`addListener(PaymentIntentEventsEnum.Completed, ...)`](#addlistenerpaymentintenteventsenumcompleted)
+* [`addListener(PaymentIntentEventsEnum.Canceled, ...)`](#addlistenerpaymentintenteventsenumcanceled)
+* [`addListener(PaymentIntentEventsEnum.Failed, ...)`](#addlistenerpaymentintenteventsenumfailed)
 * [`createPaymentSheet(...)`](#createpaymentsheet)
 * [`presentPaymentSheet()`](#presentpaymentsheet)
 * [`addListener(PaymentSheetEventsEnum.Loaded, ...)`](#addlistenerpaymentsheeteventsenumloaded)
@@ -102,21 +107,6 @@ Learn at [the official @capacitor-community/stripe documentation](https://stripe
 
 This is for @capacitor/docgen only.
 Not use in product.
-
-### confirmPaymentIntent(...)
-
-```typescript
-confirmPaymentIntent(options: { clientSecret: string; paymentMethodId: string; stripeAccount?: string; }) => Promise<unknown>
-```
-
-| Param         | Type                                                                                    |
-| ------------- | --------------------------------------------------------------------------------------- |
-| **`options`** | <code>{ clientSecret: string; paymentMethodId: string; stripeAccount?: string; }</code> |
-
-**Returns:** <code>Promise&lt;unknown&gt;</code>
-
---------------------
-
 
 ### isApplePayAvailable()
 
@@ -523,6 +513,101 @@ addListener(eventName: PaymentFlowEventsEnum.Created, listenerFunc: (info: { car
 --------------------
 
 
+### confirmPaymentIntent(...)
+
+```typescript
+confirmPaymentIntent(options: { clientSecret: string; paymentMethodId: string; stripeAccount?: string; }) => Promise<{ paymentResult: PaymentIntentResultInterface; }>
+```
+
+| Param         | Type                                                                                    |
+| ------------- | --------------------------------------------------------------------------------------- |
+| **`options`** | <code>{ clientSecret: string; paymentMethodId: string; stripeAccount?: string; }</code> |
+
+**Returns:** <code>Promise&lt;{ paymentResult: <a href="#paymentintentresultinterface">PaymentIntentResultInterface</a>; }&gt;</code>
+
+--------------------
+
+
+### addListener(PaymentIntentEventsEnum.Loaded, ...)
+
+```typescript
+addListener(eventName: PaymentIntentEventsEnum.Loaded, listenerFunc: () => void) => PluginListenerHandle
+```
+
+| Param              | Type                                                                               |
+| ------------------ | ---------------------------------------------------------------------------------- |
+| **`eventName`**    | <code><a href="#paymentintenteventsenum">PaymentIntentEventsEnum.Loaded</a></code> |
+| **`listenerFunc`** | <code>() =&gt; void</code>                                                         |
+
+**Returns:** <code><a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+
+--------------------
+
+
+### addListener(PaymentIntentEventsEnum.FailedToLoad, ...)
+
+```typescript
+addListener(eventName: PaymentIntentEventsEnum.FailedToLoad, listenerFunc: (error: string) => void) => PluginListenerHandle
+```
+
+| Param              | Type                                                                                     |
+| ------------------ | ---------------------------------------------------------------------------------------- |
+| **`eventName`**    | <code><a href="#paymentintenteventsenum">PaymentIntentEventsEnum.FailedToLoad</a></code> |
+| **`listenerFunc`** | <code>(error: string) =&gt; void</code>                                                  |
+
+**Returns:** <code><a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+
+--------------------
+
+
+### addListener(PaymentIntentEventsEnum.Completed, ...)
+
+```typescript
+addListener(eventName: PaymentIntentEventsEnum.Completed, listenerFunc: () => void) => PluginListenerHandle
+```
+
+| Param              | Type                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------------- |
+| **`eventName`**    | <code><a href="#paymentintenteventsenum">PaymentIntentEventsEnum.Completed</a></code> |
+| **`listenerFunc`** | <code>() =&gt; void</code>                                                            |
+
+**Returns:** <code><a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+
+--------------------
+
+
+### addListener(PaymentIntentEventsEnum.Canceled, ...)
+
+```typescript
+addListener(eventName: PaymentIntentEventsEnum.Canceled, listenerFunc: () => void) => PluginListenerHandle
+```
+
+| Param              | Type                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------ |
+| **`eventName`**    | <code><a href="#paymentintenteventsenum">PaymentIntentEventsEnum.Canceled</a></code> |
+| **`listenerFunc`** | <code>() =&gt; void</code>                                                           |
+
+**Returns:** <code><a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+
+--------------------
+
+
+### addListener(PaymentIntentEventsEnum.Failed, ...)
+
+```typescript
+addListener(eventName: PaymentIntentEventsEnum.Failed, listenerFunc: (error: string) => void) => PluginListenerHandle
+```
+
+| Param              | Type                                                                               |
+| ------------------ | ---------------------------------------------------------------------------------- |
+| **`eventName`**    | <code><a href="#paymentintenteventsenum">PaymentIntentEventsEnum.Failed</a></code> |
+| **`listenerFunc`** | <code>(error: string) =&gt; void</code>                                            |
+
+**Returns:** <code><a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+
+--------------------
+
+
 ### createPaymentSheet(...)
 
 ```typescript
@@ -805,6 +890,11 @@ iOS Only
 <code><a href="#paymentfloweventsenum">PaymentFlowEventsEnum.Completed</a> | <a href="#paymentfloweventsenum">PaymentFlowEventsEnum.Canceled</a> | <a href="#paymentfloweventsenum">PaymentFlowEventsEnum.Failed</a></code>
 
 
+#### PaymentIntentResultInterface
+
+<code><a href="#paymentintenteventsenum">PaymentIntentEventsEnum.Completed</a> | <a href="#paymentintenteventsenum">PaymentIntentEventsEnum.Canceled</a> | <a href="#paymentintenteventsenum">PaymentIntentEventsEnum.Failed</a> | <a href="#paymentintenteventsenum">PaymentIntentEventsEnum.FailedToLoad</a></code>
+
+
 #### PaymentSheetResultInterface
 
 <code><a href="#paymentsheeteventsenum">PaymentSheetEventsEnum.Completed</a> | <a href="#paymentsheeteventsenum">PaymentSheetEventsEnum.Canceled</a> | <a href="#paymentsheeteventsenum">PaymentSheetEventsEnum.Failed</a></code>
@@ -848,6 +938,17 @@ iOS Only
 | **`Completed`**    | <code>"paymentFlowCompleted"</code>    |
 | **`Canceled`**     | <code>"paymentFlowCanceled"</code>     |
 | **`Failed`**       | <code>"paymentFlowFailed"</code>       |
+
+
+#### PaymentIntentEventsEnum
+
+| Members            | Value                                    |
+| ------------------ | ---------------------------------------- |
+| **`Loaded`**       | <code>"paymentIntentLoaded"</code>       |
+| **`FailedToLoad`** | <code>"paymentIntentFailedToLoad"</code> |
+| **`Completed`**    | <code>"paymentIntentCompleted"</code>    |
+| **`Canceled`**     | <code>"paymentIntentCanceled"</code>     |
+| **`Failed`**       | <code>"paymentIntentFailed"</code>       |
 
 
 #### PaymentSheetEventsEnum
