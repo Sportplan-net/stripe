@@ -3,6 +3,8 @@ package com.getcapacitor.community.stripe;
 import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.content.pm.ApplicationInfo;
+
 import androidx.activity.ComponentActivity;
 
 import com.getcapacitor.Bridge;
@@ -16,6 +18,7 @@ import com.getcapacitor.community.stripe.helper.MetaData;
 import com.getcapacitor.community.stripe.identityverification.IdentityVerificationSheetExecutor;
 import com.getcapacitor.community.stripe.paymentIntent.PaymentIntentExecutor;
 import com.getcapacitor.community.stripe.paymentintent.PaymentIntentExecutor;
+import com.getcapacitor.community.stripe.paymentintent.CheckoutFragment;
 import com.getcapacitor.community.stripe.paymentflow.PaymentFlowExecutor;
 import com.getcapacitor.community.stripe.paymentsheet.PaymentSheetExecutor;
 import com.stripe.android.PaymentConfiguration;
@@ -33,9 +36,9 @@ import java.util.Objects;
 public class StripePlugin extends Plugin {
 
     private String publishableKey;
+    private String lastStripeAccountId = "";
     private String paymentSheetCallbackId;
     private String paymentFlowCallbackId;
-    private String paymentIntentCallbackId;
     private String googlePayCallbackId;
 
     private String identityVerificationCallbackId;
@@ -57,20 +60,12 @@ public class StripePlugin extends Plugin {
         getLogTag()
     );
 
-    private final PaymentIntentExecutor paymentIntentExecutor = new PaymentIntentExecutor(
-            this::getContext,
-            this::getActivity,
-            this::notifyListeners,
-            getLogTag()
-    );
     /**
      * Gets a plugin log tag with the child's class name as subTag.
      */
     /*private String getComponentActivity() {
         return this.bridge.get
     }*/
-
-
 
     private final GooglePayExecutor googlePayExecutor = new GooglePayExecutor(
         this::getContext,
@@ -85,6 +80,22 @@ public class StripePlugin extends Plugin {
         this::notifyListeners,
         getLogTag()
     );
+    /**
+     * Update the StripeAccountId on PaymentConfiguration
+     * @param sentStripeAccountId
+     * @param force
+     * @return boolean if updated
+     */
+    private boolean updatePaymentConfiguration(final String sentStripeAccountId, final boolean force) {
+        final boolean update = force || sentStripeAccountId != lastStripeAccountId;
+        // Could do publishableKey too but seems not needed, would be odd to change....
+        if (update) {
+            lastStripeAccountId = sentStripeAccountId;
+            Logger.info("updatePaymentConfiguration with new stripeAccountId.");
+            PaymentConfiguration.init(getContext(), publishableKey, sentStripeAccountId);
+        }
+        return update;
+    }
 
     @Override
     public void load() {
@@ -183,19 +194,18 @@ public class StripePlugin extends Plugin {
     @PluginMethod
     public void initialize(final PluginCall call) {
         try {
-            publishableKey = call.getString("publishableKey");
+            final String stripeAccountId = call.getString("stripeAccount", null);
+            if (publishableKey == null) {
+                publishableKey = call.getString("publishableKey");
 
                 if (publishableKey == null || publishableKey.equals("")) {
                     call.reject("you must provide a valid key");
                     return;
                 }
-
-                String stripeAccountId = call.getString("stripeAccount", null);
-
                 PaymentConfiguration.init(getContext(), publishableKey, stripeAccountId);
                 Stripe.setAppInfo(AppInfo.create(APP_INFO_NAME));
-            } else if (publishableKey != null && call.getString("stripeAccount", null) != null){
-                // PaymentConfiguration.init(getContext(), publishableKey, stripeAccountId);
+            } else if (this.updatePaymentConfiguration(stripeAccountId, false)) {
+                Logger.info("PaymentConfiguration.init was re initialised");
             } else {
                 Logger.info("PaymentConfiguration.init was run at load");
             }
@@ -212,15 +222,13 @@ public class StripePlugin extends Plugin {
 
     @PluginMethod
     public void confirmPaymentIntent(final PluginCall call) {
-        paymentIntentCallbackId = call.getCallbackId();
-        bridge.saveCall(call);
 
-        String stripeAccountId = call.getString("stripeAccount", null);
-
-        if (publishableKey != null && stripeAccountId != null) {
-            PaymentConfiguration.init(getContext(), publishableKey, stripeAccountId);
-        }
-        paymentIntentExecutor.confirmPaymentIntent(call);
+        var currentFragment = new CheckoutFragment().getInstance(this.publishableKey, call);
+        currentFragment.setCall(call);
+        getActivity().getSupportFragmentManager()
+            .beginTransaction()
+            .add(R.id.webview, currentFragment, "CheckoutActivity")
+                .commit();
     }
 
     @PluginMethod

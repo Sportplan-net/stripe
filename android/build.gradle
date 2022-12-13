@@ -66,7 +66,7 @@ dependencies {
     implementation 'com.stripe:identity:20.19.5'
     implementation 'com.google.android.gms:play-services-wallet:19.1.0'
     implementation 'com.google.code.gson:gson:2.8.9'
-
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
     implementation "androidx.core:core-ktx:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
