@@ -1,5 +1,7 @@
 # node files
-dist
+
+# rm so can install direct from github...
+# dist 
 node_modules
 
 # iOS files
