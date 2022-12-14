@@ -1,0 +1,2117 @@
+{
+  "api": {
+    "name": "DocGenType",
+    "slug": "docgentype",
+    "docs": "This is for @capacitor/docgen only.\nNot use in product.",
+    "tags": [],
+    "methods": [
+      {
+        "name": "isApplePayAvailable",
+        "signature": "() => Promise<void>",
+        "parameters": [],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "isapplepayavailable"
+      },
+      {
+        "name": "createApplePay",
+        "signature": "(options: CreateApplePayOption) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "CreateApplePayOption"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "CreateApplePayOption"
+        ],
+        "slug": "createapplepay"
+      },
+      {
+        "name": "presentApplePay",
+        "signature": "() => Promise<{ paymentResult: ApplePayResultInterface; }>",
+        "parameters": [],
+        "returns": "Promise<{ paymentResult: ApplePayResultInterface; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "ApplePayResultInterface"
+        ],
+        "slug": "presentapplepay"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: ApplePayEventsEnum.Loaded, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "ApplePayEventsEnum.Loaded"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "ApplePayEventsEnum"
+        ],
+        "slug": "addlistenerapplepayeventsenumloaded"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: ApplePayEventsEnum.FailedToLoad, listenerFunc: (error: string) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "ApplePayEventsEnum.FailedToLoad"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(error: string) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "ApplePayEventsEnum"
+        ],
+        "slug": "addlistenerapplepayeventsenumfailedtoload"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: ApplePayEventsEnum.Completed, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "ApplePayEventsEnum.Completed"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "ApplePayEventsEnum"
+        ],
+        "slug": "addlistenerapplepayeventsenumcompleted"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: ApplePayEventsEnum.Canceled, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "ApplePayEventsEnum.Canceled"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "ApplePayEventsEnum"
+        ],
+        "slug": "addlistenerapplepayeventsenumcanceled"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: ApplePayEventsEnum.Failed, listenerFunc: (error: string) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "ApplePayEventsEnum.Failed"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(error: string) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "ApplePayEventsEnum"
+        ],
+        "slug": "addlistenerapplepayeventsenumfailed"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: ApplePayEventsEnum.DidSelectShippingContact, listenerFunc: (data: DidSelectShippingContact) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "ApplePayEventsEnum.DidSelectShippingContact"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(data: DidSelectShippingContact) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "ApplePayEventsEnum",
+          "DidSelectShippingContact"
+        ],
+        "slug": "addlistenerapplepayeventsenumdidselectshippingcontact"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: ApplePayEventsEnum.DidCreatePaymentMethod, listenerFunc: (data: DidSelectShippingContact) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "ApplePayEventsEnum.DidCreatePaymentMethod"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(data: DidSelectShippingContact) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "ApplePayEventsEnum",
+          "DidSelectShippingContact"
+        ],
+        "slug": "addlistenerapplepayeventsenumdidcreatepaymentmethod"
+      },
+      {
+        "name": "isGooglePayAvailable",
+        "signature": "() => Promise<void>",
+        "parameters": [],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "isgooglepayavailable"
+      },
+      {
+        "name": "createGooglePay",
+        "signature": "(options: CreateGooglePayOption) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "CreateGooglePayOption"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "CreateGooglePayOption"
+        ],
+        "slug": "creategooglepay"
+      },
+      {
+        "name": "presentGooglePay",
+        "signature": "() => Promise<{ paymentResult: GooglePayResultInterface; }>",
+        "parameters": [],
+        "returns": "Promise<{ paymentResult: GooglePayResultInterface; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "GooglePayResultInterface"
+        ],
+        "slug": "presentgooglepay"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: GooglePayEventsEnum.Loaded, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "GooglePayEventsEnum.Loaded"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "GooglePayEventsEnum"
+        ],
+        "slug": "addlistenergooglepayeventsenumloaded"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: GooglePayEventsEnum.FailedToLoad, listenerFunc: (error: string) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "GooglePayEventsEnum.FailedToLoad"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(error: string) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "GooglePayEventsEnum"
+        ],
+        "slug": "addlistenergooglepayeventsenumfailedtoload"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: GooglePayEventsEnum.Completed, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "GooglePayEventsEnum.Completed"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "GooglePayEventsEnum"
+        ],
+        "slug": "addlistenergooglepayeventsenumcompleted"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: GooglePayEventsEnum.Canceled, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "GooglePayEventsEnum.Canceled"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "GooglePayEventsEnum"
+        ],
+        "slug": "addlistenergooglepayeventsenumcanceled"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: GooglePayEventsEnum.Failed, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "GooglePayEventsEnum.Failed"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "GooglePayEventsEnum"
+        ],
+        "slug": "addlistenergooglepayeventsenumfailed"
+      },
+      {
+        "name": "createPaymentFlow",
+        "signature": "(options: CreatePaymentFlowOption) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "CreatePaymentFlowOption"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "CreatePaymentFlowOption"
+        ],
+        "slug": "createpaymentflow"
+      },
+      {
+        "name": "presentPaymentFlow",
+        "signature": "() => Promise<{ cardNumber: string; }>",
+        "parameters": [],
+        "returns": "Promise<{ cardNumber: string; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "presentpaymentflow"
+      },
+      {
+        "name": "confirmPaymentFlow",
+        "signature": "() => Promise<{ paymentResult: PaymentFlowResultInterface; }>",
+        "parameters": [],
+        "returns": "Promise<{ paymentResult: PaymentFlowResultInterface; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PaymentFlowResultInterface"
+        ],
+        "slug": "confirmpaymentflow"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentFlowEventsEnum.Loaded, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentFlowEventsEnum.Loaded"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentFlowEventsEnum"
+        ],
+        "slug": "addlistenerpaymentfloweventsenumloaded"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentFlowEventsEnum.FailedToLoad, listenerFunc: (error: string) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentFlowEventsEnum.FailedToLoad"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(error: string) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentFlowEventsEnum"
+        ],
+        "slug": "addlistenerpaymentfloweventsenumfailedtoload"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentFlowEventsEnum.Opened, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentFlowEventsEnum.Opened"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentFlowEventsEnum"
+        ],
+        "slug": "addlistenerpaymentfloweventsenumopened"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentFlowEventsEnum.Completed, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentFlowEventsEnum.Completed"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentFlowEventsEnum"
+        ],
+        "slug": "addlistenerpaymentfloweventsenumcompleted"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentFlowEventsEnum.Canceled, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentFlowEventsEnum.Canceled"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentFlowEventsEnum"
+        ],
+        "slug": "addlistenerpaymentfloweventsenumcanceled"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentFlowEventsEnum.Failed, listenerFunc: (error: string) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentFlowEventsEnum.Failed"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(error: string) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentFlowEventsEnum"
+        ],
+        "slug": "addlistenerpaymentfloweventsenumfailed"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentFlowEventsEnum.Created, listenerFunc: (info: { cardNumber: string; }) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentFlowEventsEnum.Created"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(info: { cardNumber: string; }) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentFlowEventsEnum"
+        ],
+        "slug": "addlistenerpaymentfloweventsenumcreated"
+      },
+      {
+        "name": "confirmPaymentIntent",
+        "signature": "(options: { clientSecret: string; paymentMethodId: string; stripeAccount?: string; }) => Promise<{ paymentResult: PaymentIntentResultInterface; }>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "{ clientSecret: string; paymentMethodId: string; stripeAccount?: string | undefined; }"
+          }
+        ],
+        "returns": "Promise<{ paymentResult: PaymentIntentResultInterface; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PaymentIntentResultInterface"
+        ],
+        "slug": "confirmpaymentintent"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentIntentEventsEnum.Loaded, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentIntentEventsEnum.Loaded"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentIntentEventsEnum"
+        ],
+        "slug": "addlistenerpaymentintenteventsenumloaded"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentIntentEventsEnum.FailedToLoad, listenerFunc: (error: string) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentIntentEventsEnum.FailedToLoad"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(error: string) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentIntentEventsEnum"
+        ],
+        "slug": "addlistenerpaymentintenteventsenumfailedtoload"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentIntentEventsEnum.Completed, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentIntentEventsEnum.Completed"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentIntentEventsEnum"
+        ],
+        "slug": "addlistenerpaymentintenteventsenumcompleted"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentIntentEventsEnum.Canceled, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentIntentEventsEnum.Canceled"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentIntentEventsEnum"
+        ],
+        "slug": "addlistenerpaymentintenteventsenumcanceled"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentIntentEventsEnum.Failed, listenerFunc: (error: string) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentIntentEventsEnum.Failed"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(error: string) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentIntentEventsEnum"
+        ],
+        "slug": "addlistenerpaymentintenteventsenumfailed"
+      },
+      {
+        "name": "createPaymentSheet",
+        "signature": "(options: CreatePaymentSheetOption) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "CreatePaymentSheetOption"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "CreatePaymentSheetOption"
+        ],
+        "slug": "createpaymentsheet"
+      },
+      {
+        "name": "presentPaymentSheet",
+        "signature": "() => Promise<{ paymentResult: PaymentSheetResultInterface; }>",
+        "parameters": [],
+        "returns": "Promise<{ paymentResult: PaymentSheetResultInterface; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PaymentSheetResultInterface"
+        ],
+        "slug": "presentpaymentsheet"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentSheetEventsEnum.Loaded, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentSheetEventsEnum.Loaded"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentSheetEventsEnum"
+        ],
+        "slug": "addlistenerpaymentsheeteventsenumloaded"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentSheetEventsEnum.FailedToLoad, listenerFunc: (error: string) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentSheetEventsEnum.FailedToLoad"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(error: string) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentSheetEventsEnum"
+        ],
+        "slug": "addlistenerpaymentsheeteventsenumfailedtoload"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentSheetEventsEnum.Completed, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentSheetEventsEnum.Completed"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentSheetEventsEnum"
+        ],
+        "slug": "addlistenerpaymentsheeteventsenumcompleted"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentSheetEventsEnum.Canceled, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentSheetEventsEnum.Canceled"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentSheetEventsEnum"
+        ],
+        "slug": "addlistenerpaymentsheeteventsenumcanceled"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: PaymentSheetEventsEnum.Failed, listenerFunc: (error: string) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "PaymentSheetEventsEnum.Failed"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(error: string) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "PaymentSheetEventsEnum"
+        ],
+        "slug": "addlistenerpaymentsheeteventsenumfailed"
+      },
+      {
+        "name": "initialize",
+        "signature": "(opts: StripeInitializationOptions) => Promise<void>",
+        "parameters": [
+          {
+            "name": "opts",
+            "docs": "",
+            "type": "StripeInitializationOptions"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "StripeInitializationOptions"
+        ],
+        "slug": "initialize"
+      },
+      {
+        "name": "handleURLCallback",
+        "signature": "(opts: StripeURLHandlingOptions) => Promise<void>",
+        "parameters": [
+          {
+            "name": "opts",
+            "docs": "",
+            "type": "StripeURLHandlingOptions"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "url",
+            "text": "https://stripe.com/docs/payments/3d-secure#return-url"
+          }
+        ],
+        "docs": "iOS Only",
+        "complexTypes": [
+          "StripeURLHandlingOptions"
+        ],
+        "slug": "handleurlcallback"
+      }
+    ],
+    "properties": [
+      {
+        "name": "stripe",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "StripePlugin"
+        ],
+        "type": "StripePlugin"
+      },
+      {
+        "name": "context",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "CapacitorStripeContext"
+        ],
+        "type": "CapacitorStripeContext"
+      }
+    ],
+    "importObject": [
+      "ApplePayDefinitions",
+      "GooglePayDefinitions",
+      "PaymentFlowDefinitions",
+      "PaymentIntentDefinitions",
+      "PaymentSheetDefinitions",
+      "StripeDefinitions",
+      "StripePlugin",
+      "StripeInitializationOptions",
+      "StripeURLHandlingOptions",
+      "CapacitorStripeContext"
+    ]
+  },
+  "interfaces": [
+    {
+      "name": "CreateApplePayOption",
+      "slug": "createapplepayoption",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "paymentIntentClientSecret",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "paymentSummaryItems",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "{ label: string; amount: number; }[]"
+        },
+        {
+          "name": "merchantIdentifier",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "countryCode",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "currency",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "requiredShippingContactFields",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "('postalAddress' | 'phoneNumber' | 'emailAddress' | 'name')[] | undefined"
+        }
+      ],
+      "importObject": [
+        "CreatePaymentSheetOption",
+        "CreatePaymentFlowOption",
+        "BasePaymentOption",
+        "CreateGooglePayOption",
+        "DidSelectShippingContact",
+        "ShippingContact"
+      ]
+    },
+    {
+      "name": "PluginListenerHandle",
+      "slug": "pluginlistenerhandle",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "remove",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "() => Promise<void>"
+        }
+      ],
+      "importObject": [
+        "PluginRegistry",
+        "CapacitorException",
+        "CapacitorGlobal",
+        "RegisterPlugin",
+        "PluginImplementations",
+        "Plugin",
+        "PermissionState",
+        "PluginResultData",
+        "PluginResultError",
+        "PluginCallback"
+      ]
+    },
+    {
+      "name": "DidSelectShippingContact",
+      "slug": "didselectshippingcontact",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "contact",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [
+            "ShippingContact"
+          ],
+          "type": "ShippingContact"
+        }
+      ],
+      "importObject": [
+        "CreatePaymentSheetOption",
+        "CreatePaymentFlowOption",
+        "BasePaymentOption",
+        "CreateApplePayOption",
+        "CreateGooglePayOption",
+        "ShippingContact"
+      ]
+    },
+    {
+      "name": "ShippingContact",
+      "slug": "shippingcontact",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "givenName",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "familyName",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "middleName",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "namePrefix",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "nameSuffix",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "nameFormatted",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "phoneNumber",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "nickname",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "street",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "city",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "state",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "postalCode",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "country",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "isoCountryCode",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "subAdministrativeArea",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "subLocality",
+          "tags": [],
+          "docs": "Apple Pay only",
+          "complexTypes": [],
+          "type": "string | undefined"
+        }
+      ],
+      "importObject": [
+        "CreatePaymentSheetOption",
+        "CreatePaymentFlowOption",
+        "BasePaymentOption",
+        "CreateApplePayOption",
+        "CreateGooglePayOption",
+        "DidSelectShippingContact"
+      ]
+    },
+    {
+      "name": "CreateGooglePayOption",
+      "slug": "creategooglepayoption",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "paymentIntentClientSecret",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "paymentSummaryItems",
+          "tags": [],
+          "docs": "Web only\nneed @stripe-elements/stripe-elements > 1.1.0",
+          "complexTypes": [],
+          "type": "{ label: string; amount: number; }[] | undefined"
+        },
+        {
+          "name": "merchantIdentifier",
+          "tags": [],
+          "docs": "Web only\nneed @stripe-elements/stripe-elements > 1.1.0",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "countryCode",
+          "tags": [],
+          "docs": "Web only\nneed @stripe-elements/stripe-elements > 1.1.0",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "currency",
+          "tags": [],
+          "docs": "Web only\nneed @stripe-elements/stripe-elements > 1.1.0",
+          "complexTypes": [],
+          "type": "string | undefined"
+        }
+      ],
+      "importObject": [
+        "CreatePaymentSheetOption",
+        "CreatePaymentFlowOption",
+        "BasePaymentOption",
+        "CreateApplePayOption",
+        "DidSelectShippingContact",
+        "ShippingContact"
+      ]
+    },
+    {
+      "name": "CreatePaymentFlowOption",
+      "slug": "createpaymentflowoption",
+      "docs": "",
+      "tags": [
+        {
+          "text": "BasePaymentOption",
+          "name": "extends"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "paymentIntentClientSecret",
+          "tags": [],
+          "docs": "Any documentation call 'paymentIntent'\nSet paymentIntentClientSecret or setupIntentClientSecret",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "setupIntentClientSecret",
+          "tags": [],
+          "docs": "Any documentation call 'paymentIntent'\nSet paymentIntentClientSecret or setupIntentClientSecret",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "customerEphemeralKeySecret",
+          "tags": [],
+          "docs": "Any documentation call 'ephemeralKey'",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "customerId",
+          "tags": [],
+          "docs": "Any documentation call 'customer'",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "enableApplePay",
+          "tags": [
+            {
+              "text": "false",
+              "name": "default"
+            },
+            {
+              "text": "https://stripe.com/docs/payments/accept-a-payment?platform=ios&ui=payment-sheet",
+              "name": "url"
+            }
+          ],
+          "docs": "If you set payment method ApplePay, this set true",
+          "complexTypes": [],
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "applePayMerchantId",
+          "tags": [],
+          "docs": "If set enableApplePay false, Plugin ignore here.",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "enableGooglePay",
+          "tags": [
+            {
+              "text": "false",
+              "name": "default"
+            },
+            {
+              "text": "https://stripe.com/docs/payments/accept-a-payment?platform=android&ui=payment-sheet#google-pay",
+              "name": "url"
+            }
+          ],
+          "docs": "If you set payment method GooglePay, this set true",
+          "complexTypes": [],
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "GooglePayIsTesting",
+          "tags": [
+            {
+              "text": "false,",
+              "name": "default"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "countryCode",
+          "tags": [
+            {
+              "text": "\"US\"",
+              "name": "default"
+            }
+          ],
+          "docs": "use ApplePay and GooglePay.\nIf set enableApplePay and enableGooglePay false, Plugin ignore here.",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "merchantDisplayName",
+          "tags": [
+            {
+              "text": "https://stripe.com/docs/payments/accept-a-payment?platform=ios&ui=payment-sheet",
+              "name": "url"
+            },
+            {
+              "text": "\"App Name\"",
+              "name": "default"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "returnURL",
+          "tags": [
+            {
+              "text": "https://stripe.com/docs/payments/accept-a-payment?platform=ios&ui=payment-sheet#ios-set-up-return-url",
+              "name": "url"
+            },
+            {
+              "text": "\"\"",
+              "name": "default"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "style",
+          "tags": [
+            {
+              "text": "https://stripe.com/docs/payments/accept-a-payment?platform=ios&ui=payment-sheet#userinterfacestyle",
+              "name": "url"
+            },
+            {
+              "text": "undefined",
+              "name": "default"
+            }
+          ],
+          "docs": "iOS Only",
+          "complexTypes": [],
+          "type": "'alwaysLight' | 'alwaysDark' | undefined"
+        },
+        {
+          "name": "withZipCode",
+          "tags": [
+            {
+              "text": "true",
+              "name": "default"
+            }
+          ],
+          "docs": "Platform: Web only\nShow ZIP code field.",
+          "complexTypes": [],
+          "type": "boolean | undefined"
+        }
+      ],
+      "importObject": [
+        "CreatePaymentSheetOption",
+        "BasePaymentOption",
+        "CreateApplePayOption",
+        "CreateGooglePayOption",
+        "DidSelectShippingContact",
+        "ShippingContact"
+      ]
+    },
+    {
+      "name": "CreatePaymentSheetOption",
+      "slug": "createpaymentsheetoption",
+      "docs": "",
+      "tags": [
+        {
+          "text": "BasePaymentOption",
+          "name": "extends"
+        }
+      ],
+      "methods": [],
+      "properties": [
+        {
+          "name": "paymentIntentClientSecret",
+          "tags": [],
+          "docs": "Any documentation call 'paymentIntent'\nSet paymentIntentClientSecret or setupIntentClientSecret",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "setupIntentClientSecret",
+          "tags": [],
+          "docs": "Any documentation call 'paymentIntent'\nSet paymentIntentClientSecret or setupIntentClientSecret",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "customerEphemeralKeySecret",
+          "tags": [],
+          "docs": "Any documentation call 'ephemeralKey'",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "customerId",
+          "tags": [],
+          "docs": "Any documentation call 'customer'",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "enableApplePay",
+          "tags": [
+            {
+              "text": "false",
+              "name": "default"
+            },
+            {
+              "text": "https://stripe.com/docs/payments/accept-a-payment?platform=ios&ui=payment-sheet",
+              "name": "url"
+            }
+          ],
+          "docs": "If you set payment method ApplePay, this set true",
+          "complexTypes": [],
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "applePayMerchantId",
+          "tags": [],
+          "docs": "If set enableApplePay false, Plugin ignore here.",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "enableGooglePay",
+          "tags": [
+            {
+              "text": "false",
+              "name": "default"
+            },
+            {
+              "text": "https://stripe.com/docs/payments/accept-a-payment?platform=android&ui=payment-sheet#google-pay",
+              "name": "url"
+            }
+          ],
+          "docs": "If you set payment method GooglePay, this set true",
+          "complexTypes": [],
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "GooglePayIsTesting",
+          "tags": [
+            {
+              "text": "false,",
+              "name": "default"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "countryCode",
+          "tags": [
+            {
+              "text": "\"US\"",
+              "name": "default"
+            }
+          ],
+          "docs": "use ApplePay and GooglePay.\nIf set enableApplePay and enableGooglePay false, Plugin ignore here.",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "merchantDisplayName",
+          "tags": [
+            {
+              "text": "https://stripe.com/docs/payments/accept-a-payment?platform=ios&ui=payment-sheet",
+              "name": "url"
+            },
+            {
+              "text": "\"App Name\"",
+              "name": "default"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "returnURL",
+          "tags": [
+            {
+              "text": "https://stripe.com/docs/payments/accept-a-payment?platform=ios&ui=payment-sheet#ios-set-up-return-url",
+              "name": "url"
+            },
+            {
+              "text": "\"\"",
+              "name": "default"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "style",
+          "tags": [
+            {
+              "text": "https://stripe.com/docs/payments/accept-a-payment?platform=ios&ui=payment-sheet#userinterfacestyle",
+              "name": "url"
+            },
+            {
+              "text": "undefined",
+              "name": "default"
+            }
+          ],
+          "docs": "iOS Only",
+          "complexTypes": [],
+          "type": "'alwaysLight' | 'alwaysDark' | undefined"
+        },
+        {
+          "name": "withZipCode",
+          "tags": [
+            {
+              "text": "true",
+              "name": "default"
+            }
+          ],
+          "docs": "Platform: Web only\nShow ZIP code field.",
+          "complexTypes": [],
+          "type": "boolean | undefined"
+        }
+      ],
+      "importObject": [
+        "CreatePaymentFlowOption",
+        "BasePaymentOption",
+        "CreateApplePayOption",
+        "CreateGooglePayOption",
+        "DidSelectShippingContact",
+        "ShippingContact"
+      ]
+    },
+    {
+      "name": "StripeInitializationOptions",
+      "slug": "stripeinitializationoptions",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "publishableKey",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "stripeAccount",
+          "tags": [
+            {
+              "text": "https://stripe.com/docs/connect/authentication",
+              "name": "info"
+            }
+          ],
+          "docs": "Optional. Making API calls for connected accounts",
+          "complexTypes": [],
+          "type": "string | undefined"
+        }
+      ],
+      "importObject": [
+        "ApplePayDefinitions",
+        "GooglePayDefinitions",
+        "PaymentFlowDefinitions",
+        "PaymentIntentDefinitions",
+        "PaymentSheetDefinitions",
+        "StripeDefinitions",
+        "StripePlugin",
+        "StripeURLHandlingOptions",
+        "CapacitorStripeContext",
+        "DocGenType"
+      ]
+    },
+    {
+      "name": "StripeURLHandlingOptions",
+      "slug": "stripeurlhandlingoptions",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "url",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ],
+      "importObject": [
+        "ApplePayDefinitions",
+        "GooglePayDefinitions",
+        "PaymentFlowDefinitions",
+        "PaymentIntentDefinitions",
+        "PaymentSheetDefinitions",
+        "StripeDefinitions",
+        "StripePlugin",
+        "StripeInitializationOptions",
+        "CapacitorStripeContext",
+        "DocGenType"
+      ]
+    },
+    {
+      "name": "StripePlugin",
+      "slug": "stripeplugin",
+      "docs": "",
+      "tags": [],
+      "methods": [
+        {
+          "name": "initialize",
+          "signature": "(opts: StripeInitializationOptions) => Promise<void>",
+          "parameters": [
+            {
+              "name": "opts",
+              "docs": "",
+              "type": "StripeInitializationOptions"
+            }
+          ],
+          "returns": "Promise<void>",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [
+            "StripeInitializationOptions"
+          ],
+          "slug": "initialize"
+        },
+        {
+          "name": "handleURLCallback",
+          "signature": "(opts: StripeURLHandlingOptions) => Promise<void>",
+          "parameters": [
+            {
+              "name": "opts",
+              "docs": "",
+              "type": "StripeURLHandlingOptions"
+            }
+          ],
+          "returns": "Promise<void>",
+          "tags": [
+            {
+              "name": "url",
+              "text": "https://stripe.com/docs/payments/3d-secure#return-url"
+            }
+          ],
+          "docs": "iOS Only",
+          "complexTypes": [
+            "StripeURLHandlingOptions"
+          ],
+          "slug": "handleurlcallback"
+        }
+      ],
+      "properties": [],
+      "importObject": [
+        "ApplePayDefinitions",
+        "GooglePayDefinitions",
+        "PaymentFlowDefinitions",
+        "PaymentIntentDefinitions",
+        "PaymentSheetDefinitions",
+        "StripeDefinitions",
+        "StripeInitializationOptions",
+        "StripeURLHandlingOptions",
+        "CapacitorStripeContext",
+        "DocGenType"
+      ]
+    },
+    {
+      "name": "CapacitorStripeContext",
+      "slug": "capacitorstripecontext",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "stripe",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [
+            "StripePlugin"
+          ],
+          "type": "StripePlugin"
+        },
+        {
+          "name": "isApplePayAvailable",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "boolean"
+        },
+        {
+          "name": "isGooglePayAvailable",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "boolean"
+        }
+      ],
+      "importObject": [
+        "ApplePayDefinitions",
+        "GooglePayDefinitions",
+        "PaymentFlowDefinitions",
+        "PaymentIntentDefinitions",
+        "PaymentSheetDefinitions",
+        "StripeDefinitions",
+        "StripePlugin",
+        "StripeInitializationOptions",
+        "StripeURLHandlingOptions",
+        "DocGenType"
+      ]
+    }
+  ],
+  "enums": [
+    {
+      "name": "ApplePayEventsEnum",
+      "slug": "applepayeventsenum",
+      "members": [
+        {
+          "name": "Loaded",
+          "value": "\"applePayLoaded\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "FailedToLoad",
+          "value": "\"applePayFailedToLoad\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Completed",
+          "value": "\"applePayCompleted\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Canceled",
+          "value": "\"applePayCanceled\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Failed",
+          "value": "\"applePayFailed\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "DidSelectShippingContact",
+          "value": "\"applePayDidSelectShippingContact\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "DidCreatePaymentMethod",
+          "value": "\"applePayDidCreatePaymentMethod\"",
+          "tags": [],
+          "docs": ""
+        }
+      ]
+    },
+    {
+      "name": "GooglePayEventsEnum",
+      "slug": "googlepayeventsenum",
+      "members": [
+        {
+          "name": "Loaded",
+          "value": "\"googlePayLoaded\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "FailedToLoad",
+          "value": "\"googlePayFailedToLoad\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Completed",
+          "value": "\"googlePayCompleted\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Canceled",
+          "value": "\"googlePayCanceled\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Failed",
+          "value": "\"googlePayFailed\"",
+          "tags": [],
+          "docs": ""
+        }
+      ]
+    },
+    {
+      "name": "PaymentFlowEventsEnum",
+      "slug": "paymentfloweventsenum",
+      "members": [
+        {
+          "name": "Loaded",
+          "value": "\"paymentFlowLoaded\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "FailedToLoad",
+          "value": "\"paymentFlowFailedToLoad\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Opened",
+          "value": "\"paymentFlowOpened\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Created",
+          "value": "\"paymentFlowCreated\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Completed",
+          "value": "\"paymentFlowCompleted\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Canceled",
+          "value": "\"paymentFlowCanceled\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Failed",
+          "value": "\"paymentFlowFailed\"",
+          "tags": [],
+          "docs": ""
+        }
+      ]
+    },
+    {
+      "name": "PaymentIntentEventsEnum",
+      "slug": "paymentintenteventsenum",
+      "members": [
+        {
+          "name": "Loaded",
+          "value": "\"paymentIntentLoaded\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "FailedToLoad",
+          "value": "\"paymentIntentFailedToLoad\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Completed",
+          "value": "\"paymentIntentCompleted\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Canceled",
+          "value": "\"paymentIntentCanceled\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Failed",
+          "value": "\"paymentIntentFailed\"",
+          "tags": [],
+          "docs": ""
+        }
+      ]
+    },
+    {
+      "name": "PaymentSheetEventsEnum",
+      "slug": "paymentsheeteventsenum",
+      "members": [
+        {
+          "name": "Loaded",
+          "value": "\"paymentSheetLoaded\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "FailedToLoad",
+          "value": "\"paymentSheetFailedToLoad\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Completed",
+          "value": "\"paymentSheetCompleted\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Canceled",
+          "value": "\"paymentSheetCanceled\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Failed",
+          "value": "\"paymentSheetFailed\"",
+          "tags": [],
+          "docs": ""
+        }
+      ]
+    }
+  ],
+  "typeAliases": [
+    {
+      "name": "ApplePayResultInterface",
+      "slug": "applepayresultinterface",
+      "docs": "",
+      "types": [
+        {
+          "text": "ApplePayEventsEnum.Completed",
+          "complexTypes": [
+            "ApplePayEventsEnum"
+          ]
+        },
+        {
+          "text": "ApplePayEventsEnum.Canceled",
+          "complexTypes": [
+            "ApplePayEventsEnum"
+          ]
+        },
+        {
+          "text": "ApplePayEventsEnum.Failed",
+          "complexTypes": [
+            "ApplePayEventsEnum"
+          ]
+        },
+        {
+          "text": "ApplePayEventsEnum.DidSelectShippingContact",
+          "complexTypes": [
+            "ApplePayEventsEnum"
+          ]
+        },
+        {
+          "text": "ApplePayEventsEnum.DidCreatePaymentMethod",
+          "complexTypes": [
+            "ApplePayEventsEnum"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "GooglePayResultInterface",
+      "slug": "googlepayresultinterface",
+      "docs": "",
+      "types": [
+        {
+          "text": "GooglePayEventsEnum.Completed",
+          "complexTypes": [
+            "GooglePayEventsEnum"
+          ]
+        },
+        {
+          "text": "GooglePayEventsEnum.Canceled",
+          "complexTypes": [
+            "GooglePayEventsEnum"
+          ]
+        },
+        {
+          "text": "GooglePayEventsEnum.Failed",
+          "complexTypes": [
+            "GooglePayEventsEnum"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PaymentFlowResultInterface",
+      "slug": "paymentflowresultinterface",
+      "docs": "",
+      "types": [
+        {
+          "text": "PaymentFlowEventsEnum.Completed",
+          "complexTypes": [
+            "PaymentFlowEventsEnum"
+          ]
+        },
+        {
+          "text": "PaymentFlowEventsEnum.Canceled",
+          "complexTypes": [
+            "PaymentFlowEventsEnum"
+          ]
+        },
+        {
+          "text": "PaymentFlowEventsEnum.Failed",
+          "complexTypes": [
+            "PaymentFlowEventsEnum"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PaymentIntentResultInterface",
+      "slug": "paymentintentresultinterface",
+      "docs": "",
+      "types": [
+        {
+          "text": "PaymentIntentEventsEnum.Completed",
+          "complexTypes": [
+            "PaymentIntentEventsEnum"
+          ]
+        },
+        {
+          "text": "PaymentIntentEventsEnum.Canceled",
+          "complexTypes": [
+            "PaymentIntentEventsEnum"
+          ]
+        },
+        {
+          "text": "PaymentIntentEventsEnum.Failed",
+          "complexTypes": [
+            "PaymentIntentEventsEnum"
+          ]
+        },
+        {
+          "text": "PaymentIntentEventsEnum.FailedToLoad",
+          "complexTypes": [
+            "PaymentIntentEventsEnum"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PaymentSheetResultInterface",
+      "slug": "paymentsheetresultinterface",
+      "docs": "",
+      "types": [
+        {
+          "text": "PaymentSheetEventsEnum.Completed",
+          "complexTypes": [
+            "PaymentSheetEventsEnum"
+          ]
+        },
+        {
+          "text": "PaymentSheetEventsEnum.Canceled",
+          "complexTypes": [
+            "PaymentSheetEventsEnum"
+          ]
+        },
+        {
+          "text": "PaymentSheetEventsEnum.Failed",
+          "complexTypes": [
+            "PaymentSheetEventsEnum"
+          ]
+        }
+      ]
+    }
+  ],
+  "pluginConfigs": []
+}
