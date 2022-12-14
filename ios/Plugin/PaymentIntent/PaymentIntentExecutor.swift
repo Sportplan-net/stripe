@@ -32,7 +32,7 @@ class PaymentIntenetExecutor: NSObject, STPAuthenticationContext {
                    let errorMessage = err?.localizedDescription ?? "payment failed"
                    if err != nil {
                        // self.plugin?.notifyListeners(PaymentIntentEvents.Failed.rawValue, data: ["error": errorMessage])
-                       call.resolve(["error": errorMessage])
+                       call.resolve(["error": errorMessage, "debugError": err?.userInfo ?? ""])
                    } else {
                        // self.plugin?.notifyListeners(PaymentIntentEvents.Failed.rawValue, data: ["error": "payment failed"])
                        call.resolve(["error": errorMessage])
@@ -45,7 +45,7 @@ class PaymentIntenetExecutor: NSObject, STPAuthenticationContext {
                    /* self.plugin?.notifyListeners(PaymentIntentEvents.Succeeded.rawValue, data: ["succeeded": pi!.allResponseFields as! PluginCallResultData]) */
                    call.resolve(["paymentResult": PaymentIntentEvents.Succeeded.rawValue])
             }
+            STPAPIClient.shared.stripeAccount = nil
         }
-        STPAPIClient.shared.stripeAccount = nil
     }
 }
