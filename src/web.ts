@@ -1,7 +1,5 @@
 import { WebPlugin } from '@capacitor/core';
-import type { Components } from '@stripe-elements/stripe-elements';
 import type { FormSubmitEvent } from '@stripe-elements/stripe-elements/dist/types/interfaces';
-import type { HTMLStencilElement } from '@stripe-elements/stripe-elements/dist/types/stencil-public-runtime';
 import type { StripeCardNumberElement, Stripe } from '@stripe/stripe-js';
 
 import type {
@@ -16,13 +14,11 @@ import type {
   PaymentSheetResultInterface,
   StripeInitializationOptions,
   StripePlugin,
+  StripePaymentSheet,
+  StripeRequestButton
 } from './definitions';
 import { ApplePayEventsEnum, GooglePayEventsEnum, PaymentFlowEventsEnum, PaymentSheetEventsEnum, PaymentIntentEventsEnum } from './definitions';
 import { isPlatform } from './shared/platform';
-
-interface StripePaymentSheet extends Components.StripePaymentSheet, HTMLStencilElement, HTMLElement { }
-
-interface StripeRequestButton extends Components.StripePaymentRequestButton, HTMLStencilElement, HTMLElement { }
 
 export class StripeWeb extends WebPlugin implements StripePlugin {
   private publishableKey: string | undefined;
@@ -152,7 +148,7 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     };
   }
 
-  async createPaymentFlow(options: CreatePaymentFlowOption): Promise<void> {
+  async createPaymentFlow(options: CreatePaymentFlowOption): Promise<StripePaymentSheet | void> {
     if (!this.publishableKey) {
       this.notifyListeners(PaymentFlowEventsEnum.FailedToLoad, null);
       return;
@@ -181,7 +177,7 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     if (options.withZipCode !== undefined) {
       this.paymentSheet.zip = options.withZipCode;
     }
-
+    
     if (isPlatform(window, 'ios')) {
       this.paymentSheet.buttonLabel = 'Add card';
       this.paymentSheet.sheetTitle = 'Add a card';
@@ -190,6 +186,8 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     }
 
     this.notifyListeners(PaymentFlowEventsEnum.Loaded, null);
+
+    return this.paymentSheet;
   }
 
   async presentPaymentFlow(): Promise<{

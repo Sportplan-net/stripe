@@ -1,11 +1,12 @@
 import type { PluginListenerHandle } from '@capacitor/core';
 
+import type { StripePaymentSheet } from '../definitions';
 import type { CreatePaymentFlowOption } from '../shared';
 
 import type { PaymentFlowEventsEnum, PaymentFlowResultInterface } from './payment-flow-events.enum';
 
 export interface PaymentFlowDefinitions {
-  createPaymentFlow(options: CreatePaymentFlowOption): Promise<void>;
+  createPaymentFlow(options: CreatePaymentFlowOption): Promise<StripePaymentSheet | void>;
   presentPaymentFlow(): Promise<{
     cardNumber: string;
   }>;
