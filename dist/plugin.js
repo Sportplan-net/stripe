@@ -265,6 +265,7 @@ var capacitorStripe = (function (exports, core) {
                 this.paymentSheet.buttonLabel = 'Add';
             }
             this.notifyListeners(exports.PaymentFlowEventsEnum.Loaded, null);
+            return this.paymentSheet;
         }
         async presentPaymentFlow() {
             if (!this.paymentSheet) {

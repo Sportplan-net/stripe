@@ -122,6 +122,7 @@ export class StripeWeb extends WebPlugin {
             this.paymentSheet.buttonLabel = 'Add';
         }
         this.notifyListeners(PaymentFlowEventsEnum.Loaded, null);
+        return this.paymentSheet;
     }
     async presentPaymentFlow() {
         if (!this.paymentSheet) {

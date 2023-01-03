@@ -6,6 +6,338 @@
     "tags": [],
     "methods": [
       {
+        "name": "componentOnReady",
+        "signature": "() => Promise<this>",
+        "parameters": [],
+        "returns": "Promise<this>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "componentonready"
+      },
+      {
+        "name": "componentWillLoad",
+        "signature": "() => Promise<void> | void",
+        "parameters": [],
+        "returns": "void | Promise<void>",
+        "tags": [],
+        "docs": "The component is about to load and it has not\nrendered yet.\n\nThis is the best place to make any data updates\nbefore the first render.\n\ncomponentWillLoad will only be called once.",
+        "complexTypes": [],
+        "slug": "componentwillload"
+      },
+      {
+        "name": "componentDidLoad",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "The component has loaded and has already rendered.\n\nUpdating data in this method will cause the\ncomponent to re-render.\n\ncomponentDidLoad will only be called once.",
+        "complexTypes": [],
+        "slug": "componentdidload"
+      },
+      {
+        "name": "componentWillUpdate",
+        "signature": "() => Promise<void> | void",
+        "parameters": [],
+        "returns": "void | Promise<void>",
+        "tags": [],
+        "docs": "The component is about to update and re-render.\n\nCalled multiple times throughout the life of\nthe component as it updates.\n\ncomponentWillUpdate is not called on the first render.",
+        "complexTypes": [],
+        "slug": "componentwillupdate"
+      },
+      {
+        "name": "componentDidUpdate",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "The component has just re-rendered.\n\nCalled multiple times throughout the life of\nthe component as it updates.\n\ncomponentWillUpdate is not called on the\nfirst render.",
+        "complexTypes": [],
+        "slug": "componentdidupdate"
+      },
+      {
+        "name": "connectedCallback",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "connectedcallback"
+      },
+      {
+        "name": "disconnectedCallback",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "disconnectedcallback"
+      },
+      {
+        "name": "componentWillRender",
+        "signature": "() => Promise<void> | void",
+        "parameters": [],
+        "returns": "void | Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "componentwillrender"
+      },
+      {
+        "name": "componentDidRender",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "componentdidrender"
+      },
+      {
+        "name": "componentWillLoad",
+        "signature": "() => Promise<void> | void",
+        "parameters": [],
+        "returns": "void | Promise<void>",
+        "tags": [],
+        "docs": "The component is about to load and it has not\nrendered yet.\n\nThis is the best place to make any data updates\nbefore the first render.\n\ncomponentWillLoad will only be called once.",
+        "complexTypes": [],
+        "slug": "componentwillload"
+      },
+      {
+        "name": "componentDidLoad",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "The component has loaded and has already rendered.\n\nUpdating data in this method will cause the\ncomponent to re-render.\n\ncomponentDidLoad will only be called once.",
+        "complexTypes": [],
+        "slug": "componentdidload"
+      },
+      {
+        "name": "componentShouldUpdate",
+        "signature": "(newVal: any, oldVal: any, propName: string) => boolean | void",
+        "parameters": [
+          {
+            "name": "newVal",
+            "docs": "",
+            "type": "any"
+          },
+          {
+            "name": "oldVal",
+            "docs": "",
+            "type": "any"
+          },
+          {
+            "name": "propName",
+            "docs": "",
+            "type": "string"
+          }
+        ],
+        "returns": "boolean | void",
+        "tags": [],
+        "docs": "A `@Prop` or `@State` property changed and a rerender is about to be requested.\n\nCalled multiple times throughout the life of\nthe component as its properties change.\n\ncomponentShouldUpdate is not called on the first render.",
+        "complexTypes": [],
+        "slug": "componentshouldupdate"
+      },
+      {
+        "name": "componentWillUpdate",
+        "signature": "() => Promise<void> | void",
+        "parameters": [],
+        "returns": "void | Promise<void>",
+        "tags": [],
+        "docs": "The component is about to update and re-render.\n\nCalled multiple times throughout the life of\nthe component as it updates.\n\ncomponentWillUpdate is not called on the first render.",
+        "complexTypes": [],
+        "slug": "componentwillupdate"
+      },
+      {
+        "name": "componentDidUpdate",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "The component has just re-rendered.\n\nCalled multiple times throughout the life of\nthe component as it updates.\n\ncomponentWillUpdate is not called on the\nfirst render.",
+        "complexTypes": [],
+        "slug": "componentdidupdate"
+      },
+      {
+        "name": "render",
+        "signature": "() => any",
+        "parameters": [],
+        "returns": "any",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "render"
+      },
+      {
+        "name": "componentOnReady",
+        "signature": "() => Promise<this>",
+        "parameters": [],
+        "returns": "Promise<this>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "componentonready"
+      },
+      {
+        "name": "componentWillLoad",
+        "signature": "() => Promise<void> | void",
+        "parameters": [],
+        "returns": "void | Promise<void>",
+        "tags": [],
+        "docs": "The component is about to load and it has not\nrendered yet.\n\nThis is the best place to make any data updates\nbefore the first render.\n\ncomponentWillLoad will only be called once.",
+        "complexTypes": [],
+        "slug": "componentwillload"
+      },
+      {
+        "name": "componentDidLoad",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "The component has loaded and has already rendered.\n\nUpdating data in this method will cause the\ncomponent to re-render.\n\ncomponentDidLoad will only be called once.",
+        "complexTypes": [],
+        "slug": "componentdidload"
+      },
+      {
+        "name": "componentWillUpdate",
+        "signature": "() => Promise<void> | void",
+        "parameters": [],
+        "returns": "void | Promise<void>",
+        "tags": [],
+        "docs": "The component is about to update and re-render.\n\nCalled multiple times throughout the life of\nthe component as it updates.\n\ncomponentWillUpdate is not called on the first render.",
+        "complexTypes": [],
+        "slug": "componentwillupdate"
+      },
+      {
+        "name": "componentDidUpdate",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "The component has just re-rendered.\n\nCalled multiple times throughout the life of\nthe component as it updates.\n\ncomponentWillUpdate is not called on the\nfirst render.",
+        "complexTypes": [],
+        "slug": "componentdidupdate"
+      },
+      {
+        "name": "connectedCallback",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "connectedcallback"
+      },
+      {
+        "name": "disconnectedCallback",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "disconnectedcallback"
+      },
+      {
+        "name": "componentWillRender",
+        "signature": "() => Promise<void> | void",
+        "parameters": [],
+        "returns": "void | Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "componentwillrender"
+      },
+      {
+        "name": "componentDidRender",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "componentdidrender"
+      },
+      {
+        "name": "componentWillLoad",
+        "signature": "() => Promise<void> | void",
+        "parameters": [],
+        "returns": "void | Promise<void>",
+        "tags": [],
+        "docs": "The component is about to load and it has not\nrendered yet.\n\nThis is the best place to make any data updates\nbefore the first render.\n\ncomponentWillLoad will only be called once.",
+        "complexTypes": [],
+        "slug": "componentwillload"
+      },
+      {
+        "name": "componentDidLoad",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "The component has loaded and has already rendered.\n\nUpdating data in this method will cause the\ncomponent to re-render.\n\ncomponentDidLoad will only be called once.",
+        "complexTypes": [],
+        "slug": "componentdidload"
+      },
+      {
+        "name": "componentShouldUpdate",
+        "signature": "(newVal: any, oldVal: any, propName: string) => boolean | void",
+        "parameters": [
+          {
+            "name": "newVal",
+            "docs": "",
+            "type": "any"
+          },
+          {
+            "name": "oldVal",
+            "docs": "",
+            "type": "any"
+          },
+          {
+            "name": "propName",
+            "docs": "",
+            "type": "string"
+          }
+        ],
+        "returns": "boolean | void",
+        "tags": [],
+        "docs": "A `@Prop` or `@State` property changed and a rerender is about to be requested.\n\nCalled multiple times throughout the life of\nthe component as its properties change.\n\ncomponentShouldUpdate is not called on the first render.",
+        "complexTypes": [],
+        "slug": "componentshouldupdate"
+      },
+      {
+        "name": "componentWillUpdate",
+        "signature": "() => Promise<void> | void",
+        "parameters": [],
+        "returns": "void | Promise<void>",
+        "tags": [],
+        "docs": "The component is about to update and re-render.\n\nCalled multiple times throughout the life of\nthe component as it updates.\n\ncomponentWillUpdate is not called on the first render.",
+        "complexTypes": [],
+        "slug": "componentwillupdate"
+      },
+      {
+        "name": "componentDidUpdate",
+        "signature": "() => void",
+        "parameters": [],
+        "returns": "void",
+        "tags": [],
+        "docs": "The component has just re-rendered.\n\nCalled multiple times throughout the life of\nthe component as it updates.\n\ncomponentWillUpdate is not called on the\nfirst render.",
+        "complexTypes": [],
+        "slug": "componentdidupdate"
+      },
+      {
+        "name": "render",
+        "signature": "() => any",
+        "parameters": [],
+        "returns": "any",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "render"
+      },
+      {
         "name": "isApplePayAvailable",
         "signature": "() => Promise<void>",
         "parameters": [],
@@ -377,7 +709,7 @@
       },
       {
         "name": "createPaymentFlow",
-        "signature": "(options: CreatePaymentFlowOption) => Promise<void>",
+        "signature": "(options: CreatePaymentFlowOption) => Promise<StripePaymentSheet | void>",
         "parameters": [
           {
             "name": "options",
@@ -385,10 +717,11 @@
             "type": "CreatePaymentFlowOption"
           }
         ],
-        "returns": "Promise<void>",
+        "returns": "Promise<void | StripePaymentSheet>",
         "tags": [],
         "docs": "",
         "complexTypes": [
+          "StripePaymentSheet",
           "CreatePaymentFlowOption"
         ],
         "slug": "createpaymentflow"
@@ -934,12 +1267,16 @@
       }
     ],
     "importObject": [
+      "Components",
+      "HTMLStencilElement",
       "ApplePayDefinitions",
       "GooglePayDefinitions",
       "PaymentFlowDefinitions",
       "PaymentIntentDefinitions",
       "PaymentSheetDefinitions",
       "StripeDefinitions",
+      "StripePaymentSheet",
+      "StripeRequestButton",
       "StripePlugin",
       "StripeInitializationOptions",
       "StripeURLHandlingOptions",
@@ -1239,6 +1576,25 @@
         "CreateApplePayOption",
         "DidSelectShippingContact",
         "ShippingContact"
+      ]
+    },
+    {
+      "name": "StripePaymentSheet",
+      "slug": "stripepaymentsheet",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [],
+      "importObject": [
+        "Components",
+        "JSX",
+        "StripePayment",
+        "StripePaymentRequestButton",
+        "StripeSheet",
+        "defineCustomElements",
+        "setAssetPath",
+        "SetPlatformOptions",
+        "setPlatformOptions"
       ]
     },
     {
@@ -1615,12 +1971,16 @@
         }
       ],
       "importObject": [
+        "Components",
+        "HTMLStencilElement",
         "ApplePayDefinitions",
         "GooglePayDefinitions",
         "PaymentFlowDefinitions",
         "PaymentIntentDefinitions",
         "PaymentSheetDefinitions",
         "StripeDefinitions",
+        "StripePaymentSheet",
+        "StripeRequestButton",
         "StripePlugin",
         "StripeURLHandlingOptions",
         "CapacitorStripeContext",
@@ -1643,12 +2003,16 @@
         }
       ],
       "importObject": [
+        "Components",
+        "HTMLStencilElement",
         "ApplePayDefinitions",
         "GooglePayDefinitions",
         "PaymentFlowDefinitions",
         "PaymentIntentDefinitions",
         "PaymentSheetDefinitions",
         "StripeDefinitions",
+        "StripePaymentSheet",
+        "StripeRequestButton",
         "StripePlugin",
         "StripeInitializationOptions",
         "CapacitorStripeContext",
@@ -1705,12 +2069,16 @@
       ],
       "properties": [],
       "importObject": [
+        "Components",
+        "HTMLStencilElement",
         "ApplePayDefinitions",
         "GooglePayDefinitions",
         "PaymentFlowDefinitions",
         "PaymentIntentDefinitions",
         "PaymentSheetDefinitions",
         "StripeDefinitions",
+        "StripePaymentSheet",
+        "StripeRequestButton",
         "StripeInitializationOptions",
         "StripeURLHandlingOptions",
         "CapacitorStripeContext",
@@ -1749,12 +2117,16 @@
         }
       ],
       "importObject": [
+        "Components",
+        "HTMLStencilElement",
         "ApplePayDefinitions",
         "GooglePayDefinitions",
         "PaymentFlowDefinitions",
         "PaymentIntentDefinitions",
         "PaymentSheetDefinitions",
         "StripeDefinitions",
+        "StripePaymentSheet",
+        "StripeRequestButton",
         "StripePlugin",
         "StripeInitializationOptions",
         "StripeURLHandlingOptions",
