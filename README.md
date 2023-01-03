@@ -53,6 +53,36 @@ Learn at [the official @capacitor-community/stripe documentation](https://stripe
 
 <docgen-index>
 
+* [`componentOnReady()`](#componentonready)
+* [`componentWillLoad()`](#componentwillload)
+* [`componentDidLoad()`](#componentdidload)
+* [`componentWillUpdate()`](#componentwillupdate)
+* [`componentDidUpdate()`](#componentdidupdate)
+* [`connectedCallback()`](#connectedcallback)
+* [`disconnectedCallback()`](#disconnectedcallback)
+* [`componentWillRender()`](#componentwillrender)
+* [`componentDidRender()`](#componentdidrender)
+* [`componentWillLoad()`](#componentwillload)
+* [`componentDidLoad()`](#componentdidload)
+* [`componentShouldUpdate(...)`](#componentshouldupdate)
+* [`componentWillUpdate()`](#componentwillupdate)
+* [`componentDidUpdate()`](#componentdidupdate)
+* [`render()`](#render)
+* [`componentOnReady()`](#componentonready)
+* [`componentWillLoad()`](#componentwillload)
+* [`componentDidLoad()`](#componentdidload)
+* [`componentWillUpdate()`](#componentwillupdate)
+* [`componentDidUpdate()`](#componentdidupdate)
+* [`connectedCallback()`](#connectedcallback)
+* [`disconnectedCallback()`](#disconnectedcallback)
+* [`componentWillRender()`](#componentwillrender)
+* [`componentDidRender()`](#componentdidrender)
+* [`componentWillLoad()`](#componentwillload)
+* [`componentDidLoad()`](#componentdidload)
+* [`componentShouldUpdate(...)`](#componentshouldupdate)
+* [`componentWillUpdate()`](#componentwillupdate)
+* [`componentDidUpdate()`](#componentdidupdate)
+* [`render()`](#render)
 * [`isApplePayAvailable()`](#isapplepayavailable)
 * [`createApplePay(...)`](#createapplepay)
 * [`presentApplePay()`](#presentapplepay)
@@ -107,6 +137,454 @@ Learn at [the official @capacitor-community/stripe documentation](https://stripe
 
 This is for @capacitor/docgen only.
 Not use in product.
+
+### componentOnReady()
+
+```typescript
+componentOnReady() => Promise<this>
+```
+
+**Returns:** <code>Promise&lt;this&gt;</code>
+
+--------------------
+
+
+### componentWillLoad()
+
+```typescript
+componentWillLoad() => Promise<void> | void
+```
+
+The component is about to load and it has not
+rendered yet.
+
+This is the best place to make any data updates
+before the first render.
+
+componentWillLoad will only be called once.
+
+**Returns:** <code>void | Promise&lt;void&gt;</code>
+
+--------------------
+
+
+### componentDidLoad()
+
+```typescript
+componentDidLoad() => void
+```
+
+The component has loaded and has already rendered.
+
+Updating data in this method will cause the
+component to re-render.
+
+componentDidLoad will only be called once.
+
+--------------------
+
+
+### componentWillUpdate()
+
+```typescript
+componentWillUpdate() => Promise<void> | void
+```
+
+The component is about to update and re-render.
+
+Called multiple times throughout the life of
+the component as it updates.
+
+componentWillUpdate is not called on the first render.
+
+**Returns:** <code>void | Promise&lt;void&gt;</code>
+
+--------------------
+
+
+### componentDidUpdate()
+
+```typescript
+componentDidUpdate() => void
+```
+
+The component has just re-rendered.
+
+Called multiple times throughout the life of
+the component as it updates.
+
+componentWillUpdate is not called on the
+first render.
+
+--------------------
+
+
+### connectedCallback()
+
+```typescript
+connectedCallback() => void
+```
+
+--------------------
+
+
+### disconnectedCallback()
+
+```typescript
+disconnectedCallback() => void
+```
+
+--------------------
+
+
+### componentWillRender()
+
+```typescript
+componentWillRender() => Promise<void> | void
+```
+
+**Returns:** <code>void | Promise&lt;void&gt;</code>
+
+--------------------
+
+
+### componentDidRender()
+
+```typescript
+componentDidRender() => void
+```
+
+--------------------
+
+
+### componentWillLoad()
+
+```typescript
+componentWillLoad() => Promise<void> | void
+```
+
+The component is about to load and it has not
+rendered yet.
+
+This is the best place to make any data updates
+before the first render.
+
+componentWillLoad will only be called once.
+
+**Returns:** <code>void | Promise&lt;void&gt;</code>
+
+--------------------
+
+
+### componentDidLoad()
+
+```typescript
+componentDidLoad() => void
+```
+
+The component has loaded and has already rendered.
+
+Updating data in this method will cause the
+component to re-render.
+
+componentDidLoad will only be called once.
+
+--------------------
+
+
+### componentShouldUpdate(...)
+
+```typescript
+componentShouldUpdate(newVal: any, oldVal: any, propName: string) => boolean | void
+```
+
+A `@Prop` or `@State` property changed and a rerender is about to be requested.
+
+Called multiple times throughout the life of
+the component as its properties change.
+
+componentShouldUpdate is not called on the first render.
+
+| Param          | Type                |
+| -------------- | ------------------- |
+| **`newVal`**   | <code>any</code>    |
+| **`oldVal`**   | <code>any</code>    |
+| **`propName`** | <code>string</code> |
+
+**Returns:** <code>boolean | void</code>
+
+--------------------
+
+
+### componentWillUpdate()
+
+```typescript
+componentWillUpdate() => Promise<void> | void
+```
+
+The component is about to update and re-render.
+
+Called multiple times throughout the life of
+the component as it updates.
+
+componentWillUpdate is not called on the first render.
+
+**Returns:** <code>void | Promise&lt;void&gt;</code>
+
+--------------------
+
+
+### componentDidUpdate()
+
+```typescript
+componentDidUpdate() => void
+```
+
+The component has just re-rendered.
+
+Called multiple times throughout the life of
+the component as it updates.
+
+componentWillUpdate is not called on the
+first render.
+
+--------------------
+
+
+### render()
+
+```typescript
+render() => any
+```
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### componentOnReady()
+
+```typescript
+componentOnReady() => Promise<this>
+```
+
+**Returns:** <code>Promise&lt;this&gt;</code>
+
+--------------------
+
+
+### componentWillLoad()
+
+```typescript
+componentWillLoad() => Promise<void> | void
+```
+
+The component is about to load and it has not
+rendered yet.
+
+This is the best place to make any data updates
+before the first render.
+
+componentWillLoad will only be called once.
+
+**Returns:** <code>void | Promise&lt;void&gt;</code>
+
+--------------------
+
+
+### componentDidLoad()
+
+```typescript
+componentDidLoad() => void
+```
+
+The component has loaded and has already rendered.
+
+Updating data in this method will cause the
+component to re-render.
+
+componentDidLoad will only be called once.
+
+--------------------
+
+
+### componentWillUpdate()
+
+```typescript
+componentWillUpdate() => Promise<void> | void
+```
+
+The component is about to update and re-render.
+
+Called multiple times throughout the life of
+the component as it updates.
+
+componentWillUpdate is not called on the first render.
+
+**Returns:** <code>void | Promise&lt;void&gt;</code>
+
+--------------------
+
+
+### componentDidUpdate()
+
+```typescript
+componentDidUpdate() => void
+```
+
+The component has just re-rendered.
+
+Called multiple times throughout the life of
+the component as it updates.
+
+componentWillUpdate is not called on the
+first render.
+
+--------------------
+
+
+### connectedCallback()
+
+```typescript
+connectedCallback() => void
+```
+
+--------------------
+
+
+### disconnectedCallback()
+
+```typescript
+disconnectedCallback() => void
+```
+
+--------------------
+
+
+### componentWillRender()
+
+```typescript
+componentWillRender() => Promise<void> | void
+```
+
+**Returns:** <code>void | Promise&lt;void&gt;</code>
+
+--------------------
+
+
+### componentDidRender()
+
+```typescript
+componentDidRender() => void
+```
+
+--------------------
+
+
+### componentWillLoad()
+
+```typescript
+componentWillLoad() => Promise<void> | void
+```
+
+The component is about to load and it has not
+rendered yet.
+
+This is the best place to make any data updates
+before the first render.
+
+componentWillLoad will only be called once.
+
+**Returns:** <code>void | Promise&lt;void&gt;</code>
+
+--------------------
+
+
+### componentDidLoad()
+
+```typescript
+componentDidLoad() => void
+```
+
+The component has loaded and has already rendered.
+
+Updating data in this method will cause the
+component to re-render.
+
+componentDidLoad will only be called once.
+
+--------------------
+
+
+### componentShouldUpdate(...)
+
+```typescript
+componentShouldUpdate(newVal: any, oldVal: any, propName: string) => boolean | void
+```
+
+A `@Prop` or `@State` property changed and a rerender is about to be requested.
+
+Called multiple times throughout the life of
+the component as its properties change.
+
+componentShouldUpdate is not called on the first render.
+
+| Param          | Type                |
+| -------------- | ------------------- |
+| **`newVal`**   | <code>any</code>    |
+| **`oldVal`**   | <code>any</code>    |
+| **`propName`** | <code>string</code> |
+
+**Returns:** <code>boolean | void</code>
+
+--------------------
+
+
+### componentWillUpdate()
+
+```typescript
+componentWillUpdate() => Promise<void> | void
+```
+
+The component is about to update and re-render.
+
+Called multiple times throughout the life of
+the component as it updates.
+
+componentWillUpdate is not called on the first render.
+
+**Returns:** <code>void | Promise&lt;void&gt;</code>
+
+--------------------
+
+
+### componentDidUpdate()
+
+```typescript
+componentDidUpdate() => void
+```
+
+The component has just re-rendered.
+
+Called multiple times throughout the life of
+the component as it updates.
+
+componentWillUpdate is not called on the
+first render.
+
+--------------------
+
+
+### render()
+
+```typescript
+render() => any
+```
+
+**Returns:** <code>any</code>
+
+--------------------
+
 
 ### isApplePayAvailable()
 
@@ -369,12 +847,14 @@ addListener(eventName: GooglePayEventsEnum.Failed, listenerFunc: () => void) => 
 ### createPaymentFlow(...)
 
 ```typescript
-createPaymentFlow(options: CreatePaymentFlowOption) => Promise<void>
+createPaymentFlow(options: CreatePaymentFlowOption) => Promise<StripePaymentSheet | void>
 ```
 
 | Param         | Type                                                                        |
 | ------------- | --------------------------------------------------------------------------- |
 | **`options`** | <code><a href="#createpaymentflowoption">CreatePaymentFlowOption</a></code> |
+
+**Returns:** <code>Promise&lt;void | <a href="#stripepaymentsheet">StripePaymentSheet</a>&gt;</code>
 
 --------------------
 
@@ -800,6 +1280,9 @@ iOS Only
 | **`merchantIdentifier`**        | <code>string</code>                               | Web only need @stripe-elements/stripe-elements &gt; 1.1.0 |
 | **`countryCode`**               | <code>string</code>                               | Web only need @stripe-elements/stripe-elements &gt; 1.1.0 |
 | **`currency`**                  | <code>string</code>                               | Web only need @stripe-elements/stripe-elements &gt; 1.1.0 |
+
+
+#### StripePaymentSheet
 
 
 #### CreatePaymentFlowOption

@@ -1,3 +1,5 @@
+import type { Components } from '@stripe-elements/stripe-elements';
+import type { HTMLStencilElement } from '@stripe-elements/stripe-elements/dist/types/stencil-public-runtime';
 import type { ApplePayDefinitions } from './applepay';
 import type { GooglePayDefinitions } from './googlepay';
 import type { PaymentFlowDefinitions } from './paymentflow';
@@ -10,6 +12,10 @@ export * from './paymentsheet/index';
 export * from './paymentintent/index';
 export * from './shared/index';
 declare type StripeDefinitions = PaymentSheetDefinitions & PaymentFlowDefinitions & ApplePayDefinitions & GooglePayDefinitions & PaymentIntentDefinitions;
+export interface StripePaymentSheet extends Components.StripePaymentSheet, HTMLStencilElement, HTMLElement {
+}
+export interface StripeRequestButton extends Components.StripePaymentRequestButton, HTMLStencilElement, HTMLElement {
+}
 export interface StripePlugin extends StripeDefinitions {
     initialize(opts: StripeInitializationOptions): Promise<void>;
     /**
