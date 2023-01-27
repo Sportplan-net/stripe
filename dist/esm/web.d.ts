@@ -29,6 +29,8 @@ export declare class StripeWeb extends WebPlugin implements StripePlugin {
     }>;
     confirmPaymentFlow(): Promise<{
         paymentResult: PaymentFlowResultInterface;
+        error?: string;
+        debugError?: string;
     }>;
     isApplePayAvailable(): Promise<void>;
     createApplePay(createApplePayOption: CreateApplePayOption): Promise<void>;

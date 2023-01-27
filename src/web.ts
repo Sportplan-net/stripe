@@ -237,7 +237,9 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
   }
 
   async confirmPaymentFlow(): Promise<{
-    paymentResult: PaymentFlowResultInterface;
+    paymentResult: PaymentFlowResultInterface,
+    error?: string;
+    debugError?: string;
   }> {
     if (!this.paymentSheet || !this.flowStripe || !this.flowCardNumberElement) {
       throw new Error();
@@ -250,6 +252,16 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
 
     if (result.error !== undefined) {
       this.notifyListeners(PaymentFlowEventsEnum.Failed, null);
+      this.paymentSheet.updateProgress('failure');
+      this.paymentSheet.remove();
+
+      this.notifyListeners(PaymentFlowEventsEnum.Failed, null);
+
+      return {
+        paymentResult: PaymentFlowEventsEnum.Failed,
+        error: result.error.message,
+        debugError: result.error.decline_code,
+      };
     }
 
     this.paymentSheet.updateProgress('success');

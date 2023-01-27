@@ -11,7 +11,9 @@ export interface PaymentFlowDefinitions {
     cardNumber: string;
   }>;
   confirmPaymentFlow(): Promise<{
-    paymentResult: PaymentFlowResultInterface
+    paymentResult: PaymentFlowResultInterface,
+    error?: string,
+    debugError?: string,
   }>;
 
   addListener(

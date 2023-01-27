@@ -301,6 +301,14 @@ var capacitorStripe = (function (exports, core) {
             });
             if (result.error !== undefined) {
                 this.notifyListeners(exports.PaymentFlowEventsEnum.Failed, null);
+                this.paymentSheet.updateProgress('failure');
+                this.paymentSheet.remove();
+                this.notifyListeners(exports.PaymentFlowEventsEnum.Failed, null);
+                return {
+                    paymentResult: exports.PaymentFlowEventsEnum.Failed,
+                    error: result.error.message,
+                    debugError: result.error.decline_code,
+                };
             }
             this.paymentSheet.updateProgress('success');
             this.paymentSheet.remove();

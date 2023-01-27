@@ -158,6 +158,14 @@ export class StripeWeb extends WebPlugin {
         });
         if (result.error !== undefined) {
             this.notifyListeners(PaymentFlowEventsEnum.Failed, null);
+            this.paymentSheet.updateProgress('failure');
+            this.paymentSheet.remove();
+            this.notifyListeners(PaymentFlowEventsEnum.Failed, null);
+            return {
+                paymentResult: PaymentFlowEventsEnum.Failed,
+                error: result.error.message,
+                debugError: result.error.decline_code,
+            };
         }
         this.paymentSheet.updateProgress('success');
         this.paymentSheet.remove();

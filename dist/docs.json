@@ -738,9 +738,9 @@
       },
       {
         "name": "confirmPaymentFlow",
-        "signature": "() => Promise<{ paymentResult: PaymentFlowResultInterface; }>",
+        "signature": "() => Promise<{ paymentResult: PaymentFlowResultInterface; error?: string; debugError?: string; }>",
         "parameters": [],
-        "returns": "Promise<{ paymentResult: PaymentFlowResultInterface; }>",
+        "returns": "Promise<{ paymentResult: PaymentFlowResultInterface; error?: string | undefined; debugError?: string | undefined; }>",
         "tags": [],
         "docs": "",
         "complexTypes": [
