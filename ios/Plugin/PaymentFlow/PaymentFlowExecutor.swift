@@ -129,7 +129,7 @@ class PaymentFlowExecutor: NSObject {
                         call.resolve(["paymentResult": PaymentFlowEvents.Canceled.rawValue])
                     case .failed(let error):
                         self.plugin?.notifyListeners(PaymentFlowEvents.Failed.rawValue, data: ["error": error.localizedDescription])
-                        call.resolve(["paymentResult": PaymentFlowEvents.Failed.rawValue])
+                        call.resolve(["paymentResult": PaymentFlowEvents.Failed.rawValue, "error": error.localizedDescription])
                     }
                 }
             }
