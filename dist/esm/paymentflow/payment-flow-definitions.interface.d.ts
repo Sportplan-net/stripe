@@ -9,6 +9,8 @@ export interface PaymentFlowDefinitions {
     }>;
     confirmPaymentFlow(): Promise<{
         paymentResult: PaymentFlowResultInterface;
+        error?: string;
+        debugError?: string;
     }>;
     addListener(eventName: PaymentFlowEventsEnum.Loaded, listenerFunc: () => void): PluginListenerHandle;
     addListener(eventName: PaymentFlowEventsEnum.FailedToLoad, listenerFunc: (error: string) => void): PluginListenerHandle;

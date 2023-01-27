@@ -873,10 +873,10 @@ presentPaymentFlow() => Promise<{ cardNumber: string; }>
 ### confirmPaymentFlow()
 
 ```typescript
-confirmPaymentFlow() => Promise<{ paymentResult: PaymentFlowResultInterface; }>
+confirmPaymentFlow() => Promise<{ paymentResult: PaymentFlowResultInterface; error?: string; debugError?: string; }>
 ```
 
-**Returns:** <code>Promise&lt;{ paymentResult: <a href="#paymentflowresultinterface">PaymentFlowResultInterface</a>; }&gt;</code>
+**Returns:** <code>Promise&lt;{ paymentResult: <a href="#paymentflowresultinterface">PaymentFlowResultInterface</a>; error?: string; debugError?: string; }&gt;</code>
 
 --------------------
 
