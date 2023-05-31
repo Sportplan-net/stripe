@@ -159,7 +159,10 @@ public class PaymentFlowExecutor extends Executor {
                 PaymentFlowEvents.Failed.getWebEventName(),
                 new JSObject().put("error", ((PaymentSheetResult.Failed) paymentSheetResult).getError().getLocalizedMessage())
             );
-            call.resolve(new JSObject().put("paymentResult", PaymentFlowEvents.Failed.getWebEventName()));
+            
+            call.resolve(new JSObject().put("paymentResult", PaymentFlowEvents.Failed.getWebEventName())
+              .put("error", ((PaymentSheetResult.Failed) paymentSheetResult).getError().getLocalizedMessage()));
+
         } else if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
             notifyListenersFunction.accept(PaymentFlowEvents.Completed.getWebEventName(), emptyObject);
             call.resolve(new JSObject().put("paymentResult", PaymentFlowEvents.Completed.getWebEventName()));
