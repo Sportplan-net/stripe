@@ -135,6 +135,7 @@ Learn at [the official @capacitor-community/stripe documentation](https://stripe
 * [`addListener(PaymentFlowEventsEnum.Canceled, ...)`](#addlistenerpaymentfloweventsenumcanceled)
 * [`addListener(PaymentFlowEventsEnum.Failed, ...)`](#addlistenerpaymentfloweventsenumfailed)
 * [`addListener(PaymentFlowEventsEnum.Created, ...)`](#addlistenerpaymentfloweventsenumcreated)
+* [`retrievePaymentIntent(...)`](#retrievepaymentintent)
 * [`confirmPaymentIntent(...)`](#confirmpaymentintent)
 * [`addListener(PaymentIntentEventsEnum.Loaded, ...)`](#addlistenerpaymentintenteventsenumloaded)
 * [`addListener(PaymentIntentEventsEnum.FailedToLoad, ...)`](#addlistenerpaymentintenteventsenumfailedtoload)
@@ -1121,17 +1122,32 @@ addListener(eventName: PaymentFlowEventsEnum.Created, listenerFunc: (info: { car
 --------------------
 
 
+### retrievePaymentIntent(...)
+
+```typescript
+retrievePaymentIntent(options: { clientSecret: string; stripeAccount?: string; }) => Promise<{ paymentResult?: PaymentIntentResultInterface; error?: string; debugError?: unknown; }>
+```
+
+| Param         | Type                                                           |
+| ------------- | -------------------------------------------------------------- |
+| **`options`** | <code>{ clientSecret: string; stripeAccount?: string; }</code> |
+
+**Returns:** <code>Promise&lt;{ paymentResult?: <a href="#paymentintentresultinterface">PaymentIntentResultInterface</a>; error?: string; debugError?: unknown; }&gt;</code>
+
+--------------------
+
+
 ### confirmPaymentIntent(...)
 
 ```typescript
-confirmPaymentIntent(options: { clientSecret: string; paymentMethodId: string; stripeAccount?: string; }) => Promise<{ paymentResult: PaymentIntentResultInterface; }>
+confirmPaymentIntent(options: { clientSecret: string; paymentMethodId: string; stripeAccount?: string; }) => Promise<{ paymentResult?: PaymentIntentResultInterface; }>
 ```
 
 | Param         | Type                                                                                    |
 | ------------- | --------------------------------------------------------------------------------------- |
 | **`options`** | <code>{ clientSecret: string; paymentMethodId: string; stripeAccount?: string; }</code> |
 
-**Returns:** <code>Promise&lt;{ paymentResult: <a href="#paymentintentresultinterface">PaymentIntentResultInterface</a>; }&gt;</code>
+**Returns:** <code>Promise&lt;{ paymentResult?: <a href="#paymentintentresultinterface">PaymentIntentResultInterface</a>; }&gt;</code>
 
 --------------------
 

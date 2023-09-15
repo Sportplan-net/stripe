@@ -88,7 +88,9 @@ class CheckoutFragment : Fragment() {
             is PaymentResult.Failed -> {
                 // This string comes from the PaymentIntent's error message.
                 // See here: https://stripe.com/docs/api/payment_intents/object#payment_intent_object-last_payment_error-message
-                call?.resolve(JSObject().put("error", paymentResult.throwable.message))
+                val ret = JSObject().put("error", paymentResult.throwable.message)
+                ret.put("paymentResult", PaymentIntentEvents.Failed.webEventName);
+                call?.resolve(ret)
             }
         }
     }

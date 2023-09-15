@@ -151,6 +151,27 @@ var capacitorStripe = (function (exports, core) {
                 platforms: ['web'],
             });
         }
+        async retrievePaymentIntent(options) {
+            if (!window || !window.Stripe || !this.publishableKey) {
+                return {
+                    paymentResult: exports.PaymentIntentEventsEnum.FailedToLoad
+                };
+            }
+            console.log(options);
+            const stripe = window.Stripe(this.publishableKey, { stripeAccount: options.stripeAccount });
+            const paymentIntent = await stripe.retrievePaymentIntent(options.clientSecret).then(pir => pir.paymentIntent);
+            if ((paymentIntent === null || paymentIntent === void 0 ? void 0 : paymentIntent.status) === 'succeeded') {
+                this.notifyListeners(exports.PaymentIntentEventsEnum.Completed, null);
+                return {
+                    paymentResult: exports.PaymentIntentEventsEnum.Completed,
+                };
+            }
+            this.notifyListeners(exports.PaymentIntentEventsEnum.Failed, paymentIntent === null || paymentIntent === void 0 ? void 0 : paymentIntent.last_payment_error);
+            return {
+                paymentResult: exports.PaymentIntentEventsEnum.Failed,
+                error: (paymentIntent === null || paymentIntent === void 0 ? void 0 : paymentIntent.last_payment_error) ? paymentIntent === null || paymentIntent === void 0 ? void 0 : paymentIntent.last_payment_error.message : undefined
+            };
+        }
         async confirmPaymentIntent(options) {
             if (!window || !window.Stripe || !this.publishableKey) {
                 return {

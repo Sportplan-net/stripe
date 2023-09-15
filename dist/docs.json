@@ -917,8 +917,26 @@
         "slug": "addlistenerpaymentfloweventsenumcreated"
       },
       {
+        "name": "retrievePaymentIntent",
+        "signature": "(options: { clientSecret: string; stripeAccount?: string; }) => Promise<{ paymentResult?: PaymentIntentResultInterface; error?: string; debugError?: unknown; }>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "{ clientSecret: string; stripeAccount?: string | undefined; }"
+          }
+        ],
+        "returns": "Promise<{ paymentResult?: PaymentIntentResultInterface | undefined; error?: string | undefined; debugError?: unknown; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PaymentIntentResultInterface"
+        ],
+        "slug": "retrievepaymentintent"
+      },
+      {
         "name": "confirmPaymentIntent",
-        "signature": "(options: { clientSecret: string; paymentMethodId: string; stripeAccount?: string; }) => Promise<{ paymentResult: PaymentIntentResultInterface; }>",
+        "signature": "(options: { clientSecret: string; paymentMethodId: string; stripeAccount?: string; }) => Promise<{ paymentResult?: PaymentIntentResultInterface; }>",
         "parameters": [
           {
             "name": "options",
@@ -926,7 +944,7 @@
             "type": "{ clientSecret: string; paymentMethodId: string; stripeAccount?: string | undefined; }"
           }
         ],
-        "returns": "Promise<{ paymentResult: PaymentIntentResultInterface; }>",
+        "returns": "Promise<{ paymentResult?: PaymentIntentResultInterface | undefined; }>",
         "tags": [],
         "docs": "",
         "complexTypes": [

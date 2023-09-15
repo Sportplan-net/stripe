@@ -11,12 +11,21 @@ export declare class StripeWeb extends WebPlugin implements StripePlugin {
     private requestGooglePay;
     private requestGooglePayOptions;
     constructor();
+    retrievePaymentIntent(options: {
+        clientSecret: string;
+        stripeAccount?: string;
+    }): Promise<{
+        paymentResult: PaymentIntentResultInterface;
+        error?: string;
+    }>;
     confirmPaymentIntent(options: {
         clientSecret: string;
         paymentMethodId: string;
         stripeAccount?: string;
     }): Promise<{
-        paymentResult: PaymentIntentResultInterface;
+        paymentResult?: PaymentIntentResultInterface;
+        error?: string;
+        debugError?: unknown;
     }>;
     initialize(options: StripeInitializationOptions): Promise<void>;
     createPaymentSheet(options: CreatePaymentSheetOption): Promise<void>;
