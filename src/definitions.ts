@@ -23,6 +23,9 @@ type StripeDefinitions = PaymentSheetDefinitions &
   GooglePayDefinitions &
   IdentityVerificationSheetDefinitions & 
   PaymentIntentDefinitions;
+export * from './paymentintent/index';
+export * from './shared/index';
+
 
 export interface StripePaymentSheet extends Components.StripePaymentSheet, HTMLStencilElement, HTMLElement { }
 export interface StripeRequestButton extends Components.StripePaymentRequestButton, HTMLStencilElement, HTMLElement { }

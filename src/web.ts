@@ -19,6 +19,7 @@ import { ApplePayEventsEnum, GooglePayEventsEnum, PaymentFlowEventsEnum, Payment
 import { isPlatform } from './shared/platform';
 
 
+
 export class StripeWeb extends WebPlugin implements StripePlugin {
   private publishableKey: string | undefined;
   private stripeAccount: string | undefined;
