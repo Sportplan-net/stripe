@@ -137,7 +137,6 @@ public class PaymentFlowExecutor extends Executor {
 
     public void onPaymentOption(Bridge bridge, String callbackId, @Nullable PaymentOption paymentOption) {
         PluginCall call = bridge.getSavedCall(callbackId);
-        Logger.info("Got onPaymentOption " + paymentOption.getLabel());
         if (paymentOption != null) {
             notifyListenersFunction.accept(
                 PaymentFlowEvents.Created.getWebEventName(),
