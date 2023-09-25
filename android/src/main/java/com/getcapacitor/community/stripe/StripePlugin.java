@@ -45,8 +45,6 @@ public class StripePlugin extends Plugin {
 
     private static final String APP_INFO_NAME = "@capacitor-community/stripe";
 
-
-
     private final PaymentSheetExecutor paymentSheetExecutor = new PaymentSheetExecutor(
             this::getContext,
             this::notifyListeners,
@@ -222,7 +220,7 @@ public class StripePlugin extends Plugin {
                 return;
             }
         }
-        if(clientSecret == null){
+        if(clientSecret == null) {
             call.reject("you must provide a valid clientSecret");
             return;
         }
@@ -237,7 +235,13 @@ public class StripePlugin extends Plugin {
         if (si != null && si.getStatus().equals(StripeIntent.Status.Succeeded)) {
             notifyListeners(PaymentIntentEvents.Completed.getWebEventName(), new JSObject().put("paymentResult", PaymentIntentEvents.Completed.getWebEventName()));
             call.resolve(new JSObject().put("paymentResult", PaymentIntentEvents.Completed.getWebEventName()));
-        } else if (si == null || !si.getStatus().equals(StripeIntent.Status.Succeeded)) {
+        } else if (si == null ) {
+            final JSObject ret = new JSObject().put("error", "Failed to fetch SetupIntent");
+            ret.put("paymentResult", PaymentIntentEvents.Failed.getWebEventName());
+
+            notifyListeners(PaymentIntentEvents.Failed.getWebEventName(), new JSObject().put("paymentResult", PaymentIntentEvents.Completed.getWebEventName()));
+            call.resolve(ret);
+        } else if(!si.getStatus().equals(StripeIntent.Status.Succeeded)) {
             final JSObject ret = new JSObject().put("error", si.getLastErrorMessage());
             ret.put("paymentResult", PaymentIntentEvents.Failed.getWebEventName());
 
