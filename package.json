@@ -98,5 +98,13 @@
     "android": {
       "src": "android"
     }
+  },
+  "dependencies": {
+    "@typescript-eslint/parser": "5.62.0",
+    "@typescript-eslint/scope-manager": "5.62.0",
+    "@typescript-eslint/types": "5.62.0",
+    "@typescript-eslint/typescript-estree": "5.62.0",
+    "@typescript-eslint/visitor-keys": "5.62.0",
+    "is-array-buffer": "3.0.2"
   }
 }
