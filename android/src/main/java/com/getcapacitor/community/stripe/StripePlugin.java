@@ -3,15 +3,11 @@ package com.getcapacitor.community.stripe;
 import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.content.pm.ApplicationInfo;
-
 import androidx.activity.ComponentActivity;
-import androidx.annotation.NonNull;
 
 import com.getcapacitor.Bridge;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
-import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
@@ -19,25 +15,20 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.community.stripe.googlepay.GooglePayExecutor;
 import com.getcapacitor.community.stripe.helper.MetaData;
 import com.getcapacitor.community.stripe.identityverification.IdentityVerificationSheetExecutor;
-import com.getcapacitor.community.stripe.paymentIntent.PaymentIntentExecutor;
-import com.getcapacitor.community.stripe.paymentintent.PaymentIntentExecutor;
 import com.getcapacitor.community.stripe.paymentintent.CheckoutFragment;
 import com.getcapacitor.community.stripe.paymentflow.PaymentFlowExecutor;
 import com.getcapacitor.community.stripe.paymentintent.PaymentIntentEvents;
 import com.getcapacitor.community.stripe.paymentsheet.PaymentSheetExecutor;
-import com.stripe.android.ApiResultCallback;
 import com.stripe.android.PaymentConfiguration;
 import com.stripe.android.Stripe;
 import com.stripe.android.core.AppInfo;
 import com.stripe.android.googlepaylauncher.GooglePayLauncher;
 import com.stripe.android.identity.IdentityVerificationSheet;
-import com.stripe.android.model.PaymentIntent;
+import com.stripe.android.model.SetupIntent;
 import com.stripe.android.model.StripeIntent;
-import com.stripe.android.payments.paymentlauncher.PaymentLauncher;
 import com.stripe.android.paymentsheet.PaymentSheet;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
+import java.util.Objects;
 
 @CapacitorPlugin(name = "Stripe", requestCodes = { 9972, 50000, 50001, 6000 })
 public class StripePlugin extends Plugin {
@@ -54,8 +45,10 @@ public class StripePlugin extends Plugin {
 
     private static final String APP_INFO_NAME = "@capacitor-community/stripe";
 
+
+
     private final PaymentSheetExecutor paymentSheetExecutor = new PaymentSheetExecutor(
-        this::getContext,
+            this::getContext,
             this::notifyListeners,
         getLogTag()
     );
@@ -188,15 +181,9 @@ public class StripePlugin extends Plugin {
                     }
                 );
         }
-            this.paymentIntentExecutor.paymentLauncher = PaymentLauncher.Companion.create(
-                    getActivity(),
-                    PaymentConfiguration.getInstance(getContext()).getPublishableKey(),
-                    PaymentConfiguration.getInstance(getContext()).getStripeAccountId(),
-                    paymentResult -> {
-                        this.paymentIntentExecutor.onPaymentResult(bridge, paymentIntentCallbackId, paymentResult);
-                    }
-            );
     }
+
+
 
     @PluginMethod
     public void initialize(final PluginCall call) {
@@ -216,18 +203,14 @@ public class StripePlugin extends Plugin {
             } else {
                 Logger.info("PaymentConfiguration.init was run at load");
             }
-
-            String stripeAccountId = call.getString("stripeAccount", null);
-
-            PaymentConfiguration.init(getContext(), publishableKey, stripeAccountId);
-            Stripe.setAppInfo(AppInfo.create(APP_INFO_NAME));
             call.resolve();
         } catch (Exception e) {
             call.reject("unable to set publishable key: " + e.getLocalizedMessage(), e);
         }
     }
+
     @PluginMethod
-    public void retrievePaymentIntent(final PluginCall call){
+    public void retrieveSetupIntent(final PluginCall call){
         final String stripeAccountId = call.getString("stripeAccount", null);
         final String clientSecret = call.getString("clientSecret", null);
 
@@ -243,29 +226,24 @@ public class StripePlugin extends Plugin {
             call.reject("you must provide a valid clientSecret");
             return;
         }
-        new Stripe(getContext(), publishableKey, stripeAccountId)
-                .retrievePaymentIntent(clientSecret, stripeAccountId, new ApiResultCallback<>() {
-                    @Override
-                    public void onSuccess(@NonNull PaymentIntent paymentIntent) {
-                        if (paymentIntent.getStatus().equals(StripeIntent.Status.Succeeded)) {
-                            notifyListeners(PaymentIntentEvents.Completed.getWebEventName(), new JSObject().put("paymentResult", PaymentIntentEvents.Completed.getWebEventName()));
-                            call.resolve(new JSObject().put("paymentResult", PaymentIntentEvents.Completed.getWebEventName()));
-                            return;
-                        }
-                        if (!paymentIntent.getStatus().equals(StripeIntent.Status.Succeeded)) {
-                            final JSObject ret = new JSObject().put("error", paymentIntent.getLastErrorMessage());
-                            ret.put("paymentResult", PaymentIntentEvents.Failed.getWebEventName());
+        SetupIntent si = null;
+        try {
+            si = new Stripe(getContext(), publishableKey, stripeAccountId)
+                    .retrieveSetupIntentSynchronous(clientSecret, stripeAccountId);
+        } catch (Exception e) {
+            call.reject("error", e.getLocalizedMessage());
+        }
 
-                            notifyListeners(PaymentIntentEvents.Failed.getWebEventName(), new JSObject().put("paymentResult", PaymentIntentEvents.Completed.getWebEventName()));
-                            call.resolve(ret);
-                        }
-                    }
+        if (si != null && si.getStatus().equals(StripeIntent.Status.Succeeded)) {
+            notifyListeners(PaymentIntentEvents.Completed.getWebEventName(), new JSObject().put("paymentResult", PaymentIntentEvents.Completed.getWebEventName()));
+            call.resolve(new JSObject().put("paymentResult", PaymentIntentEvents.Completed.getWebEventName()));
+        } else if (si == null || !si.getStatus().equals(StripeIntent.Status.Succeeded)) {
+            final JSObject ret = new JSObject().put("error", si.getLastErrorMessage());
+            ret.put("paymentResult", PaymentIntentEvents.Failed.getWebEventName());
 
-                    @Override
-                    public void onError(@NonNull Exception e) {
-                        call.reject("error", e.getLocalizedMessage());
-                    }
-                });
+            notifyListeners(PaymentIntentEvents.Failed.getWebEventName(), new JSObject().put("paymentResult", PaymentIntentEvents.Completed.getWebEventName()));
+            call.resolve(ret);
+        }
     }
 
     @PluginMethod
@@ -308,6 +286,14 @@ public class StripePlugin extends Plugin {
     @PluginMethod
     public void createPaymentFlow(final PluginCall call) {
         paymentFlowExecutor.createPaymentFlow(call);
+
+        /* this.paymentSheetFragment = new CheckOutFragment().getInstance();
+        this.paymentSheetFragment.setCall(call);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .add(0, this.paymentSheetFragment, "CheckOutActivity")
+                .commit(); */
+
     }
 
     @PluginMethod
@@ -315,7 +301,9 @@ public class StripePlugin extends Plugin {
         paymentFlowCallbackId = call.getCallbackId();
         bridge.saveCall(call);
 
+
         paymentFlowExecutor.presentPaymentFlow(call);
+        // this.paymentSheetFragment.presentPaymentFlow(call);
     }
 
     @PluginMethod
@@ -324,6 +312,23 @@ public class StripePlugin extends Plugin {
         bridge.saveCall(call);
 
         paymentFlowExecutor.confirmPaymentFlow(call);
+        /* this.paymentSheetFragment.setCall(call);
+        this.paymentSheetFragment.confirmPaymentFlow(call); */
+    }
+
+    @PluginMethod
+    public void clean(final PluginCall call) {
+        /* Logger.info("Cleaning....");
+        try {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(this.paymentSheetFragment)
+                    .commit();
+        } catch (Exception e) {
+            call.reject("error", e);
+            return;
+        } */
+        call.resolve();
     }
 
     @PluginMethod

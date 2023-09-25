@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.core.util.Supplier;
 import com.getcapacitor.Bridge;
 import com.getcapacitor.JSObject;
+import com.getcapacitor.Logger;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.community.stripe.models.Executor;
 import com.google.android.gms.common.util.BiConsumer;
@@ -136,6 +137,7 @@ public class PaymentFlowExecutor extends Executor {
 
     public void onPaymentOption(Bridge bridge, String callbackId, @Nullable PaymentOption paymentOption) {
         PluginCall call = bridge.getSavedCall(callbackId);
+        Logger.info("Got onPaymentOption " + paymentOption.getLabel());
         if (paymentOption != null) {
             notifyListenersFunction.accept(
                 PaymentFlowEvents.Created.getWebEventName(),
@@ -150,7 +152,7 @@ public class PaymentFlowExecutor extends Executor {
 
     public void onPaymentFlowResult(Bridge bridge, String callbackId, final PaymentSheetResult paymentSheetResult) {
         PluginCall call = bridge.getSavedCall(callbackId);
-
+        Logger.info("Got onPaymentFlowResult ");
         if (paymentSheetResult instanceof PaymentSheetResult.Canceled) {
             notifyListenersFunction.accept(PaymentFlowEvents.Canceled.getWebEventName(), emptyObject);
             call.resolve(new JSObject().put("paymentResult", PaymentFlowEvents.Canceled.getWebEventName()));

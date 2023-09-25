@@ -44,6 +44,15 @@ exports.PaymentSheetEventsEnum = void 0;
     PaymentSheetEventsEnum["Failed"] = "paymentSheetFailed";
 })(exports.PaymentSheetEventsEnum || (exports.PaymentSheetEventsEnum = {}));
 
+exports.IdentityVerificationSheetEventsEnum = void 0;
+(function (IdentityVerificationSheetEventsEnum) {
+    IdentityVerificationSheetEventsEnum["Loaded"] = "identityVerificationSheetLoaded";
+    IdentityVerificationSheetEventsEnum["FailedToLoad"] = "identityVerificationSheetFailedToLoad";
+    IdentityVerificationSheetEventsEnum["Completed"] = "identityVerificationSheetCompleted";
+    IdentityVerificationSheetEventsEnum["Canceled"] = "identityVerificationSheetCanceled";
+    IdentityVerificationSheetEventsEnum["Failed"] = "identityVerificationSheetFailed";
+})(exports.IdentityVerificationSheetEventsEnum || (exports.IdentityVerificationSheetEventsEnum = {}));
+
 exports.PaymentIntentEventsEnum = void 0;
 (function (PaymentIntentEventsEnum) {
     PaymentIntentEventsEnum["Loaded"] = "paymentIntentLoaded";
@@ -154,7 +163,11 @@ class StripeWeb extends core.WebPlugin {
             platforms: ['web'],
         });
     }
-    async retrievePaymentIntent(options) {
+    async clean() {
+        return;
+    }
+    async retrieveSetupIntent(options) {
+        var _a, _b, _c, _d;
         if (!window || !window.Stripe || !this.publishableKey) {
             return {
                 paymentResult: exports.PaymentIntentEventsEnum.FailedToLoad
@@ -162,17 +175,17 @@ class StripeWeb extends core.WebPlugin {
         }
         console.log(options);
         const stripe = window.Stripe(this.publishableKey, { stripeAccount: options.stripeAccount });
-        const paymentIntent = await stripe.retrievePaymentIntent(options.clientSecret).then(pir => pir.paymentIntent);
-        if ((paymentIntent === null || paymentIntent === void 0 ? void 0 : paymentIntent.status) === 'succeeded') {
+        const res = await stripe.retrieveSetupIntent(options.clientSecret).then(pir => pir);
+        if (((_a = res === null || res === void 0 ? void 0 : res.setupIntent) === null || _a === void 0 ? void 0 : _a.status) === 'succeeded') {
             this.notifyListeners(exports.PaymentIntentEventsEnum.Completed, null);
             return {
                 paymentResult: exports.PaymentIntentEventsEnum.Completed,
             };
         }
-        this.notifyListeners(exports.PaymentIntentEventsEnum.Failed, paymentIntent === null || paymentIntent === void 0 ? void 0 : paymentIntent.last_payment_error);
+        this.notifyListeners(exports.PaymentIntentEventsEnum.Failed, (_b = res.setupIntent) === null || _b === void 0 ? void 0 : _b.last_setup_error);
         return {
             paymentResult: exports.PaymentIntentEventsEnum.Failed,
-            error: (paymentIntent === null || paymentIntent === void 0 ? void 0 : paymentIntent.last_payment_error) ? paymentIntent === null || paymentIntent === void 0 ? void 0 : paymentIntent.last_payment_error.message : undefined
+            error: ((_c = res.setupIntent) === null || _c === void 0 ? void 0 : _c.last_setup_error) ? (_d = res.setupIntent) === null || _d === void 0 ? void 0 : _d.last_setup_error.message : undefined
         };
     }
     async confirmPaymentIntent(options) {
@@ -204,6 +217,13 @@ class StripeWeb extends core.WebPlugin {
         if (options.stripeAccount) {
             this.stripeAccount = options.stripeAccount;
         }
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async createIdentityVerificationSheet(_options) {
+        // TODO: what is web.ts for?
+    }
+    presentIdentityVerificationSheet() {
+        throw new Error('Method not implemented.');
     }
     async createPaymentSheet(options) {
         var _a;

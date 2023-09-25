@@ -1,5 +1,5 @@
 import { WebPlugin } from '@capacitor/core';
-import type { ApplePayResultInterface, CreateApplePayOption, CreateGooglePayOption, CreatePaymentFlowOption, CreatePaymentSheetOption, GooglePayResultInterface, PaymentFlowResultInterface, PaymentIntentResultInterface, PaymentSheetResultInterface, StripeInitializationOptions, StripePlugin, StripePaymentSheet } from './definitions';
+import type { ApplePayResultInterface, CreateApplePayOption, CreateGooglePayOption, CreateIdentityVerificationSheetOption, CreatePaymentFlowOption, CreatePaymentSheetOption, GooglePayResultInterface, IdentityVerificationSheetResultInterface, PaymentFlowResultInterface, PaymentIntentResultInterface, PaymentSheetResultInterface, StripeInitializationOptions, StripePaymentSheet, StripePlugin } from './definitions';
 export declare class StripeWeb extends WebPlugin implements StripePlugin {
     private publishableKey;
     private stripeAccount;
@@ -11,7 +11,8 @@ export declare class StripeWeb extends WebPlugin implements StripePlugin {
     private requestGooglePay;
     private requestGooglePayOptions;
     constructor();
-    retrievePaymentIntent(options: {
+    clean(): Promise<void>;
+    retrieveSetupIntent(options: {
         clientSecret: string;
         stripeAccount?: string;
     }): Promise<{
@@ -28,6 +29,10 @@ export declare class StripeWeb extends WebPlugin implements StripePlugin {
         debugError?: unknown;
     }>;
     initialize(options: StripeInitializationOptions): Promise<void>;
+    createIdentityVerificationSheet(_options: CreateIdentityVerificationSheetOption): Promise<void>;
+    presentIdentityVerificationSheet(): Promise<{
+        identityVerificationResult: IdentityVerificationSheetResultInterface;
+    }>;
     createPaymentSheet(options: CreatePaymentSheetOption): Promise<void>;
     presentPaymentSheet(): Promise<{
         paymentResult: PaymentSheetResultInterface;

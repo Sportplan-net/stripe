@@ -135,7 +135,8 @@ Learn at [the official @capacitor-community/stripe documentation](https://stripe
 * [`addListener(PaymentFlowEventsEnum.Canceled, ...)`](#addlistenerpaymentfloweventsenumcanceled)
 * [`addListener(PaymentFlowEventsEnum.Failed, ...)`](#addlistenerpaymentfloweventsenumfailed)
 * [`addListener(PaymentFlowEventsEnum.Created, ...)`](#addlistenerpaymentfloweventsenumcreated)
-* [`retrievePaymentIntent(...)`](#retrievepaymentintent)
+* [`clean()`](#clean)
+* [`retrieveSetupIntent(...)`](#retrievesetupintent)
 * [`confirmPaymentIntent(...)`](#confirmpaymentintent)
 * [`addListener(PaymentIntentEventsEnum.Loaded, ...)`](#addlistenerpaymentintenteventsenumloaded)
 * [`addListener(PaymentIntentEventsEnum.FailedToLoad, ...)`](#addlistenerpaymentintenteventsenumfailedtoload)
@@ -1122,10 +1123,19 @@ addListener(eventName: PaymentFlowEventsEnum.Created, listenerFunc: (info: { car
 --------------------
 
 
-### retrievePaymentIntent(...)
+### clean()
 
 ```typescript
-retrievePaymentIntent(options: { clientSecret: string; stripeAccount?: string; }) => Promise<{ paymentResult?: PaymentIntentResultInterface; error?: string; debugError?: unknown; }>
+clean() => Promise<void>
+```
+
+--------------------
+
+
+### retrieveSetupIntent(...)
+
+```typescript
+retrieveSetupIntent(options: { clientSecret: string; stripeAccount?: string; }) => Promise<{ paymentResult?: PaymentIntentResultInterface; error?: string; debugError?: unknown; }>
 ```
 
 | Param         | Type                                                           |
@@ -1432,6 +1442,8 @@ iOS Only
 | ------------------------ | ------------------- |
 | **`verificationId`**     | <code>string</code> |
 | **`ephemeralKeySecret`** | <code>string</code> |
+
+
 #### StripePaymentSheet
 
 

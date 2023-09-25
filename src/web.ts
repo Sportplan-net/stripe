@@ -1,6 +1,7 @@
 import { WebPlugin } from '@capacitor/core';
 import type { FormSubmitEvent } from '@stripe-elements/stripe-elements/dist/types/interfaces';
 import type { Stripe, StripeCardNumberElement } from '@stripe/stripe-js';
+
 import type {
   ApplePayResultInterface,
   CreateApplePayOption,
@@ -41,7 +42,11 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     });
   }
 
-  async retrievePaymentIntent(options: {
+  async clean(): Promise<void> {
+    return;
+  }
+
+  async retrieveSetupIntent(options: {
     clientSecret: string;
     stripeAccount?: string;
   }): Promise<{
@@ -55,17 +60,17 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     }
     console.log(options);
     const stripe = window.Stripe(this.publishableKey, { stripeAccount: options.stripeAccount });
-    const paymentIntent = await stripe.retrievePaymentIntent(options.clientSecret).then(pir => pir.paymentIntent);
-    if (paymentIntent?.status === 'succeeded') {
+    const res = await stripe.retrieveSetupIntent(options.clientSecret).then(pir => pir);
+    if (res?.setupIntent?.status === 'succeeded') {
       this.notifyListeners(PaymentIntentEventsEnum.Completed, null);
       return {
         paymentResult: PaymentIntentEventsEnum.Completed,
       };
     }
-    this.notifyListeners(PaymentIntentEventsEnum.Failed, paymentIntent?.last_payment_error);
+    this.notifyListeners(PaymentIntentEventsEnum.Failed, res.setupIntent?.last_setup_error);
     return {
       paymentResult: PaymentIntentEventsEnum.Failed,
-      error: paymentIntent?.last_payment_error ? paymentIntent?.last_payment_error.message : undefined
+      error: res.setupIntent?.last_setup_error ? res.setupIntent?.last_setup_error.message : undefined
     };
   }
 

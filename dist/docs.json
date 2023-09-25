@@ -708,6 +708,156 @@
         "slug": "addlistenergooglepayeventsenumfailed"
       },
       {
+        "name": "createIdentityVerificationSheet",
+        "signature": "(options: CreateIdentityVerificationSheetOption) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "CreateIdentityVerificationSheetOption"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "CreateIdentityVerificationSheetOption"
+        ],
+        "slug": "createidentityverificationsheet"
+      },
+      {
+        "name": "presentIdentityVerificationSheet",
+        "signature": "() => Promise<{ identityVerificationResult: IdentityVerificationSheetResultInterface; }>",
+        "parameters": [],
+        "returns": "Promise<{ identityVerificationResult: IdentityVerificationSheetResultInterface; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "IdentityVerificationSheetResultInterface"
+        ],
+        "slug": "presentidentityverificationsheet"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: IdentityVerificationSheetEventsEnum.Loaded, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "IdentityVerificationSheetEventsEnum.Loaded"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "IdentityVerificationSheetEventsEnum"
+        ],
+        "slug": "addlisteneridentityverificationsheeteventsenumloaded"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: IdentityVerificationSheetEventsEnum.FailedToLoad, listenerFunc: (error: string) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "IdentityVerificationSheetEventsEnum.FailedToLoad"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(error: string) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "IdentityVerificationSheetEventsEnum"
+        ],
+        "slug": "addlisteneridentityverificationsheeteventsenumfailedtoload"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: IdentityVerificationSheetEventsEnum.Completed, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "IdentityVerificationSheetEventsEnum.Completed"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "IdentityVerificationSheetEventsEnum"
+        ],
+        "slug": "addlisteneridentityverificationsheeteventsenumcompleted"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: IdentityVerificationSheetEventsEnum.Canceled, listenerFunc: () => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "IdentityVerificationSheetEventsEnum.Canceled"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "() => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "IdentityVerificationSheetEventsEnum"
+        ],
+        "slug": "addlisteneridentityverificationsheeteventsenumcanceled"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: IdentityVerificationSheetEventsEnum.Failed, listenerFunc: (error: string) => void) => PluginListenerHandle",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "IdentityVerificationSheetEventsEnum.Failed"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(error: string) => void"
+          }
+        ],
+        "returns": "PluginListenerHandle",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "IdentityVerificationSheetEventsEnum"
+        ],
+        "slug": "addlisteneridentityverificationsheeteventsenumfailed"
+      },
+      {
         "name": "createPaymentFlow",
         "signature": "(options: CreatePaymentFlowOption) => Promise<StripePaymentSheet | void>",
         "parameters": [
@@ -917,7 +1067,17 @@
         "slug": "addlistenerpaymentfloweventsenumcreated"
       },
       {
-        "name": "retrievePaymentIntent",
+        "name": "clean",
+        "signature": "() => Promise<void>",
+        "parameters": [],
+        "returns": "Promise<void>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "clean"
+      },
+      {
+        "name": "retrieveSetupIntent",
         "signature": "(options: { clientSecret: string; stripeAccount?: string; }) => Promise<{ paymentResult?: PaymentIntentResultInterface; error?: string; debugError?: unknown; }>",
         "parameters": [
           {
@@ -932,7 +1092,7 @@
         "complexTypes": [
           "PaymentIntentResultInterface"
         ],
-        "slug": "retrievepaymentintent"
+        "slug": "retrievesetupintent"
       },
       {
         "name": "confirmPaymentIntent",
@@ -1289,6 +1449,7 @@
       "HTMLStencilElement",
       "ApplePayDefinitions",
       "GooglePayDefinitions",
+      "IdentityVerificationSheetDefinitions",
       "PaymentFlowDefinitions",
       "PaymentIntentDefinitions",
       "PaymentSheetDefinitions",
@@ -1594,6 +1755,35 @@
         "CreateApplePayOption",
         "DidSelectShippingContact",
         "ShippingContact"
+      ]
+    },
+    {
+      "name": "CreateIdentityVerificationSheetOption",
+      "slug": "createidentityverificationsheetoption",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "verificationId",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "ephemeralKeySecret",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ],
+      "importObject": [
+        "PluginListenerHandle",
+        "IdentityVerificationSheetEventsEnum",
+        "IdentityVerificationSheetResultInterface",
+        "IdentityVerificationSheetDefinitions"
       ]
     },
     {
@@ -1993,6 +2183,7 @@
         "HTMLStencilElement",
         "ApplePayDefinitions",
         "GooglePayDefinitions",
+        "IdentityVerificationSheetDefinitions",
         "PaymentFlowDefinitions",
         "PaymentIntentDefinitions",
         "PaymentSheetDefinitions",
@@ -2025,6 +2216,7 @@
         "HTMLStencilElement",
         "ApplePayDefinitions",
         "GooglePayDefinitions",
+        "IdentityVerificationSheetDefinitions",
         "PaymentFlowDefinitions",
         "PaymentIntentDefinitions",
         "PaymentSheetDefinitions",
@@ -2091,6 +2283,7 @@
         "HTMLStencilElement",
         "ApplePayDefinitions",
         "GooglePayDefinitions",
+        "IdentityVerificationSheetDefinitions",
         "PaymentFlowDefinitions",
         "PaymentIntentDefinitions",
         "PaymentSheetDefinitions",
@@ -2139,6 +2332,7 @@
         "HTMLStencilElement",
         "ApplePayDefinitions",
         "GooglePayDefinitions",
+        "IdentityVerificationSheetDefinitions",
         "PaymentFlowDefinitions",
         "PaymentIntentDefinitions",
         "PaymentSheetDefinitions",
@@ -2232,6 +2426,42 @@
         {
           "name": "Failed",
           "value": "\"googlePayFailed\"",
+          "tags": [],
+          "docs": ""
+        }
+      ]
+    },
+    {
+      "name": "IdentityVerificationSheetEventsEnum",
+      "slug": "identityverificationsheeteventsenum",
+      "members": [
+        {
+          "name": "Loaded",
+          "value": "\"identityVerificationSheetLoaded\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "FailedToLoad",
+          "value": "\"identityVerificationSheetFailedToLoad\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Completed",
+          "value": "\"identityVerificationSheetCompleted\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Canceled",
+          "value": "\"identityVerificationSheetCanceled\"",
+          "tags": [],
+          "docs": ""
+        },
+        {
+          "name": "Failed",
+          "value": "\"identityVerificationSheetFailed\"",
           "tags": [],
           "docs": ""
         }
@@ -2417,6 +2647,31 @@
           "text": "GooglePayEventsEnum.Failed",
           "complexTypes": [
             "GooglePayEventsEnum"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "IdentityVerificationSheetResultInterface",
+      "slug": "identityverificationsheetresultinterface",
+      "docs": "",
+      "types": [
+        {
+          "text": "IdentityVerificationSheetEventsEnum.Completed",
+          "complexTypes": [
+            "IdentityVerificationSheetEventsEnum"
+          ]
+        },
+        {
+          "text": "IdentityVerificationSheetEventsEnum.Canceled",
+          "complexTypes": [
+            "IdentityVerificationSheetEventsEnum"
+          ]
+        },
+        {
+          "text": "IdentityVerificationSheetEventsEnum.Failed",
+          "complexTypes": [
+            "IdentityVerificationSheetEventsEnum"
           ]
         }
       ]
