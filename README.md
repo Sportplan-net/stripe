@@ -111,7 +111,7 @@ Learn at [the official @capacitor-community/stripe documentation](https://stripe
 * [`addListener(PaymentFlowEventsEnum.Canceled, ...)`](#addlistenerpaymentfloweventsenumcanceled)
 * [`addListener(PaymentFlowEventsEnum.Failed, ...)`](#addlistenerpaymentfloweventsenumfailed)
 * [`addListener(PaymentFlowEventsEnum.Created, ...)`](#addlistenerpaymentfloweventsenumcreated)
-* [`retrievePaymentIntent(...)`](#retrievepaymentintent)
+* [`retrieveSetupIntent(...)`](#retrievesetupintent)
 * [`confirmPaymentIntent(...)`](#confirmpaymentintent)
 * [`addListener(PaymentIntentEventsEnum.Loaded, ...)`](#addlistenerpaymentintenteventsenumloaded)
 * [`addListener(PaymentIntentEventsEnum.FailedToLoad, ...)`](#addlistenerpaymentintenteventsenumfailedtoload)
@@ -994,10 +994,10 @@ addListener(eventName: PaymentFlowEventsEnum.Created, listenerFunc: (info: { car
 --------------------
 
 
-### retrievePaymentIntent(...)
+### retrieveSetupIntent(...)
 
 ```typescript
-retrievePaymentIntent(options: { clientSecret: string; stripeAccount?: string; }) => Promise<{ paymentResult?: PaymentIntentResultInterface; error?: string; debugError?: unknown; }>
+retrieveSetupIntent(options: { clientSecret: string; stripeAccount?: string; }) => Promise<{ paymentResult?: PaymentIntentResultInterface; error?: string; debugError?: unknown; }>
 ```
 
 | Param         | Type                                                           |

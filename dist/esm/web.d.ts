@@ -11,7 +11,7 @@ export declare class StripeWeb extends WebPlugin implements StripePlugin {
     private requestGooglePay;
     private requestGooglePayOptions;
     constructor();
-    retrievePaymentIntent(options: {
+    retrieveSetupIntent(options: {
         clientSecret: string;
         stripeAccount?: string;
     }): Promise<{

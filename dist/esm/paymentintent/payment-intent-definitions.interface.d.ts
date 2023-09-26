@@ -1,7 +1,7 @@
 import type { PluginListenerHandle } from '@capacitor/core';
 import type { PaymentIntentEventsEnum, PaymentIntentResultInterface } from './payment-intent-events.enum';
 export interface PaymentIntentDefinitions {
-    retrievePaymentIntent(options: {
+    retrieveSetupIntent(options: {
         clientSecret: string;
         stripeAccount?: string;
     }): Promise<{

@@ -4,7 +4,7 @@ import type { PaymentIntentEventsEnum, PaymentIntentResultInterface } from './pa
 
 export interface PaymentIntentDefinitions {
   
-  retrievePaymentIntent(options: {
+  retrieveSetupIntent(options: {
     clientSecret: string;
     stripeAccount?: string;
   }): Promise<{ paymentResult?: PaymentIntentResultInterface; error?: string; debugError?: unknown }>;

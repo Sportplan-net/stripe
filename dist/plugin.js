@@ -151,25 +151,26 @@ var capacitorStripe = (function (exports, core) {
                 platforms: ['web'],
             });
         }
-        async retrievePaymentIntent(options) {
-            if (!window || !window.Stripe || !this.publishableKey) {
+        async retrieveSetupIntent(options) {
+            var _a, _b, _c, _d;
+            if (!(window === null || window === void 0 ? void 0 : window.Stripe) || !this.publishableKey) {
                 return {
                     paymentResult: exports.PaymentIntentEventsEnum.FailedToLoad
                 };
             }
             console.log(options);
             const stripe = window.Stripe(this.publishableKey, { stripeAccount: options.stripeAccount });
-            const paymentIntent = await stripe.retrievePaymentIntent(options.clientSecret).then(pir => pir.paymentIntent);
-            if ((paymentIntent === null || paymentIntent === void 0 ? void 0 : paymentIntent.status) === 'succeeded') {
+            const res = await stripe.retrieveSetupIntent(options.clientSecret).then(pir => pir);
+            if (((_a = res.setupIntent) === null || _a === void 0 ? void 0 : _a.status) === 'succeeded') {
                 this.notifyListeners(exports.PaymentIntentEventsEnum.Completed, null);
                 return {
                     paymentResult: exports.PaymentIntentEventsEnum.Completed,
                 };
             }
-            this.notifyListeners(exports.PaymentIntentEventsEnum.Failed, paymentIntent === null || paymentIntent === void 0 ? void 0 : paymentIntent.last_payment_error);
+            this.notifyListeners(exports.PaymentIntentEventsEnum.Failed, (_b = res.setupIntent) === null || _b === void 0 ? void 0 : _b.last_setup_error);
             return {
                 paymentResult: exports.PaymentIntentEventsEnum.Failed,
-                error: (paymentIntent === null || paymentIntent === void 0 ? void 0 : paymentIntent.last_payment_error) ? paymentIntent === null || paymentIntent === void 0 ? void 0 : paymentIntent.last_payment_error.message : undefined
+                error: ((_c = res === null || res === void 0 ? void 0 : res.setupIntent) === null || _c === void 0 ? void 0 : _c.last_setup_error) ? (_d = res === null || res === void 0 ? void 0 : res.setupIntent) === null || _d === void 0 ? void 0 : _d.last_setup_error.message : undefined
             };
         }
         async confirmPaymentIntent(options) {

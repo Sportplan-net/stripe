@@ -917,7 +917,7 @@
         "slug": "addlistenerpaymentfloweventsenumcreated"
       },
       {
-        "name": "retrievePaymentIntent",
+        "name": "retrieveSetupIntent",
         "signature": "(options: { clientSecret: string; stripeAccount?: string; }) => Promise<{ paymentResult?: PaymentIntentResultInterface; error?: string; debugError?: unknown; }>",
         "parameters": [
           {
@@ -932,7 +932,7 @@
         "complexTypes": [
           "PaymentIntentResultInterface"
         ],
-        "slug": "retrievepaymentintent"
+        "slug": "retrievesetupintent"
       },
       {
         "name": "confirmPaymentIntent",
