@@ -25,6 +25,7 @@ import com.stripe.android.Stripe;
 import com.stripe.android.core.AppInfo;
 import com.stripe.android.googlepaylauncher.GooglePayLauncher;
 import com.stripe.android.model.PaymentIntent;
+import com.stripe.android.model.SetupIntent;
 import com.stripe.android.model.StripeIntent;
 import com.stripe.android.payments.paymentlauncher.PaymentLauncher;
 import com.stripe.android.paymentsheet.PaymentSheet;
