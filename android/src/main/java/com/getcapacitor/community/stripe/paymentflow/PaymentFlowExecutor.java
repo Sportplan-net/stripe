@@ -29,6 +29,29 @@ public class PaymentFlowExecutor extends Executor {
         this.contextSupplier = contextSupplier;
     }
 
+    private @Nullable PaymentSheet.BillingDetails buildBillingDetails (final @Nullable JSObject address ) {
+
+      if (address == null){
+        return null;
+      }
+      
+      @Nullable String city = address.getString("city", null);
+      @Nullable String country = address.getString("country", null);
+      @Nullable String lineOne = address.getString("lineOne", null);
+      @Nullable String postCode = address.getString("postCode", null);
+      @Nullable String state = address.getString("state", null);
+
+      final PaymentSheet.Address addressBuilder =
+        new PaymentSheet.Address.Builder()
+          .city(city)
+          .country(country)
+          .line1(lineOne)
+          .postalCode(postCode)
+          .state(state)
+          .build();
+        return  new PaymentSheet.BillingDetails.Builder().address(addressBuilder).build();
+    }
+
     public void createPaymentFlow(final PluginCall call) {
         String paymentIntentClientSecret = call.getString("paymentIntentClientSecret", null);
         String setupIntentClientSecret = call.getString("setupIntentClientSecret", null);
@@ -62,7 +85,11 @@ public class PaymentFlowExecutor extends Executor {
             : null;
 
         if (!enableGooglePay) {
-            paymentConfiguration = new PaymentSheet.Configuration(merchantDisplayName, customer);
+            paymentConfiguration = new PaymentSheet.Configuration(merchantDisplayName,
+                                                                  customer,
+                                                                  null,
+                                                                  null,
+                                                                  this.buildBillingDetails(call.getObject("address", null)));
         } else {
             Boolean GooglePayEnvironment = call.getBoolean("GooglePayIsTesting", false);
 
