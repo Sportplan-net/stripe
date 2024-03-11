@@ -28,6 +28,7 @@ export interface CreatePaymentFlowOption extends BasePaymentOption {
      */
     setupIntentClientSecret?: string;
     address?: {
+        name?: string;
         lineOne?: string;
         city?: string;
         postCode?: string;

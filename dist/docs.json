@@ -1646,7 +1646,7 @@
           "tags": [],
           "docs": "",
           "complexTypes": [],
-          "type": "{ lineOne?: string | undefined; city?: string | undefined; postCode?: string | undefined; state?: string | undefined; country?: string | undefined; } | undefined"
+          "type": "{ name?: string | undefined; lineOne?: string | undefined; city?: string | undefined; postCode?: string | undefined; state?: string | undefined; country?: string | undefined; } | undefined"
         },
         {
           "name": "customerEphemeralKeySecret",
