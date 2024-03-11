@@ -1642,6 +1642,13 @@
           "type": "string | undefined"
         },
         {
+          "name": "address",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "{ lineOne?: string | undefined; city?: string | undefined; postCode?: string | undefined; state?: string | undefined; country?: string | undefined; } | undefined"
+        },
+        {
           "name": "customerEphemeralKeySecret",
           "tags": [],
           "docs": "Any documentation call 'ephemeralKey'",
