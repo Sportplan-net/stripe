@@ -29,27 +29,31 @@ public class PaymentFlowExecutor extends Executor {
         this.contextSupplier = contextSupplier;
     }
 
-    private @Nullable PaymentSheet.BillingDetails buildBillingDetails (final @Nullable JSObject address ) {
-
-      if (address == null){
-        return null;
-      }
-      
+    private @Nullable PaymentSheet.Address.Builder getAddress(final @Nullable JSObject address )
+    {
       @Nullable String city = address.getString("city", null);
       @Nullable String country = address.getString("country", null);
       @Nullable String lineOne = address.getString("lineOne", null);
       @Nullable String postCode = address.getString("postCode", null);
       @Nullable String state = address.getString("state", null);
 
-      final PaymentSheet.Address addressBuilder =
+      final PaymentSheet.Address.Builder addressBuilder =
         new PaymentSheet.Address.Builder()
           .city(city)
           .country(country)
           .line1(lineOne)
           .postalCode(postCode)
-          .state(state)
-          .build();
-        return  new PaymentSheet.BillingDetails.Builder().address(addressBuilder).build();
+          .state(state);
+      return addressBuilder;
+    }
+
+    private @Nullable PaymentSheet.BillingDetails.Builder getBillingDetails (final @Nullable JSObject address ) {
+
+      if (address == null){
+        return null;
+      }
+      @Nullable String name = address.getString("name", null);
+        return new PaymentSheet.BillingDetails.Builder().address(getAddress(address).build()).name(name);
     }
 
     public void createPaymentFlow(final PluginCall call) {
@@ -85,11 +89,17 @@ public class PaymentFlowExecutor extends Executor {
             : null;
 
         if (!enableGooglePay) {
-            paymentConfiguration = new PaymentSheet.Configuration(merchantDisplayName,
-                                                                  customer,
-                                                                  null,
-                                                                  null,
-                                                                  this.buildBillingDetails(call.getObject("address", null)));
+            final @Nullable JSObject address = call.getObject("address", null);
+            paymentConfiguration = new PaymentSheet.Configuration.Builder(merchantDisplayName)
+              .customer(customer)
+              .billingDetailsCollectionConfiguration(new PaymentSheet.BillingDetailsCollectionConfiguration(
+                PaymentSheet.BillingDetailsCollectionConfiguration.CollectionMode.Automatic,
+                PaymentSheet.BillingDetailsCollectionConfiguration.CollectionMode.Automatic,
+                PaymentSheet.BillingDetailsCollectionConfiguration.CollectionMode.Automatic,
+                PaymentSheet.BillingDetailsCollectionConfiguration.AddressCollectionMode.Full,
+                false))
+              .defaultBillingDetails(this.getBillingDetails(address).build()).build();
+              //.shippingDetails(new AddressDetails(  address.getString("name", null), this.getAddress(address).build(), null, true)).build();
         } else {
             Boolean GooglePayEnvironment = call.getBoolean("GooglePayIsTesting", false);
 
