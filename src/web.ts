@@ -1,6 +1,9 @@
 import { WebPlugin } from '@capacitor/core';
+// import type { Stripe } from '@stripe-elements/stripe-elements/dist/';
 import type { FormSubmitEvent } from '@stripe-elements/stripe-elements/dist/types/interfaces';
-import type { StripeCardNumberElement, Stripe } from '@stripe/stripe-js';
+import { defineCustomElements as stripeDefineCustomElements } from '@stripe-elements/stripe-elements/loader';
+import type { Stripe, StripeCardNumberElement, StripeAddressElement } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 import type {
   ApplePayResultInterface,
@@ -13,11 +16,11 @@ import type {
   PaymentIntentResultInterface,
   PaymentSheetResultInterface,
   StripeInitializationOptions,
-  StripePlugin,
   StripePaymentSheet,
+  StripePlugin,
   StripeRequestButton
 } from './definitions';
-import { ApplePayEventsEnum, GooglePayEventsEnum, PaymentFlowEventsEnum, PaymentSheetEventsEnum, PaymentIntentEventsEnum } from './definitions';
+import { ApplePayEventsEnum, GooglePayEventsEnum, PaymentFlowEventsEnum, PaymentIntentEventsEnum, PaymentSheetEventsEnum } from './definitions';
 import { isPlatform } from './shared/platform';
 
 export class StripeWeb extends WebPlugin implements StripePlugin {
@@ -33,6 +36,8 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
 
   private requestGooglePay: StripeRequestButton | undefined;
   private requestGooglePayOptions: CreateGooglePayOption | undefined;
+
+  private addressElement: StripeAddressElement | undefined;
 
   constructor() {
     super({
@@ -176,12 +181,57 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     };
   }
 
+  waitForElm = async (el: HTMLElement, selector: string): Promise<Element | null> => {
+    return new Promise(resolve => {
+      if (el.querySelector(selector)) {
+        return resolve(el.querySelector(selector));
+      }
+      const observer = new MutationObserver(() => {
+        if (el.querySelector(selector)) {
+          resolve(el.querySelector(selector));
+          observer.disconnect();
+        }
+      });
+      observer.observe(el, {
+        childList: true,
+        subtree: true
+      });
+    });
+  };
+
+
+  async addAddressElement(paymentSheet: StripePaymentSheet, clientSecret?: string): Promise<void> {
+
+    this.addressElement?.unmount();
+
+    if (!window.Stripe && this.publishableKey) {
+      await loadStripe(this.publishableKey);
+    }
+    if (window.Stripe && this.publishableKey) {
+      const stripe = window.Stripe(this.publishableKey, { stripeAccount: this.stripeAccount });
+      const elements = stripe.elements({
+        clientSecret
+      });
+      const el = await paymentSheet.getStripePaymentSheetElement();
+      const add = document.createElement('stripe-address-sheet');
+      add.setAttribute('id', 'address-element');
+
+      const cardEl = await this.waitForElm(el, '#stripe-card-element');
+      cardEl?.appendChild(add);
+
+      this.addressElement = elements.create('address', { mode: 'billing' });
+      await this.waitForElm(paymentSheet, '#address-element');
+      this.addressElement.mount('#address-element');
+    }
+  }
+
   async createPaymentFlow(options: CreatePaymentFlowOption): Promise<StripePaymentSheet | void> {
     if (!this.publishableKey) {
       this.notifyListeners(PaymentFlowEventsEnum.FailedToLoad, null);
       return;
     }
 
+    stripeDefineCustomElements(window);
     this.paymentSheet = document.createElement('stripe-payment-sheet');
     document.querySelector('body')?.appendChild(this.paymentSheet);
     await customElements.whenDefined('stripe-payment-sheet');
@@ -212,7 +262,8 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     } else {
       this.paymentSheet.buttonLabel = 'Add';
     }
-
+    await this.addAddressElement(this.paymentSheet, options.paymentIntentClientSecret || options.setupIntentClientSecret);
+    console.log('we got:::::::', this.paymentSheet);
     this.notifyListeners(PaymentFlowEventsEnum.Loaded, null);
 
     return this.paymentSheet;
@@ -226,7 +277,66 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     }
 
     this.notifyListeners(PaymentFlowEventsEnum.Opened, null);
+
+    this.paymentSheet.handleSubmit = async (
+      event: Event,
+      submitEventProps: FormSubmitEvent
+    ) => {
+      event.preventDefault();
+      if (!this.paymentSheet?.intentClientSecret) {
+        throw new Error('intentClientSecret is not defined');
+      }
+      const cardEl = submitEventProps.cardNumberElement;
+
+      if (!cardEl || this.addressElement === undefined) {
+        console.error('card element is not defined ', submitEventProps, this.addressElement, cardEl);
+        return;
+      }
+
+      const addressHolder = await this.addressElement.getValue().then(res => res.value);
+      console.log('addressHolder', submitEventProps, this.paymentSheet, addressHolder);
+
+      if (this.paymentSheet.intentType === 'payment') {
+        await submitEventProps.stripe.confirmCardPayment(this.paymentSheet.intentClientSecret, {
+          payment_method: {
+            card: cardEl,
+            billing_details: {
+              address: {
+                line1: addressHolder?.address.line1,
+                line2: addressHolder?.address.line2 || undefined,
+                city: addressHolder?.address?.city,
+                state: addressHolder?.address?.state,
+                postal_code: addressHolder?.address?.postal_code,
+                country: addressHolder?.address?.country
+              },
+              name: addressHolder?.name,
+            }
+          }
+        });
+      }
+      await submitEventProps.stripe.confirmCardSetup(this.paymentSheet.intentClientSecret, {
+        payment_method: {
+          card: cardEl,
+          billing_details: {
+            address: {
+              line1: addressHolder?.address.line1,
+              line2: addressHolder?.address.line2 || undefined,
+              city: addressHolder?.address?.city,
+              state: addressHolder?.address?.state,
+              postal_code: addressHolder?.address?.postal_code,
+              country: addressHolder?.address?.country
+            },
+            name: addressHolder?.name,
+          }
+        }
+      });
+    };
+
     const props = await this.paymentSheet.present().catch(() => undefined);
+    const addressHolder = await this.addressElement?.getValue().then(res => res.value);
+
+    this.addressElement?.unmount();
+
     if (props === undefined) {
       this.notifyListeners(PaymentFlowEventsEnum.Canceled, null);
       throw new Error();
@@ -237,8 +347,16 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     } = props as {
       detail: FormSubmitEvent;
     };
+    const { token } = await stripe.createToken(cardNumberElement, {
+      address_line1: addressHolder?.address.line1,
+      address_line2: addressHolder?.address.line2 || undefined,
+      address_city: addressHolder?.address?.city,
+      address_state: addressHolder?.address?.state,
+      address_zip: addressHolder?.address?.postal_code,
+      address_country: addressHolder?.address?.country,
+      name: addressHolder?.name,
+    });
 
-    const { token } = await stripe.createToken(cardNumberElement);
     if (token === undefined || token.card === undefined) {
       throw new Error();
     }

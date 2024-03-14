@@ -61,6 +61,10 @@ class PaymentFlowExecutor: NSObject {
         if customerId != nil && customerEphemeralKeySecret != nil {
             configuration.customer = .init(id: customerId!, ephemeralKeySecret: customerEphemeralKeySecret!)
         }
+        configuration.billingDetailsCollectionConfiguration.name = .always
+        configuration.billingDetailsCollectionConfiguration.email = .never
+        configuration.billingDetailsCollectionConfiguration.address = .full
+        configuration.billingDetailsCollectionConfiguration.attachDefaultsToPaymentMethod = true
 
         if setupIntentClientSecret != nil {
             PaymentSheet.FlowController.create(setupIntentClientSecret: setupIntentClientSecret!,

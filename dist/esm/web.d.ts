@@ -1,5 +1,5 @@
 import { WebPlugin } from '@capacitor/core';
-import type { ApplePayResultInterface, CreateApplePayOption, CreateGooglePayOption, CreatePaymentFlowOption, CreatePaymentSheetOption, GooglePayResultInterface, PaymentFlowResultInterface, PaymentIntentResultInterface, PaymentSheetResultInterface, StripeInitializationOptions, StripePlugin, StripePaymentSheet } from './definitions';
+import type { ApplePayResultInterface, CreateApplePayOption, CreateGooglePayOption, CreatePaymentFlowOption, CreatePaymentSheetOption, GooglePayResultInterface, PaymentFlowResultInterface, PaymentIntentResultInterface, PaymentSheetResultInterface, StripeInitializationOptions, StripePaymentSheet, StripePlugin } from './definitions';
 export declare class StripeWeb extends WebPlugin implements StripePlugin {
     private publishableKey;
     private stripeAccount;
@@ -32,6 +32,8 @@ export declare class StripeWeb extends WebPlugin implements StripePlugin {
     presentPaymentSheet(): Promise<{
         paymentResult: PaymentSheetResultInterface;
     }>;
+    waitForElm: (el: HTMLElement, selector: string) => Promise<Element | null>;
+    addAddressElement(paymentSheet: StripePaymentSheet, clientSecret?: string): Promise<void>;
     createPaymentFlow(options: CreatePaymentFlowOption): Promise<StripePaymentSheet | void>;
     presentPaymentFlow(): Promise<{
         cardNumber: string;

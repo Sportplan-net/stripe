@@ -1,5 +1,7 @@
 import { WebPlugin } from '@capacitor/core';
-import { ApplePayEventsEnum, GooglePayEventsEnum, PaymentFlowEventsEnum, PaymentSheetEventsEnum, PaymentIntentEventsEnum } from './definitions';
+import { defineCustomElements as stripeDefineCustomElements } from '@stripe-elements/stripe-elements/loader';
+import { loadStripe } from '@stripe/stripe-js';
+import { ApplePayEventsEnum, GooglePayEventsEnum, PaymentFlowEventsEnum, PaymentIntentEventsEnum, PaymentSheetEventsEnum } from './definitions';
 import { isPlatform } from './shared/platform';
 export class StripeWeb extends WebPlugin {
     constructor() {
@@ -7,6 +9,23 @@ export class StripeWeb extends WebPlugin {
             name: 'Stripe',
             platforms: ['web'],
         });
+        this.waitForElm = async (el, selector) => {
+            return new Promise(resolve => {
+                if (el.querySelector(selector)) {
+                    return resolve(el.querySelector(selector));
+                }
+                const observer = new MutationObserver(() => {
+                    if (el.querySelector(selector)) {
+                        resolve(el.querySelector(selector));
+                        observer.disconnect();
+                    }
+                });
+                observer.observe(el, {
+                    childList: true,
+                    subtree: true
+                });
+            });
+        };
     }
     async retrieveSetupIntent(options) {
         var _a, _b, _c, _d;
@@ -110,12 +129,34 @@ export class StripeWeb extends WebPlugin {
             paymentResult: PaymentSheetEventsEnum.Completed,
         };
     }
+    async addAddressElement(paymentSheet, clientSecret) {
+        var _a;
+        (_a = this.addressElement) === null || _a === void 0 ? void 0 : _a.unmount();
+        if (!window.Stripe && this.publishableKey) {
+            await loadStripe(this.publishableKey);
+        }
+        if (window.Stripe && this.publishableKey) {
+            const stripe = window.Stripe(this.publishableKey, { stripeAccount: this.stripeAccount });
+            const elements = stripe.elements({
+                clientSecret
+            });
+            const el = await paymentSheet.getStripePaymentSheetElement();
+            const add = document.createElement('stripe-address-sheet');
+            add.setAttribute('id', 'address-element');
+            const cardEl = await this.waitForElm(el, '#stripe-card-element');
+            cardEl === null || cardEl === void 0 ? void 0 : cardEl.appendChild(add);
+            this.addressElement = elements.create('address', { mode: 'billing' });
+            await this.waitForElm(paymentSheet, '#address-element');
+            this.addressElement.mount('#address-element');
+        }
+    }
     async createPaymentFlow(options) {
         var _a;
         if (!this.publishableKey) {
             this.notifyListeners(PaymentFlowEventsEnum.FailedToLoad, null);
             return;
         }
+        stripeDefineCustomElements(window);
         this.paymentSheet = document.createElement('stripe-payment-sheet');
         (_a = document.querySelector('body')) === null || _a === void 0 ? void 0 : _a.appendChild(this.paymentSheet);
         await customElements.whenDefined('stripe-payment-sheet');
@@ -143,21 +184,82 @@ export class StripeWeb extends WebPlugin {
         else {
             this.paymentSheet.buttonLabel = 'Add';
         }
+        await this.addAddressElement(this.paymentSheet, options.paymentIntentClientSecret || options.setupIntentClientSecret);
+        console.log('we got:::::::', this.paymentSheet);
         this.notifyListeners(PaymentFlowEventsEnum.Loaded, null);
         return this.paymentSheet;
     }
     async presentPaymentFlow() {
+        var _a, _b, _c, _d, _e, _f;
         if (!this.paymentSheet) {
             throw new Error();
         }
         this.notifyListeners(PaymentFlowEventsEnum.Opened, null);
+        this.paymentSheet.handleSubmit = async (event, submitEventProps) => {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+            event.preventDefault();
+            if (!((_a = this.paymentSheet) === null || _a === void 0 ? void 0 : _a.intentClientSecret)) {
+                throw new Error('intentClientSecret is not defined');
+            }
+            const cardEl = submitEventProps.cardNumberElement;
+            if (!cardEl || this.addressElement === undefined) {
+                console.error('card element is not defined ', submitEventProps, this.addressElement, cardEl);
+                return;
+            }
+            const addressHolder = await this.addressElement.getValue().then(res => res.value);
+            console.log('addressHolder', submitEventProps, this.paymentSheet, addressHolder);
+            if (this.paymentSheet.intentType === 'payment') {
+                await submitEventProps.stripe.confirmCardPayment(this.paymentSheet.intentClientSecret, {
+                    payment_method: {
+                        card: cardEl,
+                        billing_details: {
+                            address: {
+                                line1: addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address.line1,
+                                line2: (addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address.line2) || undefined,
+                                city: (_b = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _b === void 0 ? void 0 : _b.city,
+                                state: (_c = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _c === void 0 ? void 0 : _c.state,
+                                postal_code: (_d = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _d === void 0 ? void 0 : _d.postal_code,
+                                country: (_e = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _e === void 0 ? void 0 : _e.country
+                            },
+                            name: addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.name,
+                        }
+                    }
+                });
+            }
+            await submitEventProps.stripe.confirmCardSetup(this.paymentSheet.intentClientSecret, {
+                payment_method: {
+                    card: cardEl,
+                    billing_details: {
+                        address: {
+                            line1: addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address.line1,
+                            line2: (addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address.line2) || undefined,
+                            city: (_f = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _f === void 0 ? void 0 : _f.city,
+                            state: (_g = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _g === void 0 ? void 0 : _g.state,
+                            postal_code: (_h = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _h === void 0 ? void 0 : _h.postal_code,
+                            country: (_j = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _j === void 0 ? void 0 : _j.country
+                        },
+                        name: addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.name,
+                    }
+                }
+            });
+        };
         const props = await this.paymentSheet.present().catch(() => undefined);
+        const addressHolder = await ((_a = this.addressElement) === null || _a === void 0 ? void 0 : _a.getValue().then(res => res.value));
+        (_b = this.addressElement) === null || _b === void 0 ? void 0 : _b.unmount();
         if (props === undefined) {
             this.notifyListeners(PaymentFlowEventsEnum.Canceled, null);
             throw new Error();
         }
         const { detail: { stripe, cardNumberElement }, } = props;
-        const { token } = await stripe.createToken(cardNumberElement);
+        const { token } = await stripe.createToken(cardNumberElement, {
+            address_line1: addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address.line1,
+            address_line2: (addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address.line2) || undefined,
+            address_city: (_c = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _c === void 0 ? void 0 : _c.city,
+            address_state: (_d = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _d === void 0 ? void 0 : _d.state,
+            address_zip: (_e = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _e === void 0 ? void 0 : _e.postal_code,
+            address_country: (_f = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _f === void 0 ? void 0 : _f.country,
+            name: addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.name,
+        });
         if (token === undefined || token.card === undefined) {
             throw new Error();
         }
