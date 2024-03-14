@@ -6,20 +6,20 @@ ext {
 }
 
 buildscript {
-    ext.kotlin_version = '1.8.20'
+    ext.kotlin_version = '1.9.0'
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath 'com.android.tools.build:gradle:7.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+// apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion project.hasProperty('compileSdkVersion') ? rootProject.ext.compileSdkVersion : 32
@@ -58,7 +58,7 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
-    implementation 'com.stripe:stripe-android:20.11.0'
+    implementation 'com.stripe:stripe-android:20.39.0'
     implementation 'com.google.android.gms:play-services-wallet:19.1.0'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
