@@ -10,6 +10,7 @@ export declare class StripeWeb extends WebPlugin implements StripePlugin {
     private requestApplePayOptions;
     private requestGooglePay;
     private requestGooglePayOptions;
+    private addressElement;
     constructor();
     retrieveSetupIntent(options: {
         clientSecret: string;
