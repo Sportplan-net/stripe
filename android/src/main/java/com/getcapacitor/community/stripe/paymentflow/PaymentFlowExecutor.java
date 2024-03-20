@@ -71,9 +71,8 @@ public class PaymentFlowExecutor extends Executor {
                     true);
 
             final @Nullable JSObject addressData = call.getObject("address", null);
-            AddressDetails ad = null;
+            PaymentSheet.BillingDetails billingDetails = null;
             if(addressData != null) {
-
                 final String name = addressData.optString("userName");
                 final String city = addressData.optString("city");
                 final String country = addressData.optString("country");
@@ -82,13 +81,19 @@ public class PaymentFlowExecutor extends Executor {
                 final String postalCode = addressData.optString("postCode");
                 final String state = addressData.optString("state");
 
+                billingDetails =
+                        new PaymentSheet.BillingDetails.Builder()
+                                .address(new PaymentSheet.Address(city, country, line1, line2, postalCode, state))
+                                .name(name)
+                                .build();
+                /*
                 ad = new AddressDetails(name,
                         new PaymentSheet.Address(city, country, line1, line2, postalCode, state),
                         null,
-                        true);
+                        true);*/
             }
             paymentConfiguration = new PaymentSheet.Configuration.Builder(merchantDisplayName)
-              .customer(customer).shippingDetails(ad)
+              .customer(customer).defaultBillingDetails(billingDetails)
               .billingDetailsCollectionConfiguration(billingDetailsCollectionConf)
                      .build();
 
