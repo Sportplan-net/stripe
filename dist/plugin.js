@@ -270,26 +270,38 @@ var capacitorStripe = (function (exports, core, loader, stripeJs) {
                 paymentResult: exports.PaymentSheetEventsEnum.Completed,
             };
         }
-        async addAddressElement(paymentSheet, clientSecret) {
-            var _a;
-            (_a = this.addressElement) === null || _a === void 0 ? void 0 : _a.unmount();
-            if (!window.Stripe && this.publishableKey) {
+        async addAddressElement(paymentSheet, clientSecret, address) {
+            var _a, _b;
+            if (!window.Stripe && this.publishableKey && !this.elements) {
                 await stripeJs.loadStripe(this.publishableKey);
             }
-            if (window.Stripe && this.publishableKey) {
+            if (window.Stripe && this.publishableKey && !this.elements) {
                 const stripe = window.Stripe(this.publishableKey, { stripeAccount: this.stripeAccount });
-                const elements = stripe.elements({
+                this.elements = stripe.elements({
                     clientSecret
                 });
-                const el = await paymentSheet.getStripePaymentSheetElement();
-                const add = document.createElement('stripe-address-sheet');
-                add.setAttribute('id', 'address-element');
-                const cardEl = await this.waitForElm(el, '#stripe-card-element');
-                cardEl === null || cardEl === void 0 ? void 0 : cardEl.appendChild(add);
-                this.addressElement = elements.create('address', { mode: 'billing' });
-                await this.waitForElm(paymentSheet, '#address-element');
-                this.addressElement.mount('#address-element');
             }
+            const el = await paymentSheet.getStripePaymentSheetElement();
+            const cardEl = await this.waitForElm(el, '#stripe-card-element');
+            const add = document.createElement('stripe-address-sheet');
+            add.setAttribute('id', 'address-element');
+            cardEl === null || cardEl === void 0 ? void 0 : cardEl.appendChild(add);
+            this.addressElement = this.addressElement ? this.addressElement : (_a = this.elements) === null || _a === void 0 ? void 0 : _a.create('address', {
+                mode: 'billing',
+                defaultValues: {
+                    name: address === null || address === void 0 ? void 0 : address.userName,
+                    address: (address === null || address === void 0 ? void 0 : address.countryCode) ? {
+                        line1: (address === null || address === void 0 ? void 0 : address.lineOne) ? address.lineOne : undefined,
+                        line2: (address === null || address === void 0 ? void 0 : address.lineTwo) ? address.lineTwo : undefined,
+                        city: (address === null || address === void 0 ? void 0 : address.city) ? address.city : undefined,
+                        state: (address === null || address === void 0 ? void 0 : address.state) ? address.state : undefined,
+                        postal_code: (address === null || address === void 0 ? void 0 : address.postCode) ? address.postCode : undefined,
+                        country: address === null || address === void 0 ? void 0 : address.countryCode,
+                    } : undefined
+                }
+            });
+            // await this.waitForElm(paymentSheet, '#address-element');
+            (_b = this.addressElement) === null || _b === void 0 ? void 0 : _b.mount('#address-element');
         }
         async createPaymentFlow(options) {
             var _a;
@@ -325,8 +337,7 @@ var capacitorStripe = (function (exports, core, loader, stripeJs) {
             else {
                 this.paymentSheet.buttonLabel = 'Add';
             }
-            await this.addAddressElement(this.paymentSheet, options.paymentIntentClientSecret || options.setupIntentClientSecret);
-            console.log('we got:::::::', this.paymentSheet);
+            await this.addAddressElement(this.paymentSheet, options.paymentIntentClientSecret || options.setupIntentClientSecret, options.address);
             this.notifyListeners(exports.PaymentFlowEventsEnum.Loaded, null);
             return this.paymentSheet;
         }
@@ -386,10 +397,14 @@ var capacitorStripe = (function (exports, core, loader, stripeJs) {
             };
             const props = await this.paymentSheet.present().catch(() => undefined);
             const addressHolder = await ((_a = this.addressElement) === null || _a === void 0 ? void 0 : _a.getValue().then(res => res.value));
-            (_b = this.addressElement) === null || _b === void 0 ? void 0 : _b.unmount();
             if (props === undefined) {
                 this.notifyListeners(exports.PaymentFlowEventsEnum.Canceled, null);
-                throw new Error();
+                (_b = document.querySelector('body')) === null || _b === void 0 ? void 0 : _b.removeChild(this.paymentSheet);
+                return {
+                    cardNumber: '',
+                    error: 'canceled',
+                    debugError: 'user hit the cancel button'
+                };
             }
             const { detail: { stripe, cardNumberElement }, } = props;
             const { token } = await stripe.createToken(cardNumberElement, {

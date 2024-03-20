@@ -2,7 +2,7 @@ import { WebPlugin } from '@capacitor/core';
 // import type { Stripe } from '@stripe-elements/stripe-elements/dist/';
 import type { FormSubmitEvent } from '@stripe-elements/stripe-elements/dist/types/interfaces';
 import { defineCustomElements as stripeDefineCustomElements } from '@stripe-elements/stripe-elements/loader';
-import type { Stripe, StripeCardNumberElement, StripeAddressElement } from '@stripe/stripe-js';
+import type { Stripe, StripeCardNumberElement, StripeAddressElement, StripeElements } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
 import type {
@@ -12,6 +12,7 @@ import type {
   CreatePaymentFlowOption,
   CreatePaymentSheetOption,
   GooglePayResultInterface,
+  IBillingAddress,
   PaymentFlowResultInterface,
   PaymentIntentResultInterface,
   PaymentSheetResultInterface,
@@ -38,6 +39,7 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
   private requestGooglePayOptions: CreateGooglePayOption | undefined;
 
   private addressElement: StripeAddressElement | undefined;
+  private elements: StripeElements | undefined;
 
   constructor() {
     super({
@@ -200,29 +202,42 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
   };
 
 
-  async addAddressElement(paymentSheet: StripePaymentSheet, clientSecret?: string): Promise<void> {
+  async addAddressElement(paymentSheet: StripePaymentSheet,
+    clientSecret?: string,
+    address?: IBillingAddress): Promise<void> {
 
-    this.addressElement?.unmount();
-
-    if (!window.Stripe && this.publishableKey) {
+    if (!window.Stripe && this.publishableKey && !this.elements) {
       await loadStripe(this.publishableKey);
     }
-    if (window.Stripe && this.publishableKey) {
+    if (window.Stripe && this.publishableKey && !this.elements) {
       const stripe = window.Stripe(this.publishableKey, { stripeAccount: this.stripeAccount });
-      const elements = stripe.elements({
+      this.elements = stripe.elements({
         clientSecret
       });
-      const el = await paymentSheet.getStripePaymentSheetElement();
-      const add = document.createElement('stripe-address-sheet');
-      add.setAttribute('id', 'address-element');
-
-      const cardEl = await this.waitForElm(el, '#stripe-card-element');
-      cardEl?.appendChild(add);
-
-      this.addressElement = elements.create('address', { mode: 'billing' });
-      await this.waitForElm(paymentSheet, '#address-element');
-      this.addressElement.mount('#address-element');
     }
+    const el = await paymentSheet.getStripePaymentSheetElement();
+
+    const cardEl = await this.waitForElm(el, '#stripe-card-element');
+    const add = document.createElement('stripe-address-sheet');
+    add.setAttribute('id', 'address-element');
+    cardEl?.appendChild(add);
+
+    this.addressElement = this.addressElement ? this.addressElement : this.elements?.create('address', {
+      mode: 'billing',
+      defaultValues: {
+        name: address?.userName,
+        address: address?.countryCode ? {
+          line1: address?.lineOne ? address.lineOne : undefined,
+          line2: address?.lineTwo ? address.lineTwo : undefined,
+          city: address?.city ? address.city : undefined,
+          state: address?.state ? address.state : undefined,
+          postal_code: address?.postCode ? address.postCode : undefined,
+          country: address?.countryCode,
+        } : undefined
+      }
+    });
+    // await this.waitForElm(paymentSheet, '#address-element');
+    this.addressElement?.mount('#address-element');
   }
 
   async createPaymentFlow(options: CreatePaymentFlowOption): Promise<StripePaymentSheet | void> {
@@ -262,8 +277,9 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     } else {
       this.paymentSheet.buttonLabel = 'Add';
     }
-    await this.addAddressElement(this.paymentSheet, options.paymentIntentClientSecret || options.setupIntentClientSecret);
-    console.log('we got:::::::', this.paymentSheet);
+    await this.addAddressElement(this.paymentSheet,
+      options.paymentIntentClientSecret || options.setupIntentClientSecret,
+      options.address);
     this.notifyListeners(PaymentFlowEventsEnum.Loaded, null);
 
     return this.paymentSheet;
@@ -271,6 +287,8 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
 
   async presentPaymentFlow(): Promise<{
     cardNumber: string;
+    error?: string;
+    debugError?: string;
   }> {
     if (!this.paymentSheet) {
       throw new Error();
@@ -334,12 +352,14 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
 
     const props = await this.paymentSheet.present().catch(() => undefined);
     const addressHolder = await this.addressElement?.getValue().then(res => res.value);
-
-    this.addressElement?.unmount();
-
     if (props === undefined) {
       this.notifyListeners(PaymentFlowEventsEnum.Canceled, null);
-      throw new Error();
+      document.querySelector('body')?.removeChild(this.paymentSheet);
+      return {
+        cardNumber: '',
+        error: 'canceled',
+        debugError: 'user hit the cancel button'
+      };
     }
 
     const {

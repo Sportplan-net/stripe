@@ -1,4 +1,12 @@
-
+export interface IBillingAddress {
+  userName?: string;
+  lineOne?: string;
+  lineTwo?: string;
+  city?: string;
+  postCode?: string;
+  state?: string;
+  countryCode?: string;
+}
 /**
  * @extends BasePaymentOption
  */
@@ -31,14 +39,8 @@ export interface CreatePaymentFlowOption extends BasePaymentOption {
    * Set paymentIntentClientSecret or setupIntentClientSecret
    */
   setupIntentClientSecret?: string;
-  address?: {
-    name?: string;
-    lineOne?: string;
-    city?: string;
-    postCode?: string;
-    state?: string;
-    country?: string;
-  }
+
+  address?: IBillingAddress
 }
 
 export interface BasePaymentOption {

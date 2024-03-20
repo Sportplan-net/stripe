@@ -61,11 +61,43 @@ class PaymentFlowExecutor: NSObject {
         if customerId != nil && customerEphemeralKeySecret != nil {
             configuration.customer = .init(id: customerId!, ephemeralKeySecret: customerEphemeralKeySecret!)
         }
+        
+        if let addressData = call.getObject("address") {
+            let name = addressData["userName"] as? String
+            let country = addressData["countryCode"] as? String
+            let city = addressData["city"] as? String
+            let line1 = addressData["lineOne"] as? String
+            let line2 = addressData["lineTwo"] as? String
+            let postalCode = addressData["postCode"] as? String
+            let state = addressData["state"] as? String
+            /*
+            configuration.shippingDetails = {
+                AddressViewController.AddressDetails(
+                    address: AddressViewController.AddressDetails.Address(city: city,
+                                                                          country: country ?? "",
+                                                                          line1: line1 ?? "",
+                                                                          line2: line2 ?? "",
+                                                                          postalCode: postalCode ?? "",
+                                                                          state: state ?? ""),
+                    name:name,
+                    isCheckboxSelected: true)
+                
+            }*/
+            configuration.defaultBillingDetails.address.city = city
+            configuration.defaultBillingDetails.address.country = country
+            configuration.defaultBillingDetails.address.line1 = line1
+            configuration.defaultBillingDetails.address.line2 = line2
+            configuration.defaultBillingDetails.address.postalCode = postalCode
+            configuration.defaultBillingDetails.address.state = state
+            configuration.defaultBillingDetails.name = name
+        }
+                                                                           
+                                                                                         
         configuration.billingDetailsCollectionConfiguration.name = .always
         configuration.billingDetailsCollectionConfiguration.email = .never
         configuration.billingDetailsCollectionConfiguration.address = .full
         configuration.billingDetailsCollectionConfiguration.attachDefaultsToPaymentMethod = true
-
+            
         if setupIntentClientSecret != nil {
             PaymentSheet.FlowController.create(setupIntentClientSecret: setupIntentClientSecret!,
                                                configuration: configuration) { [weak self] result in

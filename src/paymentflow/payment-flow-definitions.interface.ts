@@ -9,6 +9,8 @@ export interface PaymentFlowDefinitions {
   createPaymentFlow(options: CreatePaymentFlowOption): Promise<StripePaymentSheet | void>;
   presentPaymentFlow(): Promise<{
     cardNumber: string;
+    error?: string;
+    debugError?: string;
   }>;
   confirmPaymentFlow(): Promise<{
     paymentResult: PaymentFlowResultInterface,

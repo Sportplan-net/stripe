@@ -11,10 +11,10 @@ import com.getcapacitor.community.stripe.models.Executor;
 import com.google.android.gms.common.util.BiConsumer;
 import com.stripe.android.paymentsheet.PaymentSheet;
 import com.stripe.android.paymentsheet.PaymentSheetResult;
+import com.stripe.android.paymentsheet.addresselement.AddressDetails;
 import com.stripe.android.paymentsheet.model.PaymentOption;
 
 public class PaymentFlowExecutor extends Executor {
-
     public PaymentSheet.FlowController flowController;
     private final JSObject emptyObject = new JSObject();
     private PaymentSheet.Configuration paymentConfiguration;
@@ -63,14 +63,35 @@ public class PaymentFlowExecutor extends Executor {
             : null;
 
         if (!enableGooglePay) {
-             paymentConfiguration = new PaymentSheet.Configuration.Builder(merchantDisplayName)
-              .customer(customer)
-              .billingDetailsCollectionConfiguration(new PaymentSheet.BillingDetailsCollectionConfiguration(
-                PaymentSheet.BillingDetailsCollectionConfiguration.CollectionMode.Always,
-                PaymentSheet.BillingDetailsCollectionConfiguration.CollectionMode.Automatic,
-                PaymentSheet.BillingDetailsCollectionConfiguration.CollectionMode.Automatic,
-                PaymentSheet.BillingDetailsCollectionConfiguration.AddressCollectionMode.Full,
-                true)).build();
+            final PaymentSheet.BillingDetailsCollectionConfiguration billingDetailsCollectionConf = new PaymentSheet.BillingDetailsCollectionConfiguration(
+                    PaymentSheet.BillingDetailsCollectionConfiguration.CollectionMode.Always,
+                    PaymentSheet.BillingDetailsCollectionConfiguration.CollectionMode.Automatic,
+                    PaymentSheet.BillingDetailsCollectionConfiguration.CollectionMode.Automatic,
+                    PaymentSheet.BillingDetailsCollectionConfiguration.AddressCollectionMode.Full,
+                    true);
+
+            final @Nullable JSObject addressData = call.getObject("address", null);
+            AddressDetails ad = null;
+            if(addressData != null) {
+
+                final String name = addressData.optString("userName");
+                final String city = addressData.optString("city");
+                final String country = addressData.optString("country");
+                final String line1 = addressData.optString("line1");
+                final String line2 = addressData.optString("line2");
+                final String postalCode = addressData.optString("postCode");
+                final String state = addressData.optString("state");
+
+                ad = new AddressDetails(name,
+                        new PaymentSheet.Address(city, country, line1, line2, postalCode, state),
+                        null,
+                        true);
+            }
+            paymentConfiguration = new PaymentSheet.Configuration.Builder(merchantDisplayName)
+              .customer(customer).shippingDetails(ad)
+              .billingDetailsCollectionConfiguration(billingDetailsCollectionConf)
+                     .build();
+
         } else {
             Boolean GooglePayEnvironment = call.getBoolean("GooglePayIsTesting", false);
 
@@ -167,7 +188,7 @@ public class PaymentFlowExecutor extends Executor {
                 PaymentFlowEvents.Failed.getWebEventName(),
                 new JSObject().put("error", ((PaymentSheetResult.Failed) paymentSheetResult).getError().getLocalizedMessage())
             );
-            
+
             call.resolve(new JSObject().put("paymentResult", PaymentFlowEvents.Failed.getWebEventName())
               .put("error", ((PaymentSheetResult.Failed) paymentSheetResult).getError().getLocalizedMessage()));
 
