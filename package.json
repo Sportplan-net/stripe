@@ -1,6 +1,6 @@
 {
   "name": "@capacitor-community/stripe",
-  "version": "5.2.9",
+  "version": "5.2.5",
   "description": "Stripe SDK bindings for Capacitor Applications",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",

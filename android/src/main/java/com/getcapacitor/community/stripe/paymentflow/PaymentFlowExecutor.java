@@ -76,8 +76,8 @@ public class PaymentFlowExecutor extends Executor {
                 final String name = addressData.optString("userName");
                 final String city = addressData.optString("city");
                 final String country = addressData.optString("countryCode");
-                final String line1 = addressData.optString("line1");
-                final String line2 = addressData.optString("line2");
+                final String line1 = addressData.optString("lineOne");
+                final String line2 = addressData.optString("lineTwo˜");
                 final String postalCode = addressData.optString("postCode");
                 final String state = addressData.optString("state");
 
