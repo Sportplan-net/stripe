@@ -130,7 +130,7 @@ export class StripeWeb extends WebPlugin {
         };
     }
     async addAddressElement(paymentSheet, clientSecret, address) {
-        var _a, _b;
+        var _a, _b, _c;
         if (!window.Stripe && this.publishableKey && !this.elements) {
             await loadStripe(this.publishableKey);
         }
@@ -144,8 +144,8 @@ export class StripeWeb extends WebPlugin {
         const cardEl = await this.waitForElm(el, '#stripe-card-element');
         const add = document.createElement('stripe-address-sheet');
         add.setAttribute('id', 'address-element');
-        cardEl === null || cardEl === void 0 ? void 0 : cardEl.appendChild(add);
-        this.addressElement = this.addressElement ? this.addressElement : (_a = this.elements) === null || _a === void 0 ? void 0 : _a.create('address', {
+        (_a = cardEl === null || cardEl === void 0 ? void 0 : cardEl.querySelector('.payment-info')) === null || _a === void 0 ? void 0 : _a.appendChild(add);
+        this.addressElement = this.addressElement ? this.addressElement : (_b = this.elements) === null || _b === void 0 ? void 0 : _b.create('address', {
             mode: 'billing',
             defaultValues: {
                 name: address === null || address === void 0 ? void 0 : address.userName,
@@ -160,7 +160,7 @@ export class StripeWeb extends WebPlugin {
             }
         });
         // await this.waitForElm(paymentSheet, '#address-element');
-        (_b = this.addressElement) === null || _b === void 0 ? void 0 : _b.mount('#address-element');
+        (_c = this.addressElement) === null || _c === void 0 ? void 0 : _c.mount('#address-element');
     }
     async createPaymentFlow(options) {
         var _a;

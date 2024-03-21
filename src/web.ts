@@ -220,7 +220,7 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     const cardEl = await this.waitForElm(el, '#stripe-card-element');
     const add = document.createElement('stripe-address-sheet');
     add.setAttribute('id', 'address-element');
-    cardEl?.appendChild(add);
+    cardEl?.querySelector('.payment-info')?.appendChild(add);
 
     this.addressElement = this.addressElement ? this.addressElement : this.elements?.create('address', {
       mode: 'billing',
