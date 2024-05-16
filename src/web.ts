@@ -312,10 +312,10 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
       }
 
       const addressHolder = await this.addressElement.getValue().then(res => res.value);
-      console.log('addressHolder', submitEventProps, this.paymentSheet, addressHolder);
+      // console.log('addressHolder', submitEventProps, this.paymentSheet, addressHolder);
 
       if (this.paymentSheet.intentType === 'payment') {
-        await submitEventProps.stripe.confirmCardPayment(this.paymentSheet.intentClientSecret, {
+        const res = await submitEventProps.stripe.confirmCardPayment(this.paymentSheet.intentClientSecret, {
           payment_method: {
             card: cardEl,
             billing_details: {
@@ -331,8 +331,13 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
             }
           }
         });
+        // console.log('confirmCardSetup', res);
+        if (res.error) {
+          // console.error('confirmCardSetup error', res.error);
+          throw new Error(res.error.message);
+        }
       }
-      await submitEventProps.stripe.confirmCardSetup(this.paymentSheet.intentClientSecret, {
+      const res = await submitEventProps.stripe.confirmCardSetup(this.paymentSheet.intentClientSecret, {
         payment_method: {
           card: cardEl,
           billing_details: {
@@ -348,8 +353,12 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
           }
         }
       });
+      // console.log('confirmCardSetup', res);
+      if (res.error) {
+        // console.error('confirmCardSetup error', res.error);
+        throw new Error(res.error.message);
+      }
     };
-
     const props = await this.paymentSheet.present().catch(() => undefined);
     const addressHolder = await this.addressElement?.getValue().then(res => res.value);
     if (props === undefined) {
@@ -367,7 +376,7 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
     } = props as {
       detail: FormSubmitEvent;
     };
-    const { token } = await stripe.createToken(cardNumberElement, {
+    const { token, error } = await stripe.createToken(cardNumberElement, {
       address_line1: addressHolder?.address.line1,
       address_line2: addressHolder?.address.line2 || undefined,
       address_city: addressHolder?.address?.city,
@@ -377,7 +386,9 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
       name: addressHolder?.name,
     });
 
-    if (token === undefined || token.card === undefined) {
+    if (error) {
+      throw new Error(error.message);
+    } else if (token === undefined || token.card === undefined) {
       throw new Error();
     }
 

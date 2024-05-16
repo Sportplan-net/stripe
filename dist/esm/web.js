@@ -218,9 +218,9 @@ export class StripeWeb extends WebPlugin {
                 return;
             }
             const addressHolder = await this.addressElement.getValue().then(res => res.value);
-            console.log('addressHolder', submitEventProps, this.paymentSheet, addressHolder);
+            // console.log('addressHolder', submitEventProps, this.paymentSheet, addressHolder);
             if (this.paymentSheet.intentType === 'payment') {
-                await submitEventProps.stripe.confirmCardPayment(this.paymentSheet.intentClientSecret, {
+                const res = await submitEventProps.stripe.confirmCardPayment(this.paymentSheet.intentClientSecret, {
                     payment_method: {
                         card: cardEl,
                         billing_details: {
@@ -236,8 +236,13 @@ export class StripeWeb extends WebPlugin {
                         }
                     }
                 });
+                // console.log('confirmCardSetup', res);
+                if (res.error) {
+                    // console.error('confirmCardSetup error', res.error);
+                    throw new Error(res.error.message);
+                }
             }
-            await submitEventProps.stripe.confirmCardSetup(this.paymentSheet.intentClientSecret, {
+            const res = await submitEventProps.stripe.confirmCardSetup(this.paymentSheet.intentClientSecret, {
                 payment_method: {
                     card: cardEl,
                     billing_details: {
@@ -253,6 +258,11 @@ export class StripeWeb extends WebPlugin {
                     }
                 }
             });
+            // console.log('confirmCardSetup', res);
+            if (res.error) {
+                // console.error('confirmCardSetup error', res.error);
+                throw new Error(res.error.message);
+            }
         };
         const props = await this.paymentSheet.present().catch(() => undefined);
         const addressHolder = await ((_a = this.addressElement) === null || _a === void 0 ? void 0 : _a.getValue().then(res => res.value));
@@ -266,7 +276,7 @@ export class StripeWeb extends WebPlugin {
             };
         }
         const { detail: { stripe, cardNumberElement }, } = props;
-        const { token } = await stripe.createToken(cardNumberElement, {
+        const { token, error } = await stripe.createToken(cardNumberElement, {
             address_line1: addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address.line1,
             address_line2: (addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address.line2) || undefined,
             address_city: (_c = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _c === void 0 ? void 0 : _c.city,
@@ -275,7 +285,10 @@ export class StripeWeb extends WebPlugin {
             address_country: (_f = addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.address) === null || _f === void 0 ? void 0 : _f.country,
             name: addressHolder === null || addressHolder === void 0 ? void 0 : addressHolder.name,
         });
-        if (token === undefined || token.card === undefined) {
+        if (error) {
+            throw new Error(error.message);
+        }
+        else if (token === undefined || token.card === undefined) {
             throw new Error();
         }
         this.flowStripe = stripe;
