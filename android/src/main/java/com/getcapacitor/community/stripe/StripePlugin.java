@@ -1,37 +1,29 @@
 package com.getcapacitor.community.stripe;
 
-import android.content.pm.ApplicationInfo;
-
 import androidx.activity.ComponentActivity;
-import androidx.annotation.NonNull;
 
 import com.getcapacitor.Bridge;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
-import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.community.stripe.googlepay.GooglePayExecutor;
 import com.getcapacitor.community.stripe.helper.MetaData;
-import com.getcapacitor.community.stripe.paymentintent.CheckoutFragment;
 import com.getcapacitor.community.stripe.paymentflow.PaymentFlowExecutor;
+import com.getcapacitor.community.stripe.paymentintent.CheckoutFragment;
 import com.getcapacitor.community.stripe.paymentintent.PaymentIntentEvents;
 import com.getcapacitor.community.stripe.paymentsheet.PaymentSheetExecutor;
-import com.stripe.android.ApiResultCallback;
 import com.stripe.android.PaymentConfiguration;
 import com.stripe.android.Stripe;
 import com.stripe.android.core.AppInfo;
 import com.stripe.android.googlepaylauncher.GooglePayLauncher;
-import com.stripe.android.model.PaymentIntent;
 import com.stripe.android.model.SetupIntent;
 import com.stripe.android.model.StripeIntent;
-import com.stripe.android.payments.paymentlauncher.PaymentLauncher;
 import com.stripe.android.paymentsheet.PaymentSheet;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import org.jetbrains.annotations.NotNull;
 
 @CapacitorPlugin(name = "Stripe", requestCodes = { 9972, 50000, 50001, 6000 })
 public class StripePlugin extends Plugin {
