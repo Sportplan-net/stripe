@@ -6,32 +6,37 @@ import type { PaymentSheetEventsEnum, PaymentSheetResultInterface } from './paym
 
 export interface PaymentSheetDefinitions {
   createPaymentSheet(options: CreatePaymentSheetOption): Promise<void>;
-    presentPaymentSheet(): Promise<{
-      paymentResult: PaymentSheetResultInterface;
-    }>;
+  presentPaymentSheet(): Promise<{
+    paymentResult: PaymentSheetResultInterface;
+  }>;
 
+  // addListener(): Promise<PluginListenerHandle>;
   addListener(
     eventName: PaymentSheetEventsEnum.Loaded,
     listenerFunc: () => void,
-  ): PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: PaymentSheetEventsEnum.FailedToLoad,
     listenerFunc: (error: string) => void,
-  ): PluginListenerHandle;
+
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: PaymentSheetEventsEnum.Completed,
     listenerFunc: () => void,
-  ): PluginListenerHandle;
+
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: PaymentSheetEventsEnum.Canceled,
     listenerFunc: () => void,
-  ): PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: PaymentSheetEventsEnum.Failed,
     listenerFunc: (error: string) => void,
-  ): PluginListenerHandle;
+
+  ): Promise<PluginListenerHandle>;
+
 }

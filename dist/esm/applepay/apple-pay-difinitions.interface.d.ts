@@ -7,11 +7,11 @@ export interface ApplePayDefinitions {
     presentApplePay(): Promise<{
         paymentResult: ApplePayResultInterface;
     }>;
-    addListener(eventName: ApplePayEventsEnum.Loaded, listenerFunc: () => void): PluginListenerHandle;
-    addListener(eventName: ApplePayEventsEnum.FailedToLoad, listenerFunc: (error: string) => void): PluginListenerHandle;
-    addListener(eventName: ApplePayEventsEnum.Completed, listenerFunc: () => void): PluginListenerHandle;
-    addListener(eventName: ApplePayEventsEnum.Canceled, listenerFunc: () => void): PluginListenerHandle;
-    addListener(eventName: ApplePayEventsEnum.Failed, listenerFunc: (error: string) => void): PluginListenerHandle;
-    addListener(eventName: ApplePayEventsEnum.DidSelectShippingContact, listenerFunc: (data: DidSelectShippingContact) => void): PluginListenerHandle;
-    addListener(eventName: ApplePayEventsEnum.DidCreatePaymentMethod, listenerFunc: (data: DidSelectShippingContact) => void): PluginListenerHandle;
+    addListener(eventName: ApplePayEventsEnum.Loaded, listenerFunc: () => void): Promise<PluginListenerHandle>;
+    addListener(eventName: ApplePayEventsEnum.FailedToLoad, listenerFunc: (error: string) => void): Promise<PluginListenerHandle>;
+    addListener(eventName: ApplePayEventsEnum.Completed, listenerFunc: () => void): Promise<PluginListenerHandle>;
+    addListener(eventName: ApplePayEventsEnum.Canceled, listenerFunc: () => void): Promise<PluginListenerHandle>;
+    addListener(eventName: ApplePayEventsEnum.Failed, listenerFunc: (error: string) => void): Promise<PluginListenerHandle>;
+    addListener(eventName: ApplePayEventsEnum.DidSelectShippingContact, listenerFunc: (data: DidSelectShippingContact) => void): Promise<PluginListenerHandle>;
+    addListener(eventName: ApplePayEventsEnum.DidCreatePaymentMethod, listenerFunc: (data: DidSelectShippingContact) => void): Promise<PluginListenerHandle>;
 }

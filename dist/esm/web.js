@@ -27,6 +27,19 @@ export class StripeWeb extends WebPlugin {
             });
         };
     }
+    // Example method returning PluginListenerHandlePromise
+    /* async addListener(): PluginListenerHandlePromise {
+      const handle: PluginListenerHandle = {
+        remove: () => {
+          console.log('Listener removed');
+        }
+      };
+  
+      const promise = Promise.resolve(handle) as PluginListenerHandlePromise;
+      promise.remove = handle.remove;
+  
+      return promise;
+    } */
     async retrieveSetupIntent(options) {
         var _a, _b, _c, _d;
         if (!(window === null || window === void 0 ? void 0 : window.Stripe) || !this.publishableKey) {

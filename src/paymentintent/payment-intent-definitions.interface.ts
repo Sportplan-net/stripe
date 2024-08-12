@@ -3,7 +3,7 @@ import type { PluginListenerHandle } from '@capacitor/core';
 import type { PaymentIntentEventsEnum, PaymentIntentResultInterface } from './payment-intent-events.enum';
 
 export interface PaymentIntentDefinitions {
-  
+
   retrieveSetupIntent(options: {
     clientSecret: string;
     stripeAccount?: string;
@@ -20,25 +20,30 @@ export interface PaymentIntentDefinitions {
   addListener(
     eventName: PaymentIntentEventsEnum.Loaded,
     listenerFunc: () => void,
-  ): PluginListenerHandle;
+
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: PaymentIntentEventsEnum.FailedToLoad,
     listenerFunc: (error: string) => void,
-  ): PluginListenerHandle;
+
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: PaymentIntentEventsEnum.Completed,
     listenerFunc: () => void,
-  ): PluginListenerHandle;
+
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: PaymentIntentEventsEnum.Canceled,
     listenerFunc: () => void,
-  ): PluginListenerHandle;
+
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: PaymentIntentEventsEnum.Failed,
     listenerFunc: (error: string) => void,
-  ): PluginListenerHandle;
+
+  ): Promise<PluginListenerHandle>;
 }

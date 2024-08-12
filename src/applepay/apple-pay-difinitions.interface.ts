@@ -1,6 +1,6 @@
 import type { PluginListenerHandle } from '@capacitor/core';
 
-import type {CreateApplePayOption, DidSelectShippingContact} from '../shared';
+import type { CreateApplePayOption, DidSelectShippingContact } from '../shared';
 
 import type { ApplePayEventsEnum, ApplePayResultInterface } from './apple-pay-events.enum';
 
@@ -16,35 +16,35 @@ export interface ApplePayDefinitions {
   addListener(
     eventName: ApplePayEventsEnum.Loaded,
     listenerFunc: () => void,
-  ): PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: ApplePayEventsEnum.FailedToLoad,
     listenerFunc: (error: string) => void,
-  ): PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: ApplePayEventsEnum.Completed,
     listenerFunc: () => void,
-  ): PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: ApplePayEventsEnum.Canceled,
     listenerFunc: () => void,
-  ): PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: ApplePayEventsEnum.Failed,
     listenerFunc: (error: string) => void,
-  ): PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: ApplePayEventsEnum.DidSelectShippingContact,
     listenerFunc: (data: DidSelectShippingContact) => void,
-  ): PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 
   addListener(
     eventName: ApplePayEventsEnum.DidCreatePaymentMethod,
     listenerFunc: (data: DidSelectShippingContact) => void,
-  ): PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 }

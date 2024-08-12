@@ -2,8 +2,9 @@ import { WebPlugin } from '@capacitor/core';
 // import type { Stripe } from '@stripe-elements/stripe-elements/dist/';
 import type { FormSubmitEvent } from '@stripe-elements/stripe-elements/dist/types/interfaces';
 import { defineCustomElements as stripeDefineCustomElements } from '@stripe-elements/stripe-elements/loader';
-import type { Stripe, StripeCardNumberElement, StripeAddressElement, StripeElements } from '@stripe/stripe-js';
+import type { Stripe, StripeAddressElement, StripeCardNumberElement, StripeElements } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+// Extend the Promise type to include the remove method
 
 import type {
   ApplePayResultInterface,
@@ -47,7 +48,19 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
       platforms: ['web'],
     });
   }
+  // Example method returning PluginListenerHandlePromise
+  /* async addListener(): PluginListenerHandlePromise {
+    const handle: PluginListenerHandle = {
+      remove: () => {
+        console.log('Listener removed');
+      }
+    };
 
+    const promise = Promise.resolve(handle) as PluginListenerHandlePromise;
+    promise.remove = handle.remove;
+
+    return promise;
+  } */
   async retrieveSetupIntent(options: {
     clientSecret: string;
     stripeAccount?: string;
