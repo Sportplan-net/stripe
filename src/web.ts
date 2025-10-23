@@ -43,10 +43,7 @@ export class StripeWeb extends WebPlugin implements StripePlugin {
   private elements: StripeElements | undefined;
 
   constructor() {
-    super({
-      name: 'Stripe',
-      platforms: ['web'],
-    });
+    super();
   }
   // Example method returning PluginListenerHandlePromise
   /* async addListener(): PluginListenerHandlePromise {
