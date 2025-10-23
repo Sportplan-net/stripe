@@ -3,6 +3,7 @@ ext {
     androidxAppCompatVersion = project.hasProperty('androidxAppCompatVersion') ? rootProject.ext.androidxAppCompatVersion : '1.6.1'
     androidxJunitVersion = project.hasProperty('androidxJunitVersion') ? rootProject.ext.androidxJunitVersion : '1.1.5'
     androidxEspressoCoreVersion = project.hasProperty('androidxEspressoCoreVersion') ? rootProject.ext.androidxEspressoCoreVersion : '3.5.1'
+    stripeVersion = project.hasProperty('stripeVersion') ? rootProject.ext.stripeVersion : '21.20.0'
 }
 
 buildscript {
@@ -19,7 +20,7 @@ buildscript {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-// apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 
 android {
     namespace "com.getcapacitor.community.stripe"
@@ -41,8 +42,8 @@ android {
         abortOnError false
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 }
 
@@ -59,8 +60,11 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
-    implementation 'com.stripe:stripe-android:20.39.0'
-    implementation 'com.stripe:stripecardscan:20.39.0'
+    implementation "com.stripe:stripe-android:$stripeVersion" // was 21.20.0
+    implementation("com.stripe:stripecardscan:$stripeVersion") {
+      exclude group: 'com.stripe', module: 'ml-core-cardscan' // exclude the cardscan-specific portable tflite runtime
+    }
+    implementation("com.stripe:ml-core-googleplay:$stripeVersion") // include the google play tflite runtime
     implementation 'com.google.android.gms:play-services-wallet:19.1.0'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
