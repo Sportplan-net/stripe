@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { HelperService } from '../shared/helper.service';
 import { PluginListenerHandle } from '@capacitor/core';
 
-const happyPathItems: ITestItems [] = [
+const happyPathItems: ITestItems[] = [
   {
     type: 'method',
     name: 'HttpClient',
@@ -31,7 +31,7 @@ const happyPathItems: ITestItems [] = [
   },
 ];
 
-const cancelPathItems: ITestItems [] = [
+const cancelPathItems: ITestItems[] = [
   {
     type: 'method',
     name: 'HttpClient',
@@ -61,13 +61,13 @@ const cancelPathItems: ITestItems [] = [
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-  public eventItems: ITestItems [] = [];
-  private readonly listenerHandlers: PluginListenerHandle[] = [];
+  public eventItems: ITestItems[] = [];
+  private readonly listenerHandlers: Array<Promise<PluginListenerHandle>> = [];
 
   constructor(
     private http: HttpClient,
     private helper: HelperService,
-  ) {}
+  ) { }
 
   async create(type: 'happyPath' | 'cancelPath') {
     const eventKeys = Object.keys(PaymentSheetEventsEnum);
@@ -79,9 +79,9 @@ export class Tab2Page {
     });
 
     if (type === 'happyPath') {
-      this.eventItems =  JSON.parse(JSON.stringify(happyPathItems));
+      this.eventItems = JSON.parse(JSON.stringify(happyPathItems));
     } else {
-      this.eventItems =  JSON.parse(JSON.stringify(cancelPathItems));
+      this.eventItems = JSON.parse(JSON.stringify(cancelPathItems));
     }
 
     const { paymentIntent, ephemeralKey, customer } = await this.http.post<{
@@ -90,11 +90,11 @@ export class Tab2Page {
       customer: string;
     }>(environment.api + 'intent', {}).pipe(first()).toPromise(Promise)
       .catch(async (e) => {
-        await this.helper.updateItem(this.eventItems,'HttpClient', false);
+        await this.helper.updateItem(this.eventItems, 'HttpClient', false);
         throw e;
       });
 
-    await this.helper.updateItem(this.eventItems,'HttpClient', true);
+    await this.helper.updateItem(this.eventItems, 'HttpClient', true);
 
     await Stripe.createPaymentSheet({
       paymentIntentClientSecret: paymentIntent,
@@ -102,13 +102,13 @@ export class Tab2Page {
       customerId: customer,
       merchantDisplayName: 'rdlabo',
     })
-      .then(() => this.helper.updateItem(this.eventItems,'createPaymentSheet', true))
-      .catch(() => this.helper.updateItem(this.eventItems,'createPaymentSheet', false));
+      .then(() => this.helper.updateItem(this.eventItems, 'createPaymentSheet', true))
+      .catch(() => this.helper.updateItem(this.eventItems, 'createPaymentSheet', false));
 
     await Stripe.presentPaymentSheet()
-      .then((data) => this.helper.updateItem(this.eventItems,'presentPaymentSheet', undefined, data.paymentResult))
-      .catch(() => this.helper.updateItem(this.eventItems,'presentPaymentSheet', false));
+      .then((data) => this.helper.updateItem(this.eventItems, 'presentPaymentSheet', undefined, data.paymentResult))
+      .catch(() => this.helper.updateItem(this.eventItems, 'presentPaymentSheet', false));
 
-    this.listenerHandlers.forEach(handler => handler.remove());
+    this.listenerHandlers.forEach(handler => handler.then(h => h.remove()));
   }
 }
