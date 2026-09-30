@@ -68,16 +68,16 @@ public class GooglePayExecutor extends Executor {
 
         if (result instanceof GooglePayLauncher.Result.Completed) {
             notifyListenersFunction.accept(GooglePayEvents.Completed.getWebEventName(), emptyObject);
-            call.resolve(new JSObject().put("paymentResult", GooglePayEvents.Completed.getWebEventName()));
+            resolveSavedCall(call, "onGooglePayResult", new JSObject().put("paymentResult", GooglePayEvents.Completed.getWebEventName()));
         } else if (result instanceof GooglePayLauncher.Result.Canceled) {
             notifyListenersFunction.accept(GooglePayEvents.Canceled.getWebEventName(), emptyObject);
-            call.resolve(new JSObject().put("paymentResult", GooglePayEvents.Canceled.getWebEventName()));
+            resolveSavedCall(call, "onGooglePayResult", new JSObject().put("paymentResult", GooglePayEvents.Canceled.getWebEventName()));
         } else if (result instanceof GooglePayLauncher.Result.Failed) {
             notifyListenersFunction.accept(
                 GooglePayEvents.Failed.getWebEventName(),
                 new JSObject().put("error", ((GooglePayLauncher.Result.Failed) result).getError().getLocalizedMessage())
             );
-            call.resolve(new JSObject().put("paymentResult", GooglePayEvents.Failed.getWebEventName()));
+            resolveSavedCall(call, "onGooglePayResult", new JSObject().put("paymentResult", GooglePayEvents.Failed.getWebEventName()));
         }
     }
 }

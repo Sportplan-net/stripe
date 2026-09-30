@@ -107,17 +107,17 @@ public class PaymentSheetExecutor extends Executor {
 
         if (paymentSheetResult instanceof PaymentSheetResult.Canceled) {
             notifyListenersFunction.accept(PaymentSheetEvents.Canceled.getWebEventName(), emptyObject);
-            call.resolve(new JSObject().put("paymentResult", PaymentSheetEvents.Canceled.getWebEventName()));
+            resolveSavedCall(call, "onPaymentSheetResult", new JSObject().put("paymentResult", PaymentSheetEvents.Canceled.getWebEventName()));
         } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
             notifyListenersFunction.accept(
                 PaymentSheetEvents.Failed.getWebEventName(),
                 new JSObject().put("error", ((PaymentSheetResult.Failed) paymentSheetResult).getError().getLocalizedMessage())
             );
             notifyListenersFunction.accept(PaymentSheetEvents.Failed.getWebEventName(), emptyObject);
-            call.resolve(new JSObject().put("paymentResult", PaymentSheetEvents.Failed.getWebEventName()));
+            resolveSavedCall(call, "onPaymentSheetResult", new JSObject().put("paymentResult", PaymentSheetEvents.Failed.getWebEventName()));
         } else if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
             notifyListenersFunction.accept(PaymentSheetEvents.Completed.getWebEventName(), emptyObject);
-            call.resolve(new JSObject().put("paymentResult", PaymentSheetEvents.Completed.getWebEventName()));
+            resolveSavedCall(call, "onPaymentSheetResult", new JSObject().put("paymentResult", PaymentSheetEvents.Completed.getWebEventName()));
         }
     }
 }
