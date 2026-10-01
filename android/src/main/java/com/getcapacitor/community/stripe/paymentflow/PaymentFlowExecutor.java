@@ -175,10 +175,10 @@ public class PaymentFlowExecutor extends Executor {
                 PaymentFlowEvents.Created.getWebEventName(),
                 new JSObject().put("cardNumber", paymentOption.getLabel())
             );
-            call.resolve(new JSObject().put("cardNumber", paymentOption.getLabel()));
+            resolveSavedCall(call, "onPaymentOption", new JSObject().put("cardNumber", paymentOption.getLabel()));
         } else {
             notifyListenersFunction.accept(PaymentFlowEvents.Canceled.getWebEventName(), emptyObject);
-            call.reject("User close PaymentFlow Sheet");
+            rejectSavedCall(call, "onPaymentOption", "User close PaymentFlow Sheet");
         }
     }
 
@@ -187,19 +187,19 @@ public class PaymentFlowExecutor extends Executor {
 
         if (paymentSheetResult instanceof PaymentSheetResult.Canceled) {
             notifyListenersFunction.accept(PaymentFlowEvents.Canceled.getWebEventName(), emptyObject);
-            call.resolve(new JSObject().put("paymentResult", PaymentFlowEvents.Canceled.getWebEventName()));
+            resolveSavedCall(call, "onPaymentFlowResult", new JSObject().put("paymentResult", PaymentFlowEvents.Canceled.getWebEventName()));
         } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
             notifyListenersFunction.accept(
                 PaymentFlowEvents.Failed.getWebEventName(),
                 new JSObject().put("error", ((PaymentSheetResult.Failed) paymentSheetResult).getError().getLocalizedMessage())
             );
 
-            call.resolve(new JSObject().put("paymentResult", PaymentFlowEvents.Failed.getWebEventName())
+            resolveSavedCall(call, "onPaymentFlowResult", new JSObject().put("paymentResult", PaymentFlowEvents.Failed.getWebEventName())
               .put("error", ((PaymentSheetResult.Failed) paymentSheetResult).getError().getLocalizedMessage()));
 
         } else if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
             notifyListenersFunction.accept(PaymentFlowEvents.Completed.getWebEventName(), emptyObject);
-            call.resolve(new JSObject().put("paymentResult", PaymentFlowEvents.Completed.getWebEventName()));
+            resolveSavedCall(call, "onPaymentFlowResult", new JSObject().put("paymentResult", PaymentFlowEvents.Completed.getWebEventName()));
         }
     }
 }
